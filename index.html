@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="KALA — Greek and More. A coastal Mediterranean restaurant serving gyros, souvlaki, fresh salads, and Greek classics." />
+  <title>KALA — Greek and More</title>
+  <link rel="icon" type="image/png" href="public/image%2010.png" />
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-analytics.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyDg2azEJq3kvEYB5VezljXvGygmGQOtVOs",
+      authDomain: "kala-6d802.firebaseapp.com",
+      projectId: "kala-6d802",
+      storageBucket: "kala-6d802.firebasestorage.app",
+      messagingSenderId: "341282211513",
+      appId: "1:341282211513:web:a7439d74b0bbe32c647d68",
+      measurementId: "G-3JLE857RPM"
+    };
+    const app = initializeApp(firebaseConfig);
+    getAnalytics(app);
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Announce -->
+  <div class="announce">
+    <span class="announce-dot"></span>
+    <span>Now serving lunch · Tuesday – Saturday · 11a – 3p</span>
+  </div>
+
+  <!-- Navigation -->
+  <header class="nav" id="nav">
+    <div class="nav-inner container">
+      <a href="#top" class="brand" aria-label="KALA — Greek and More">
+        <img class="brand-mark" src="public/image%2010.png" alt="" />
+        <span class="brand-word">KALA</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="menu.html">Menu</a>
+        <a href="our-story.html">Our Story</a>
+        <a href="#visit">Visit</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#reserve" class="link-quiet">Reservations</a>
+        <a href="#order" class="btn btn-primary btn-sm">Order Online</a>
+      </div>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+      <a href="menu.html">Menu</a>
+      <a href="our-story.html">Our Story</a>
+      <a href="#visit">Visit</a>
+      <a href="#contact">Contact</a>
+      <a href="#reserve">Reservations</a>
+      <a href="#order" class="btn btn-primary">Order Online</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main id="top">
+  <section class="hero">
+    <div class="hero-media">
+      <img
+        src="https://images.unsplash.com/photo-1530841377377-3ff06c0ca713?auto=format&fit=crop&w=2400&q=85"
+        alt="A bright Mediterranean village with white stucco buildings and Greek blue domes."
+        fetchpriority="high"
+      />
+      <div class="hero-gradient"></div>
+    </div>
+
+    <div class="hero-content container">
+      <span class="eyebrow eyebrow-light">Coastal · Mediterranean · Family-run</span>
+      <h1 class="hero-title">
+        <span class="title-line">KALA</span>
+        <span class="title-line title-italic">Greek <span class="amp">&amp;</span> More</span>
+      </h1>
+      <p class="hero-sub">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque
+        magna. Praesent ut sollicitudin ligula, vitae laoreet justo. Curabitur dapibus laoreet
+        eros.
+      </p>
+      <div class="hero-buttons">
+        <a href="#order" class="btn btn-primary btn-lg">
+          Order Online
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#reserve" class="btn btn-ghost btn-lg">Make a Reservation</a>
+      </div>
+
+      <div class="hero-meta">
+        <div class="meta-item">
+          <span class="meta-label">Open today</span>
+          <span class="meta-value">11:00a – 10:00p</span>
+        </div>
+        <span class="meta-divider"></span>
+        <div class="meta-item">
+          <span class="meta-label">Find us</span>
+          <span class="meta-value">123 Harbor Lane</span>
+        </div>
+      </div>
+    </div>
+
+    <a href="#callout" class="scroll-cue" aria-label="Scroll to content">
+      <span>scroll</span>
+      <svg viewBox="0 0 14 24" aria-hidden="true">
+        <rect x="0.5" y="0.5" width="13" height="23" rx="6.5" fill="none" stroke="currentColor"/>
+        <circle cx="7" cy="7" r="2" fill="currentColor"/>
+      </svg>
+    </a>
+  </section>
+
+  <!-- Greek Key Divider -->
+  <div class="meander-divider" aria-hidden="true"></div>
+
+  <!-- Order Callout -->
+  <section class="callout" id="callout">
+    <div class="container">
+      <div class="callout-frame">
+        <span class="callout-eyebrow">Lunch Service</span>
+        <h2 class="callout-title">
+          Available for Lunch <em>Tuesday – Saturday</em>
+        </h2>
+        <p class="callout-sub">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet
+          libero in lacus efficitur tincidunt.
+        </p>
+        <a href="#order" class="btn btn-primary btn-lg">
+          Order for Pickup or Delivery
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="callout-corner top-left" aria-hidden="true"></div>
+        <div class="callout-corner top-right" aria-hidden="true"></div>
+        <div class="callout-corner bottom-left" aria-hidden="true"></div>
+        <div class="callout-corner bottom-right" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Preview -->
+  <section class="menu-section" id="menu">
+    <div class="container">
+      <header class="section-header">
+        <span class="eyebrow">From the kitchen</span>
+        <h2 class="section-title">
+          A taste of <em>Greece</em>
+          <br/>and beyond
+        </h2>
+        <p class="section-sub">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam erat volutpat.
+          Nullam vehicula, urna at imperdiet placerat.
+        </p>
+      </header>
+
+      <div class="menu-grid">
+        <!-- Gyros -->
+        <article class="menu-card">
+          <div class="card-image"><img src="public/image%202.png" alt="" loading="lazy" /></div>
+          <div class="card-body">
+            <h3>Gyros</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
+            <span class="card-arrow" aria-hidden="true">→</span>
+          </div>
+        </article>
+
+        <!-- Souvlaki -->
+        <article class="menu-card">
+          <div class="card-image"><img src="public/image%203.png" alt="" loading="lazy" /></div>
+          <div class="card-body">
+            <h3>Souvlaki</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
+            <span class="card-arrow" aria-hidden="true">→</span>
+          </div>
+        </article>
+
+        <!-- Greek Salads -->
+        <article class="menu-card">
+          <div class="card-image"><img src="public/image%204.png" alt="" loading="lazy" /></div>
+          <div class="card-body">
+            <h3>Greek Salads</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
+            <span class="card-arrow" aria-hidden="true">→</span>
+          </div>
+        </article>
+
+        <!-- Dips & Spreads -->
+        <article class="menu-card">
+          <div class="card-image"><img src="public/image%205.png" alt="" loading="lazy" /></div>
+          <div class="card-body">
+            <h3>Dips &amp; Spreads</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
+            <span class="card-arrow" aria-hidden="true">→</span>
+          </div>
+        </article>
+
+        <!-- Seafood -->
+        <article class="menu-card">
+          <div class="card-image"><img src="public/image%206.png" alt="" loading="lazy" /></div>
+          <div class="card-body">
+            <h3>Seafood</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
+            <span class="card-arrow" aria-hidden="true">→</span>
+          </div>
+        </article>
+
+        <!-- Wine -->
+        <article class="menu-card">
+          <div class="card-image"><img src="public/image%207.png" alt="" loading="lazy" /></div>
+          <div class="card-body">
+            <h3>Wine</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
+            <span class="card-arrow" aria-hidden="true">→</span>
+          </div>
+        </article>
+
+        <!-- Desserts -->
+        <article class="menu-card">
+          <div class="card-image"><img src="public/image%208.png" alt="" loading="lazy" /></div>
+          <div class="card-body">
+            <h3>Desserts</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
+            <span class="card-arrow" aria-hidden="true">→</span>
+          </div>
+        </article>
+
+        <!-- View full menu -->
+        <a href="menu.html" class="menu-card menu-card-cta">
+          <div>
+            <span class="eyebrow">Hungry?</span>
+            <h3>View the Full Menu</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar.</p>
+          </div>
+          <span class="card-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story / Animation Section -->
+  <section class="story" id="story">
+    <div class="container story-grid">
+      <div class="story-text">
+        <span class="eyebrow">Our Story</span>
+        <h2 class="section-title">
+          Made by hand,
+          <em>shared by the table</em>
+        </h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis
+          pellentesque magna. Praesent ut sollicitudin ligula, vitae laoreet justo.
+        </p>
+        <p>
+          Curabitur dapibus laoreet eros, vitae faucibus ipsum tincidunt vitae. Nam
+          ultrices, magna a porttitor laoreet, sapien lorem feugiat lectus, eget
+          tincidunt lacus eros vitae nibh.
+        </p>
+        <a href="#" class="link-arrow">Read our story <span>→</span></a>
+      </div>
+
+      <div class="story-visual" aria-hidden="true">
+        <div class="vis-glow"></div>
+
+        <img src="public/hand_olive.png" alt="" class="hand hand-olive" loading="lazy" />
+        <img src="public/hand_wine.png"  alt="" class="hand hand-wine"  loading="lazy" />
+
+        <!-- Greek key ribbon -->
+        <svg class="key-ribbon" viewBox="0 0 600 40" preserveAspectRatio="none">
+          <pattern id="meander" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M0 30 H 24 V 10 H 16 V 22 H 8 V 4 H 32 V 22 H 40" fill="none" stroke="#194B9E" stroke-width="2"/>
+          </pattern>
+          <rect width="600" height="40" fill="url(#meander)"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visit / Location -->
+  <section class="visit" id="visit">
+    <div class="container visit-grid">
+      <div class="visit-info">
+        <span class="eyebrow">Visit</span>
+        <h2 class="section-title">Find us by <em>the harbor</em></h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod
+          tempor lectus, sed pretium nisi tincidunt eu.
+        </p>
+
+        <dl class="info-list">
+          <div class="info-row">
+            <dt>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2c-3.3 0-6 2.6-6 6 0 4.4 6 10 6 10s6-5.6 6-10c0-3.4-2.7-6-6-6Zm0 8.2A2.2 2.2 0 1 1 10 5.8a2.2 2.2 0 0 1 0 4.4Z" fill="currentColor"/></svg>
+              Address
+            </dt>
+            <dd>
+              123 Harbor Lane<br/>
+              Coastal District, ST 00000
+            </dd>
+          </div>
+          <div class="info-row">
+            <dt>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3h3l2 5-2 1a10 10 0 0 0 5 5l1-2 5 2v3a2 2 0 0 1-2 2A14 14 0 0 1 3 5a2 2 0 0 1 2-2Z" fill="currentColor"/></svg>
+              Phone
+            </dt>
+            <dd>(555) 123 — 4567</dd>
+          </div>
+          <div class="info-row">
+            <dt>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm.8 4h-1.6v5l4 2.4.8-1.4-3.2-2Z" fill="currentColor"/></svg>
+              Hours
+            </dt>
+            <dd>
+              <span><b>Tue – Thu</b> · 11a – 9p</span>
+              <span><b>Fri – Sat</b> · 11a – 10p</span>
+              <span><b>Sun</b> · 12p – 8p</span>
+              <span class="dim"><b>Mon</b> · Closed</span>
+            </dd>
+          </div>
+        </dl>
+
+        <div class="visit-buttons">
+          <a href="#" class="btn btn-primary">Get Directions</a>
+          <a href="tel:5551234567" class="btn btn-outline">Call (555) 123-4567</a>
+        </div>
+      </div>
+
+      <div class="visit-map" aria-hidden="true">
+        <div class="map-frame">
+          <div class="map-grid"></div>
+          <div class="map-road map-road-h"></div>
+          <div class="map-road map-road-v"></div>
+          <div class="map-road map-road-d"></div>
+          <div class="map-water">
+            <div class="map-wave w1"></div>
+            <div class="map-wave w2"></div>
+            <div class="map-wave w3"></div>
+          </div>
+          <div class="map-pin">
+            <span class="pin-ring"></span>
+            <span class="pin-dot"></span>
+          </div>
+          <div class="map-label">123 Harbor Lane</div>
+          <div class="map-legend">
+            <span class="legend-dot"></span>KALA · Greek and More
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#top" class="brand brand-light">
+            <img class="brand-mark" src="public/image%2010.png" alt="" />
+            <span class="brand-word">KALA</span>
+          </a>
+          <p class="footer-tagline">Greek and More</p>
+          <p class="footer-blurb">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod
+            tempor lectus, sed pretium nisi tincidunt eu.
+          </p>
+          <div class="socials">
+            <a href="https://www.instagram.com/yamasgreekeats/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+            </a>
+            <a href="https://www.facebook.com/yamaswalla2/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v8h4v-8h3l1-4h-4V8Z" fill="currentColor"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Visit</h4>
+          <ul>
+            <li>123 Harbor Lane</li>
+            <li>Coastal District, ST 00000</li>
+            <li><a href="#">Get Directions</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Menu</h4>
+          <ul>
+            <li><a href="menu.html#gyros">Gyros</a></li>
+            <li><a href="menu.html#souvlaki">Souvlaki</a></li>
+            <li><a href="menu.html#salads">Salads</a></li>
+            <li><a href="menu.html#wine">Wine</a></li>
+            <li><a href="#order">Order Online</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Hours</h4>
+          <ul>
+            <li>Tue – Thu · 11a – 9p</li>
+            <li>Fri – Sat · 11a – 10p</li>
+            <li>Sun · 12p – 8p</li>
+            <li class="dim">Mon · Closed</li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:5551234567">(555) 123 — 4567</a></li>
+            <li><a href="mailto:hello@kala.example">hello@kala.example</a></li>
+            <li><a href="#">Private events</a></li>
+            <li><a href="#">Press inquiries</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 KALA Greek and More. All rights reserved.</p>
+        <p class="footer-meta">
+          <span class="kvline"></span>
+          Crafted with care · Coastal District
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sticky Order Button (desktop after scroll past hero) -->
+  <a href="#order" class="sticky-order" id="stickyOrder" aria-label="Order online">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.5 11a2 2 0 0 1-2 1.7H8.5a2 2 0 0 1-2-1.7L5 7Zm3-3a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>Order Online</span>
+  </a>
+
+  <!-- Mobile Bottom Anchor Bar -->
+  <nav class="mobile-bar" aria-label="Quick actions">
+    <a href="tel:5551234567">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h3.5l2 5.5L8 10a11 11 0 0 0 6 6l1.5-2.5L21 15.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      <span>Call</span>
+    </a>
+    <a href="#visit">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+      <span>Location</span>
+    </a>
+    <a href="#order">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.5 11a2 2 0 0 1-2 1.7H8.5a2 2 0 0 1-2-1.7L5 8Zm3-3a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Takeout</span>
+    </a>
+    <a href="#reserve">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 10h17M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span>Reserve</span>
+    </a>
+  </nav>
+
+  <script src="script.js"></script>
+</body>
+</html>
