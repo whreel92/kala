@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="The story of KALA — a family-run Greek restaurant rooted in Mediterranean tradition and the coastal kitchen." />
-  <title>Our Story — KALA Greek and More</title>
+  <meta name="description" content="Reserve a table at KALA — Greek and More. Choose your party size, date, and time." />
+  <title>Reservations — KALA Greek and More</title>
   <link rel="icon" type="image/png" href="public/image%2010.png" />
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
@@ -43,7 +43,7 @@
 
       <nav class="nav-links" aria-label="Primary">
         <a href="menu.html">Menu</a>
-        <a href="our-story.html" class="is-active">Our Story</a>
+        <a href="our-story.html">Our Story</a>
         <a href="contact.html">Contact</a>
       </nav>
 
@@ -71,172 +71,111 @@
   <!-- Page header -->
   <section class="page-header">
     <div class="container">
-      <span class="eyebrow">Our Story</span>
-      <h1>KALA</h1>
-      <span class="page-sub">rooted in tradition</span>
+      <h1>RESERVATIONS</h1>
+      <span class="page-sub">Save your seat by the harbor</span>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis
-        pellentesque magna. Praesent ut sollicitudin ligula, vitae laoreet justo.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium nisi
+        tincidunt eu. Donec euismod tempor lectus.
       </p>
     </div>
   </section>
 
-  <!-- Intro with drop cap -->
-  <section class="story-intro">
-    <div class="container story-intro-inner">
-      <p class="story-intro-lead">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit — phasellus quis
-        pellentesque magna, praesent ut sollicitudin ligula.
-      </p>
-      <p class="story-intro-body">
+  <!-- Reservation form -->
+  <section class="reserve-section">
+    <div class="container">
+      <div class="reserve-card">
+        <form class="reserve-form" onsubmit="event.preventDefault();">
+
+          <div class="form-grid">
+            <div class="form-row">
+              <label for="party">Party Size</label>
+              <select id="party" class="form-control" name="party">
+                <option>1 guest</option>
+                <option selected>2 guests</option>
+                <option>3 guests</option>
+                <option>4 guests</option>
+                <option>5 guests</option>
+                <option>6 guests</option>
+                <option>7+ guests · contact us</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="date">Date</label>
+              <input id="date" class="form-control" type="date" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label>Time</label>
+            <div class="time-slots">
+              <button type="button" class="time-chip">5:30p</button>
+              <button type="button" class="time-chip">5:45p</button>
+              <button type="button" class="time-chip">6:00p</button>
+              <button type="button" class="time-chip">6:30p</button>
+              <button type="button" class="time-chip active">7:00p</button>
+              <button type="button" class="time-chip">7:30p</button>
+              <button type="button" class="time-chip">8:00p</button>
+              <button type="button" class="time-chip">8:30p</button>
+              <button type="button" class="time-chip">9:00p</button>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-row">
+              <label for="name">Name</label>
+              <input id="name" class="form-control" type="text" placeholder="Your name" />
+            </div>
+            <div class="form-row">
+              <label for="phone">Phone</label>
+              <input id="phone" class="form-control" type="tel" placeholder="(555) 123-4567" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input id="email" class="form-control" type="email" placeholder="you@example.com" />
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg">
+            Reserve a Table
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <p class="reserve-note">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Confirmation sent to your email.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Walk-ins -->
+  <section class="walk-in">
+    <div class="container walk-in-inner">
+      <span class="eyebrow">Walk-ins welcome</span>
+      <h2>Or just <em>stop by</em></h2>
+      <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque
-        magna. Praesent ut sollicitudin ligula, vitae laoreet justo. Curabitur dapibus laoreet
-        eros, vitae faucibus ipsum tincidunt vitae. Nam ultrices, magna a porttitor laoreet,
-        sapien lorem feugiat lectus, eget tincidunt lacus eros vitae nibh.
+        magna — we always save room at the bar.
       </p>
     </div>
   </section>
 
-  <!-- Block 1 -->
-  <section>
-    <div class="container">
-      <div class="story-block">
-        <div class="story-block-text">
-          <span class="eyebrow">Chapter 01</span>
-          <h2>From a family table to <em>yours</em></h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis
-            pellentesque magna. Praesent ut sollicitudin ligula, vitae laoreet justo.
-          </p>
-          <p>
-            Curabitur dapibus laoreet eros, vitae faucibus ipsum tincidunt vitae. Nam
-            ultrices, magna a porttitor laoreet, sapien lorem feugiat lectus.
-          </p>
-        </div>
-        <div class="story-block-image">
-          <img
-            src="public/our%20story/dad-1-mP4p1VJ56BiGWRO5.avif"
-            alt="A family portrait — the heart of KALA."
-            loading="lazy" />
-          <span class="caption">Family</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pull quote -->
-  <section class="pull-quote-wrap">
-    <div class="pull-quote">
-      <span class="open-q" aria-hidden="true">"</span>
-      <blockquote>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit —
-        phasellus quis pellentesque magna.
-      </blockquote>
-      <cite>The KALA family</cite>
-    </div>
-  </section>
-
-  <!-- Block 2 — reversed -->
-  <section>
-    <div class="container">
-      <div class="story-block reverse">
-        <div class="story-block-text">
-          <span class="eyebrow">Chapter 02</span>
-          <h2>Mediterranean, <em>by way of the coast</em></h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod
-            tempor lectus, sed pretium nisi tincidunt eu. Vivamus sit amet libero in
-            lacus efficitur tincidunt.
-          </p>
-          <p>
-            Nam ultrices, magna a porttitor laoreet, sapien lorem feugiat lectus, eget
-            tincidunt lacus eros vitae nibh.
-          </p>
-          <a href="menu.html" class="link-arrow">Browse the menu <span>→</span></a>
-        </div>
-        <div class="story-block-image">
-          <img
-            src="public/our%20story/9edede81-5858-47d8-864f-c3efbc42b5a5.png"
-            alt="A Greek coastal village overlooking the Aegean Sea with olive branches and a painted pottery jug."
-            loading="lazy" />
-          <span class="caption">By the coast</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Block 3 — engraving showcase -->
-  <section style="background: var(--off-white);">
-    <div class="container">
-      <div class="story-block">
-        <div class="story-block-text">
-          <span class="eyebrow">Chapter 03</span>
-          <h2>Made by hand, <em>shared by the table</em></h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut sollicitudin
-            ligula, vitae laoreet justo. Curabitur dapibus laoreet eros, vitae faucibus ipsum
-            tincidunt vitae.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultrices, magna a
-            porttitor laoreet, sapien lorem feugiat lectus.
-          </p>
-        </div>
-        <div class="story-block-image">
-          <img
-            src="public/our%20story/c8dc64fd-9c12-4c40-bbc0-1061f26d079f.png"
-            alt="A Greek table spread on a coastal patio at sunset — bread, olives, salad, and tzatziki."
-            loading="lazy" />
-          <span class="caption">At the table</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Values -->
-  <section class="values">
-    <div class="container">
-      <header class="section-header" style="text-align: center; max-width: 640px; margin-left: auto; margin-right: auto;">
-        <span class="eyebrow">What we stand for</span>
-        <h2 class="section-title">Three things we promise</h2>
-        <p class="section-sub" style="margin: 0 auto;">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor
-          lectus, sed pretium nisi tincidunt eu.
-        </p>
-      </header>
-
-      <div class="values-grid">
-        <article class="value-card">
-          <h3>Hospitality</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque magna.</p>
-        </article>
-        <article class="value-card">
-          <h3>Tradition</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut sollicitudin ligula.</p>
-        </article>
-        <article class="value-card">
-          <h3>The Sea</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Invite CTA -->
+  <!-- Private events -->
   <section class="invite">
     <div class="container invite-inner">
-      <span class="eyebrow">Come find us</span>
-      <h2>Pull up <em>a chair</em></h2>
+      <span class="eyebrow">Larger parties</span>
+      <h2>Hosting <em>a celebration?</em></h2>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet libero in
-        lacus efficitur tincidunt.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet libero
+        in lacus efficitur tincidunt.
       </p>
       <div class="invite-actions">
-        <a href="reservations.html" class="btn btn-primary btn-lg">
-          Make a Reservation
+        <a href="contact.html" class="btn btn-primary btn-lg">
+          Plan a Private Event
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a href="contact.html" class="btn btn-outline btn-lg">Get Directions</a>
+        <a href="tel:5551234567" class="btn btn-outline btn-lg">Call the Restaurant</a>
       </div>
     </div>
   </section>
@@ -291,8 +230,8 @@
           <ul>
             <li><a href="tel:5551234567">(555) 123 — 4567</a></li>
             <li><a href="mailto:hello@kala.example">hello@kala.example</a></li>
-            <li><a href="#">Private events</a></li>
-            <li><a href="#">Press inquiries</a></li>
+            <li><a href="mailto:events@kala.example">Private events</a></li>
+            <li><a href="mailto:press@kala.example">Press inquiries</a></li>
           </ul>
         </div>
       </div>
@@ -302,12 +241,6 @@
       </div>
     </div>
   </footer>
-
-  <!-- Sticky Order Button -->
-  <a href="order.html" class="sticky-order" id="stickyOrder" aria-label="Order online">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.5 11a2 2 0 0 1-2 1.7H8.5a2 2 0 0 1-2-1.7L5 7Zm3-3a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span>Order Online</span>
-  </a>
 
   <!-- Mobile Bottom Bar -->
   <nav class="mobile-bar" aria-label="Quick actions">
@@ -330,5 +263,21 @@
   </nav>
 
   <script src="script.js"></script>
+  <script>
+    // Time chip selection
+    document.querySelectorAll('.time-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.time-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+      });
+    });
+    // Set default date to tomorrow
+    const dateInput = document.getElementById('date');
+    if (dateInput) {
+      const t = new Date();
+      t.setDate(t.getDate() + 1);
+      dateInput.value = t.toISOString().split('T')[0];
+    }
+  </script>
 </body>
 </html>

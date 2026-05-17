@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="The story of KALA — a family-run Greek restaurant rooted in Mediterranean tradition and the coastal kitchen." />
-  <title>Our Story — KALA Greek and More</title>
+  <meta name="description" content="Order online from KALA — Pickup, delivery, and catering across the coast." />
+  <title>Order Online — KALA Greek and More</title>
   <link rel="icon" type="image/png" href="public/image%2010.png" />
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
@@ -43,7 +43,7 @@
 
       <nav class="nav-links" aria-label="Primary">
         <a href="menu.html">Menu</a>
-        <a href="our-story.html" class="is-active">Our Story</a>
+        <a href="our-story.html">Our Story</a>
         <a href="contact.html">Contact</a>
       </nav>
 
@@ -71,172 +71,110 @@
   <!-- Page header -->
   <section class="page-header">
     <div class="container">
-      <span class="eyebrow">Our Story</span>
-      <h1>KALA</h1>
-      <span class="page-sub">rooted in tradition</span>
+      <h1>ORDER ONLINE</h1>
+      <span class="page-sub">Pickup, delivery, or catering</span>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis
-        pellentesque magna. Praesent ut sollicitudin ligula, vitae laoreet justo.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium nisi
+        tincidunt eu. Donec euismod tempor lectus, vivamus sit amet libero.
       </p>
     </div>
   </section>
 
-  <!-- Intro with drop cap -->
-  <section class="story-intro">
-    <div class="container story-intro-inner">
-      <p class="story-intro-lead">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit — phasellus quis
-        pellentesque magna, praesent ut sollicitudin ligula.
-      </p>
-      <p class="story-intro-body">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque
-        magna. Praesent ut sollicitudin ligula, vitae laoreet justo. Curabitur dapibus laoreet
-        eros, vitae faucibus ipsum tincidunt vitae. Nam ultrices, magna a porttitor laoreet,
-        sapien lorem feugiat lectus, eget tincidunt lacus eros vitae nibh.
-      </p>
-    </div>
-  </section>
-
-  <!-- Block 1 -->
-  <section>
+  <!-- Order options -->
+  <section class="order-options">
     <div class="container">
-      <div class="story-block">
-        <div class="story-block-text">
-          <span class="eyebrow">Chapter 01</span>
-          <h2>From a family table to <em>yours</em></h2>
+      <div class="order-options-grid">
+
+        <!-- Pickup -->
+        <article class="order-card">
+          <div class="order-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5 7h14l-1.5 11a2 2 0 0 1-2 1.7H8.5a2 2 0 0 1-2-1.7L5 7Zm3-3a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="meta">Ready in 15–25 min</span>
+          <h3>Pickup</h3>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis
-            pellentesque magna. Praesent ut sollicitudin ligula, vitae laoreet justo.
+            pellentesque magna — pick up at our harbor location.
           </p>
+          <a href="#" class="btn btn-primary btn-sm">
+            Start Pickup Order
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </article>
+
+        <!-- Delivery -->
+        <article class="order-card">
+          <div class="order-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M2 7h11v9H2zM13 10h5l3 4v2h-8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="7" cy="18" r="2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17" cy="18" r="2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+          </div>
+          <span class="meta">Through partner platforms</span>
+          <h3>Delivery</h3>
           <p>
-            Curabitur dapibus laoreet eros, vitae faucibus ipsum tincidunt vitae. Nam
-            ultrices, magna a porttitor laoreet, sapien lorem feugiat lectus.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut
+            sollicitudin ligula — door-to-door across the coast.
           </p>
-        </div>
-        <div class="story-block-image">
-          <img
-            src="public/our%20story/dad-1-mP4p1VJ56BiGWRO5.avif"
-            alt="A family portrait — the heart of KALA."
-            loading="lazy" />
-          <span class="caption">Family</span>
-        </div>
-      </div>
-    </div>
-  </section>
+          <a href="#" class="btn btn-primary btn-sm">
+            Choose Platform
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </article>
 
-  <!-- Pull quote -->
-  <section class="pull-quote-wrap">
-    <div class="pull-quote">
-      <span class="open-q" aria-hidden="true">"</span>
-      <blockquote>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit —
-        phasellus quis pellentesque magna.
-      </blockquote>
-      <cite>The KALA family</cite>
-    </div>
-  </section>
-
-  <!-- Block 2 — reversed -->
-  <section>
-    <div class="container">
-      <div class="story-block reverse">
-        <div class="story-block-text">
-          <span class="eyebrow">Chapter 02</span>
-          <h2>Mediterranean, <em>by way of the coast</em></h2>
+        <!-- Catering -->
+        <article class="order-card">
+          <div class="order-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M3 13h18a8 8 0 0 1-9 8 8 8 0 0 1-9-8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 8a2 2 0 1 1 4 0c0 1.5-2 1.5-2 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="6" r=".5" fill="currentColor"/></svg>
+          </div>
+          <span class="meta">48 hours notice</span>
+          <h3>Catering</h3>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod
-            tempor lectus, sed pretium nisi tincidunt eu. Vivamus sit amet libero in
-            lacus efficitur tincidunt.
+            tempor lectus — events, offices, and gatherings.
           </p>
-          <p>
-            Nam ultrices, magna a porttitor laoreet, sapien lorem feugiat lectus, eget
-            tincidunt lacus eros vitae nibh.
-          </p>
-          <a href="menu.html" class="link-arrow">Browse the menu <span>→</span></a>
-        </div>
-        <div class="story-block-image">
-          <img
-            src="public/our%20story/9edede81-5858-47d8-864f-c3efbc42b5a5.png"
-            alt="A Greek coastal village overlooking the Aegean Sea with olive branches and a painted pottery jug."
-            loading="lazy" />
-          <span class="caption">By the coast</span>
-        </div>
+          <a href="contact.html" class="btn btn-primary btn-sm">
+            Plan an Event
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </article>
+
       </div>
     </div>
   </section>
 
-  <!-- Block 3 — engraving showcase -->
-  <section style="background: var(--off-white);">
+  <!-- How it works -->
+  <section class="steps">
     <div class="container">
-      <div class="story-block">
-        <div class="story-block-text">
-          <span class="eyebrow">Chapter 03</span>
-          <h2>Made by hand, <em>shared by the table</em></h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut sollicitudin
-            ligula, vitae laoreet justo. Curabitur dapibus laoreet eros, vitae faucibus ipsum
-            tincidunt vitae.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultrices, magna a
-            porttitor laoreet, sapien lorem feugiat lectus.
-          </p>
-        </div>
-        <div class="story-block-image">
-          <img
-            src="public/our%20story/c8dc64fd-9c12-4c40-bbc0-1061f26d079f.png"
-            alt="A Greek table spread on a coastal patio at sunset — bread, olives, salad, and tzatziki."
-            loading="lazy" />
-          <span class="caption">At the table</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Values -->
-  <section class="values">
-    <div class="container">
-      <header class="section-header" style="text-align: center; max-width: 640px; margin-left: auto; margin-right: auto;">
-        <span class="eyebrow">What we stand for</span>
-        <h2 class="section-title">Three things we promise</h2>
+      <header class="section-header" style="text-align: center; max-width: 620px; margin: 0 auto;">
+        <span class="eyebrow">How it works</span>
+        <h2 class="section-title">Three steps, <em>one good meal</em></h2>
         <p class="section-sub" style="margin: 0 auto;">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor
-          lectus, sed pretium nisi tincidunt eu.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet
+          libero in lacus.
         </p>
       </header>
 
-      <div class="values-grid">
-        <article class="value-card">
-          <h3>Hospitality</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque magna.</p>
+      <div class="steps-grid">
+        <article class="step">
+          <span class="step-num">01</span>
+          <h3>Build your order</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Choose from the full menu.</p>
         </article>
-        <article class="value-card">
-          <h3>Tradition</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut sollicitudin ligula.</p>
+        <article class="step">
+          <span class="step-num">02</span>
+          <h3>Pick a time</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Confirm pickup or delivery.</p>
         </article>
-        <article class="value-card">
-          <h3>The Sea</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus.</p>
+        <article class="step">
+          <span class="step-num">03</span>
+          <h3>Pay &amp; eat</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Secure checkout, then enjoy.</p>
         </article>
       </div>
-    </div>
-  </section>
 
-  <!-- Invite CTA -->
-  <section class="invite">
-    <div class="container invite-inner">
-      <span class="eyebrow">Come find us</span>
-      <h2>Pull up <em>a chair</em></h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet libero in
-        lacus efficitur tincidunt.
-      </p>
-      <div class="invite-actions">
-        <a href="reservations.html" class="btn btn-primary btn-lg">
-          Make a Reservation
+      <div style="text-align: center; margin-top: clamp(32px, 5vw, 50px);">
+        <a href="menu.html" class="btn btn-outline btn-lg">
+          Browse the Full Menu
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a href="contact.html" class="btn btn-outline btn-lg">Get Directions</a>
       </div>
     </div>
   </section>
@@ -291,8 +229,8 @@
           <ul>
             <li><a href="tel:5551234567">(555) 123 — 4567</a></li>
             <li><a href="mailto:hello@kala.example">hello@kala.example</a></li>
-            <li><a href="#">Private events</a></li>
-            <li><a href="#">Press inquiries</a></li>
+            <li><a href="mailto:events@kala.example">Private events</a></li>
+            <li><a href="mailto:press@kala.example">Press inquiries</a></li>
           </ul>
         </div>
       </div>
@@ -302,12 +240,6 @@
       </div>
     </div>
   </footer>
-
-  <!-- Sticky Order Button -->
-  <a href="order.html" class="sticky-order" id="stickyOrder" aria-label="Order online">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.5 11a2 2 0 0 1-2 1.7H8.5a2 2 0 0 1-2-1.7L5 7Zm3-3a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span>Order Online</span>
-  </a>
 
   <!-- Mobile Bottom Bar -->
   <nav class="mobile-bar" aria-label="Quick actions">
