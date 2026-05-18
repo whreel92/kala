@@ -263,21 +263,5 @@
   </nav>
 
   <script src="script.js"></script>
-  <script>
-    // Time chip selection
-    document.querySelectorAll('.time-chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        document.querySelectorAll('.time-chip').forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-      });
-    });
-    // Set default date to tomorrow
-    const dateInput = document.getElementById('date');
-    if (dateInput) {
-      const t = new Date();
-      t.setDate(t.getDate() + 1);
-      dateInput.value = t.toISOString().split('T')[0];
-    }
-  </script>
 </body>
 </html>
