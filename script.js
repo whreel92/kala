@@ -457,14 +457,17 @@
     const chapterEls = [];
 
     if (main) {
+      const slugify = (s) => s.toLowerCase().replace(/[^\w]+/g, '-').replace(/^-|-$/g, '');
       const blocks = $$('main section');
       let chapterCount = 0;
       blocks.forEach(sec => {
         if (sec.querySelector('.story-block')) {
           chapterCount++;
-          const id = `chapter-${String(chapterCount).padStart(2, '0')}`;
+          const eyebrow = sec.querySelector('.story-block-text .eyebrow');
+          const label = eyebrow ? eyebrow.textContent.trim() : `Chapter ${chapterCount}`;
+          const id = `chapter-${slugify(label) || String(chapterCount).padStart(2, '0')}`;
           sec.id = id;
-          chapterEls.push({ id, label: `Chapter ${String(chapterCount).padStart(2, '0')}`, el: sec });
+          chapterEls.push({ id, label, el: sec });
         } else if (sec.classList.contains('values')) {
           sec.id = 'chapter-values';
           chapterEls.push({ id: 'chapter-values', label: 'Values', el: sec });
