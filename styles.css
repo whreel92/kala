@@ -59,7 +59,8 @@ body {
   background: var(--white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  /* No overflow-x on body — that breaks position: sticky on the nav.
+     overflow-x: clip lives on <html> further down. */
 }
 img, svg { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
@@ -292,20 +293,64 @@ p { margin: 0 0 1em; }
   position: relative;
   min-height: 92vh;
   display: flex;
-  align-items: flex-end;
-  padding-bottom: clamp(60px, 10vh, 110px);
+  align-items: center;
+  justify-content: center;
+  padding: clamp(40px, 8vh, 90px) 0;
   color: var(--white);
   isolation: isolate;
   overflow: hidden;
+  text-align: center;
 }
 .hero-media {
   position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(160deg, #1d3a6e, #0562AA 60%, #608DC5);
 }
-.hero-media img {
+.hero-media img,
+.hero-media .hero-bg-video {
   width: 100%; height: 100%;
   object-fit: cover; object-position: center;
+  display: block;
+}
+.hero-media img {
   animation: heroZoom 18s ease-out forwards;
+}
+/* Engraving-style illustration overlay (KALA sequence) — three keyframe stills
+   crossfading in a loop on top of the hero. mix-blend-mode: multiply drops the
+   pure-white paper background so only the ink lines + photo elements (KALA bottle,
+   feta, olive, glass, wine) appear stamped on the Queen Anne scene. */
+.hero-illustration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  animation: rise 1.2s var(--ease) both;
+  animation-delay: .5s;
+}
+.hero-ill-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: right top;
+  mix-blend-mode: multiply;
+  opacity: 0;
+  animation: heroIllSlideshow 12s ease-in-out infinite both;
+}
+.ill-frame-1 { animation-delay: 0s; }
+.ill-frame-2 { animation-delay: 4s; }
+.ill-frame-3 { animation-delay: 8s; }
+
+@keyframes heroIllSlideshow {
+  0%    { opacity: 0; }
+  5%    { opacity: 1; }
+  28%   { opacity: 1; }
+  33%   { opacity: 0; }
+  100%  { opacity: 0; }
+}
+
+@media (max-width: 900px) {
+  .hero-illustration { display: none; }
 }
 @keyframes heroZoom {
   from { transform: scale(1.08); }
@@ -313,6 +358,7 @@ p { margin: 0 0 1em; }
 }
 .hero-gradient {
   position: absolute; inset: 0;
+  z-index: 1;
   background:
     /* diagonal wash anchoring the text in the bottom-left */
     linear-gradient(40deg,
@@ -336,13 +382,70 @@ p { margin: 0 0 1em; }
   max-width: 1240px;
   width: 100%;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
-.hero-content > * { animation: rise .9s var(--ease) both; }
-.hero-content .eyebrow { animation-delay: .05s; }
+.hero-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.hero-text > * { animation: rise .9s var(--ease) both; }
+.hero-text .eyebrow { animation-delay: .05s; }
 .hero-title         { animation-delay: .15s; }
 .hero-sub           { animation-delay: .3s; }
 .hero-buttons       { animation-delay: .45s; }
 .hero-meta          { animation-delay: .6s; }
+
+/* Hero video frame (right column) */
+.hero-video-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  max-width: 620px;
+  justify-self: center;
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.22);
+  box-shadow:
+    0 30px 60px -20px rgba(0,0,0,.55),
+    0 8px 24px -8px rgba(0,0,0,.4),
+    inset 0 0 0 1px rgba(255,255,255,.06);
+  animation: rise 1s var(--ease) both;
+  animation-delay: .35s;
+}
+.hero-video-frame::after {
+  /* subtle warm vignette to integrate with the hero */
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,.28) 100%);
+  pointer-events: none;
+}
+.hero-video-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+  display: block;
+}
+
+/* Home hero now uses the illustration overlay instead of the framed video on the right */
+.hero-content { grid-template-columns: 1fr; }
+.hero-video-frame { display: none; }
+
+@media (max-width: 900px) {
+  .hero-content {
+    grid-template-columns: 1fr;
+  }
+}
 
 @keyframes rise {
   from { opacity: 0; transform: translateY(28px); }
@@ -355,11 +458,92 @@ p { margin: 0 0 1em; }
   line-height: .95;
   letter-spacing: -.02em;
   margin: 18px 0 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* (Title circle removed — KALA wordmark now floats freely on the hero) */
+
+@keyframes titleFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+
+/* ====================== Dish marquee — A Taste of Greece ====================== */
+.dish-marquee {
+  position: relative;
+  background: linear-gradient(180deg, var(--blue-wash) 0%, var(--white) 100%);
+  padding: clamp(36px, 5vw, 64px) 0 clamp(40px, 6vw, 72px);
+  border-top: 1px solid var(--cream);
+  border-bottom: 1px solid var(--cream);
+  overflow: hidden;
+}
+.dish-marquee-eyebrow {
+  text-align: center;
+  margin-bottom: clamp(22px, 3vw, 36px);
+}
+.dish-marquee-viewport {
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+}
+.dish-marquee-track {
+  display: flex;
+  gap: clamp(16px, 2vw, 28px);
+  width: max-content;
+  animation: dishMarquee 60s linear infinite;
+}
+.dish-tile {
+  width: clamp(180px, 22vw, 260px);
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .4s var(--ease);
+}
+.dish-tile:hover { transform: translateY(-4px); }
+.dish-tile img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 16px;
+  display: block;
+  box-shadow: 0 14px 32px -16px rgba(34, 37, 46, 0.28);
+  transition: transform .8s var(--ease), box-shadow .4s var(--ease);
+}
+.dish-tile:hover img {
+  transform: scale(1.03);
+  box-shadow: 0 20px 44px -16px rgba(34, 37, 46, 0.36);
+}
+.dish-tile-name {
+  display: block;
+  text-align: center;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(15px, 1.5vw, 19px);
+  font-weight: 500;
+  letter-spacing: -.005em;
+  color: var(--blue-primary);
+}
+
+@keyframes dishMarquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dish-marquee-track {
+    animation-duration: 240s;
+  }
 }
 .title-line {
   display: block;
   font-family: var(--font-wordmark);
-  font-size: clamp(56px, 10vw, 140px);
+  font-size: clamp(80px, 14vw, 200px);
   letter-spacing: .08em;
   font-weight: 600;
   text-shadow: 0 2px 30px rgba(0,0,0,.25);
@@ -370,7 +554,7 @@ p { margin: 0 0 1em; }
   font-size: clamp(38px, 6.4vw, 90px);
   letter-spacing: -.01em;
   color: rgba(255,255,255,.94);
-  margin-top: -.08em;
+  margin-top: -.04em;
 }
 .title-italic .amp {
   color: var(--blue-soft);
@@ -384,7 +568,8 @@ p { margin: 0 0 1em; }
   color: rgba(255,255,255,.86);
   max-width: 560px;
   line-height: 1.65;
-  margin-bottom: 32px;
+  margin: 0 auto 32px;
+  text-align: center;
 }
 
 .hero-buttons {
@@ -392,6 +577,7 @@ p { margin: 0 0 1em; }
   flex-wrap: wrap;
   gap: 14px;
   margin-bottom: 56px;
+  justify-content: center;
 }
 
 .hero-meta {
@@ -1281,6 +1467,46 @@ p { margin: 0 0 1em; }
   border-bottom: 1px solid var(--cream);
   overflow: hidden;
 }
+
+/* Per-page atmospheric backdrop — image + slight overlay for text contrast */
+.page-header.has-bg {
+  background-color: var(--white);
+}
+.page-header.has-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    radial-gradient(ellipse 65% 65% at 50% 18%, rgba(248, 248, 248, 0.55) 0%, rgba(248, 248, 248, 0.18) 55%, transparent 80%),
+    linear-gradient(180deg, rgba(248, 248, 248, 0.30) 0%, rgba(248, 248, 248, 0.12) 45%, rgba(248, 248, 248, 0.65) 100%),
+    var(--page-bg-image, none);
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  pointer-events: none;
+}
+.page-header.has-bg h1,
+.page-header.has-bg .page-sub,
+.page-header.has-bg .eyebrow {
+  text-shadow: 0 1px 18px rgba(255, 255, 255, 0.7);
+}
+.page-header.has-bg p {
+  text-shadow: 0 1px 12px rgba(255, 255, 255, 0.85);
+}
+.page-header.has-bg > .container { position: relative; z-index: 1; }
+.page-header.has-bg::before { z-index: 1; }
+
+.page-header.is-menu         { --page-bg-image: url('public/page-bg-menu.png'); }
+.page-header.is-story        { --page-bg-image: url('public/page-bg-story.png'); }
+.page-header.is-contact      { --page-bg-image: url('public/page-bg-contact.png'); }
+.page-header.is-reservations { --page-bg-image: url('public/page-bg-reservations.png'); }
+.page-header.is-order        { --page-bg-image: url('public/page-bg-order.png'); }
+
+/* Story: shift the dawn-vista image upward so the village + olive foreground sit higher in the frame */
+.page-header.is-story::after {
+  background-position: center, center, center bottom;
+}
 .page-header::before {
   content: '';
   position: absolute;
@@ -1710,7 +1936,7 @@ p { margin: 0 0 1em; }
   background: var(--white);
   border: 1px solid var(--cream);
   border-radius: var(--radius);
-  padding: 38px 30px;
+  overflow: hidden;
   transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
 }
 .value-card:hover {
@@ -1718,6 +1944,23 @@ p { margin: 0 0 1em; }
   border-color: var(--blue-soft);
   box-shadow: var(--shadow-pop);
 }
+.value-card .value-image {
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: var(--cream);
+}
+.value-card .value-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 1s var(--ease);
+}
+.value-card:hover .value-image img { transform: scale(1.04); }
+.value-card > h3,
+.value-card > p { padding-left: 30px; padding-right: 30px; }
+.value-card > h3 { margin-top: 26px; }
+.value-card > p:last-child { padding-bottom: 30px; }
 .value-num {
   font-family: var(--font-wordmark);
   font-size: 12px;
@@ -1794,7 +2037,10 @@ p { margin: 0 0 1em; }
   background: var(--white);
   border: 1px solid var(--cream);
   border-radius: var(--radius);
-  padding: 38px 30px 34px;
+  overflow: hidden;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -1827,6 +2073,31 @@ p { margin: 0 0 1em; }
   margin-bottom: 4px;
 }
 .order-card-icon svg { width: 30px; height: 30px; }
+.order-card-image {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: var(--cream);
+}
+.order-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 1s var(--ease);
+}
+.order-card:hover .order-card-image img { transform: scale(1.04); }
+.order-card-body {
+  padding: 28px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1;
+}
+.order-card-body .meta { margin-top: 0; }
+.order-card-body h3 { margin: 0; }
+.order-card-body p { margin: 0 0 6px; flex: 1; }
 .order-card h3 {
   font-family: var(--font-display);
   font-size: 30px;
@@ -2454,3 +2725,140 @@ body.page-fading { opacity: 0; }
 
 /* ----- Hero parallax wrapper baseline ----- */
 .hero-media { will-change: transform; }
+
+/* ====================================================================
+   Responsive tuning — consolidated coverage for ALL devices
+   Targets the recent hero centering/circle, dish marquee, order cards,
+   page-header backdrops, value cards, and site-wide safety rails.
+   ==================================================================== */
+
+/* --- Site-wide safety rails (all viewports) ---
+   overflow-x: clip on <html> (not body!) prevents horizontal scroll
+   without breaking position: sticky on the navbar. */
+html { overflow-x: clip; }
+img, video, svg { max-width: 100%; height: auto; }
+.hero-bg-video,
+.hero-media img,
+.hero-ill-frame,
+.hero-illustration img,
+.page-header.has-bg::after,
+.value-card .value-image img,
+.order-card-image img,
+.dish-tile img,
+.menu-item-card .card-image img,
+.story-block-image img,
+.hero-video-frame video { height: 100%; }
+
+/* --- Mid breakpoint (tablet, ≤880px) --- */
+@media (max-width: 880px) {
+  .hero {
+    min-height: 78vh;
+    padding: clamp(28px, 6vh, 64px) 0;
+  }
+  .hero-title { margin: 14px 0 18px; }
+  .hero-sub { font-size: 15px; margin-bottom: 28px; }
+  .hero-buttons { margin-bottom: 40px; gap: 12px; }
+  .hero-buttons .btn-lg { padding: 14px 22px; font-size: 14px; }
+
+  .dish-marquee {
+    padding: clamp(28px, 5vw, 48px) 0 clamp(32px, 5vw, 52px);
+  }
+  .dish-marquee-eyebrow { margin-bottom: 18px; }
+  .dish-marquee-track { animation-duration: 50s; }
+
+  .page-header.has-bg { background-attachment: scroll; }
+}
+
+/* --- Phone breakpoint (≤640px) --- */
+@media (max-width: 640px) {
+  .hero { min-height: 72vh; }
+
+  /* Hero title circle scales down further on phones */
+  .hero-title-circle {
+    width: clamp(220px, 64vw, 280px);
+    height: clamp(220px, 64vw, 280px);
+    padding: 18px;
+  }
+  .hero-title-circle .title-line { font-size: 44px; }
+  .hero-title-circle .title-line.title-italic { font-size: 22px; }
+
+  /* Meta pill wraps gracefully */
+  .hero-meta {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 20px;
+    padding: 12px 18px;
+    text-align: center;
+  }
+  .hero-meta .meta-divider { display: none; }
+
+  /* Buttons stack full-width on tiny screens */
+  .hero-buttons { width: 100%; flex-direction: column; align-items: stretch; }
+  .hero-buttons .btn { justify-content: center; }
+
+  /* Dish marquee tighter */
+  .dish-tile { width: clamp(150px, 42vw, 180px); }
+  .dish-tile-name { font-size: 14px; }
+
+  /* Page header background — softer on mobile so text stays legible */
+  .page-header.has-bg::after {
+    background-image:
+      radial-gradient(ellipse 75% 70% at 50% 18%, rgba(248, 248, 248, 0.70) 0%, rgba(248, 248, 248, 0.35) 55%, rgba(248, 248, 248, 0.15) 80%),
+      linear-gradient(180deg, rgba(248, 248, 248, 0.45) 0%, rgba(248, 248, 248, 0.25) 45%, rgba(248, 248, 248, 0.75) 100%),
+      var(--page-bg-image, none);
+  }
+
+  /* Order cards tighter on mobile */
+  .order-card-body { padding: 22px 22px 26px; }
+  .order-card-body h3 { font-size: 24px; }
+  .order-card-image { aspect-ratio: 16 / 10; }
+
+  /* Value cards tighter */
+  .value-card > h3,
+  .value-card > p { padding-left: 22px; padding-right: 22px; }
+  .value-card > h3 { font-size: 24px; margin-top: 20px; }
+  .value-card > p:last-child { padding-bottom: 24px; }
+  .value-card .value-image { aspect-ratio: 16 / 10; }
+}
+
+/* --- Small phone breakpoint (≤420px) --- */
+@media (max-width: 420px) {
+  .hero { min-height: 68vh; padding: 24px 0 48px; }
+
+  .hero-title-circle {
+    width: clamp(196px, 70vw, 240px);
+    height: clamp(196px, 70vw, 240px);
+    padding: 14px;
+  }
+  .hero-title-circle .title-line { font-size: 38px; letter-spacing: .06em; }
+  .hero-title-circle .title-line.title-italic { font-size: 20px; }
+
+  .hero-sub { font-size: 14.5px; line-height: 1.6; }
+
+  .dish-tile { width: 140px; }
+  .dish-marquee-track { gap: 12px; }
+
+  .page-header { padding: 70px 0 50px; }
+  .page-header h1 { font-size: clamp(38px, 12vw, 58px); }
+  .page-header .page-sub { font-size: clamp(18px, 5vw, 24px); }
+  .page-header p { font-size: 15px; }
+}
+
+/* --- Very small phones (≤360px) — last-resort safety --- */
+@media (max-width: 360px) {
+  .hero-title-circle {
+    width: 188px;
+    height: 188px;
+    padding: 12px;
+  }
+  .hero-title-circle .title-line { font-size: 34px; }
+  .hero-title-circle .title-line.title-italic { font-size: 18px; }
+  .nav-inner { padding-left: 12px; padding-right: 12px; }
+}
+
+/* --- Honor reduced-motion across new animations --- */
+@media (prefers-reduced-motion: reduce) {
+  .hero-title-circle { animation: none; }
+  .hero-ill-frame { animation: none; opacity: 1; }
+  .ill-frame-2, .ill-frame-3 { display: none; }
+}

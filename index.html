@@ -71,43 +71,70 @@
   <main id="top">
   <section class="hero">
     <div class="hero-media">
-      <img
-        src="https://images.unsplash.com/photo-1530841377377-3ff06c0ca713?auto=format&fit=crop&w=2400&q=85"
-        alt="A bright Mediterranean village with white stucco buildings and Greek blue domes."
-        fetchpriority="high"
-      />
+      <video
+        class="hero-bg-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        poster="public/hero-queen-anne-greek-v3.png"
+        aria-label="KALA — Greek coastal Mediterranean atmosphere"
+      >
+        <source src="public/video/hero_video.mp4" type="video/mp4" />
+      </video>
       <div class="hero-gradient"></div>
+      <div class="hero-illustration" aria-hidden="true">
+        <img src="public/hero-overlay-kf1.png" alt="" class="hero-ill-frame ill-frame-1" loading="eager" />
+        <img src="public/hero-overlay-kf2.png" alt="" class="hero-ill-frame ill-frame-2" loading="eager" />
+        <img src="public/hero-overlay-kf3.png" alt="" class="hero-ill-frame ill-frame-3" loading="eager" />
+      </div>
     </div>
 
     <div class="hero-content container">
-      <span class="eyebrow eyebrow-light">Coastal · Mediterranean · Family-run</span>
-      <h1 class="hero-title">
-        <span class="title-line">KALA</span>
-        <span class="title-line title-italic">Greek <span class="amp">&amp;</span> More</span>
-      </h1>
-      <p class="hero-sub">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque
-        magna. Praesent ut sollicitudin ligula, vitae laoreet justo. Curabitur dapibus laoreet
-        eros.
-      </p>
-      <div class="hero-buttons">
-        <a href="order.html" class="btn btn-primary btn-lg">
-          Order Online
-          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="reservations.html" class="btn btn-ghost btn-lg">Make a Reservation</a>
+      <div class="hero-text">
+        <span class="eyebrow eyebrow-light">Coastal · Mediterranean · Family-run</span>
+        <h1 class="hero-title">
+          <span class="title-line">KALA</span>
+          <span class="title-line title-italic">Greek <span class="amp">&amp;</span> More</span>
+        </h1>
+        <p class="hero-sub">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque
+          magna. Praesent ut sollicitudin ligula, vitae laoreet justo. Curabitur dapibus laoreet
+          eros.
+        </p>
+        <div class="hero-buttons">
+          <a href="order.html" class="btn btn-primary btn-lg">
+            Order Online
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="reservations.html" class="btn btn-ghost btn-lg">Make a Reservation</a>
+        </div>
+
+        <div class="hero-meta">
+          <div class="meta-item">
+            <span class="meta-label">Open today</span>
+            <span class="meta-value">11:00a – 10:00p</span>
+          </div>
+          <span class="meta-divider"></span>
+          <div class="meta-item">
+            <span class="meta-label">Find us</span>
+            <span class="meta-value">1500 Queen Anne Ave N</span>
+          </div>
+        </div>
       </div>
 
-      <div class="hero-meta">
-        <div class="meta-item">
-          <span class="meta-label">Open today</span>
-          <span class="meta-value">11:00a – 10:00p</span>
-        </div>
-        <span class="meta-divider"></span>
-        <div class="meta-item">
-          <span class="meta-label">Find us</span>
-          <span class="meta-value">1500 Queen Anne Ave N</span>
-        </div>
+      <div class="hero-video-frame" aria-hidden="true">
+        <video
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          poster="public/video/hero_video_poster.jpg"
+        >
+          <source src="public/video/hero_video.mp4" type="video/mp4" />
+        </video>
       </div>
     </div>
 
@@ -118,6 +145,82 @@
         <circle cx="7" cy="7" r="2" fill="currentColor"/>
       </svg>
     </a>
+  </section>
+
+  <!-- A Taste of Greece — auto-scrolling dish marquee -->
+  <section class="dish-marquee" aria-label="A taste of Greek dishes from KALA">
+    <div class="dish-marquee-eyebrow">
+      <span class="eyebrow">A taste of Greece</span>
+    </div>
+    <div class="dish-marquee-viewport">
+      <div class="dish-marquee-track">
+        <a href="menu.html#gyros" class="dish-tile">
+          <img src="public/e04b7c58-8d54-487c-9f41-5f660e52bc91.png" alt="Classic pork gyro wrapped in warm pita with tzatziki, tomato, onion, and fries." loading="lazy" />
+          <span class="dish-tile-name">Gyros</span>
+        </a>
+        <a href="menu.html#souvlaki" class="dish-tile">
+          <img src="public/e35b56c1-78a3-4f00-bc59-fef11d51ab97.png" alt="Grilled chicken souvlaki skewers with lemon and oregano." loading="lazy" />
+          <span class="dish-tile-name">Chicken Souvlaki</span>
+        </a>
+        <a href="menu.html#salads" class="dish-tile">
+          <img src="public/b428f5ae-26b3-47b3-944d-cc950b096d0f.png" alt="Horiatiki — traditional Greek salad with tomato, cucumber, feta, and olives." loading="lazy" />
+          <span class="dish-tile-name">Horiatiki</span>
+        </a>
+        <a href="menu.html#dips" class="dish-tile">
+          <img src="public/c243bbfd-cba9-4c8b-b273-3abc24c8f935.png" alt="Tzatziki — creamy yogurt and cucumber dip with herbs." loading="lazy" />
+          <span class="dish-tile-name">Tzatziki</span>
+        </a>
+        <a href="menu.html#seafood" class="dish-tile">
+          <img src="public/branzino.png" alt="Whole grilled branzino with lemon and herbs." loading="lazy" />
+          <span class="dish-tile-name">Whole Branzino</span>
+        </a>
+        <a href="menu.html#seafood" class="dish-tile">
+          <img src="public/grilled-octopus.png" alt="Grilled octopus with lemon, olive oil, and fresh herbs." loading="lazy" />
+          <span class="dish-tile-name">Grilled Octopus</span>
+        </a>
+        <a href="menu.html#souvlaki" class="dish-tile">
+          <img src="public/f654d18d-85e3-4c10-ae90-00769deaa21e.png" alt="Grilled lamb skewers with rosemary and lemon." loading="lazy" />
+          <span class="dish-tile-name">Lamb Skewers</span>
+        </a>
+        <a href="menu.html#salads" class="dish-tile">
+          <img src="public/6b99cc72-6194-477d-81ca-f8102c1d044d.png" alt="Watermelon and feta salad with mint and olive oil." loading="lazy" />
+          <span class="dish-tile-name">Watermelon &amp; Feta</span>
+        </a>
+        <!-- duplicate set for seamless loop -->
+        <a href="menu.html#gyros" class="dish-tile" aria-hidden="true" tabindex="-1">
+          <img src="public/e04b7c58-8d54-487c-9f41-5f660e52bc91.png" alt="" loading="lazy" />
+          <span class="dish-tile-name">Gyros</span>
+        </a>
+        <a href="menu.html#souvlaki" class="dish-tile" aria-hidden="true" tabindex="-1">
+          <img src="public/e35b56c1-78a3-4f00-bc59-fef11d51ab97.png" alt="" loading="lazy" />
+          <span class="dish-tile-name">Chicken Souvlaki</span>
+        </a>
+        <a href="menu.html#salads" class="dish-tile" aria-hidden="true" tabindex="-1">
+          <img src="public/b428f5ae-26b3-47b3-944d-cc950b096d0f.png" alt="" loading="lazy" />
+          <span class="dish-tile-name">Horiatiki</span>
+        </a>
+        <a href="menu.html#dips" class="dish-tile" aria-hidden="true" tabindex="-1">
+          <img src="public/c243bbfd-cba9-4c8b-b273-3abc24c8f935.png" alt="" loading="lazy" />
+          <span class="dish-tile-name">Tzatziki</span>
+        </a>
+        <a href="menu.html#seafood" class="dish-tile" aria-hidden="true" tabindex="-1">
+          <img src="public/branzino.png" alt="" loading="lazy" />
+          <span class="dish-tile-name">Whole Branzino</span>
+        </a>
+        <a href="menu.html#seafood" class="dish-tile" aria-hidden="true" tabindex="-1">
+          <img src="public/grilled-octopus.png" alt="" loading="lazy" />
+          <span class="dish-tile-name">Grilled Octopus</span>
+        </a>
+        <a href="menu.html#souvlaki" class="dish-tile" aria-hidden="true" tabindex="-1">
+          <img src="public/f654d18d-85e3-4c10-ae90-00769deaa21e.png" alt="" loading="lazy" />
+          <span class="dish-tile-name">Lamb Skewers</span>
+        </a>
+        <a href="menu.html#salads" class="dish-tile" aria-hidden="true" tabindex="-1">
+          <img src="public/6b99cc72-6194-477d-81ca-f8102c1d044d.png" alt="" loading="lazy" />
+          <span class="dish-tile-name">Watermelon &amp; Feta</span>
+        </a>
+      </div>
+    </div>
   </section>
 
   <!-- Greek Key Divider -->

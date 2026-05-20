@@ -34,3 +34,12 @@ desktop.ini
 
 # Claude Code session data
 .claude/
+.agents/
+.frames/
+.ill_frames/
+.seq3_frames/
+skills-lock.json
+
+# Intermediate generation artifacts (stitched into final assets)
+ill_a.mp4
+ill_b.mp4
