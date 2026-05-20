@@ -1401,7 +1401,8 @@ p { margin: 0 0 1em; }
     gap: 10px;
   }
   .meta-divider { display: none; }
-  .hero-meta { flex-direction: column; align-items: flex-start; padding: 14px 20px; gap: 12px; }
+  .hero-meta { flex-direction: column; align-items: center; padding: 14px 20px; gap: 12px; text-align: center; }
+  .hero-meta .meta-item { align-items: center; text-align: center; }
   .hero { min-height: 88vh; padding-bottom: 80px; }
   .page-header { padding: clamp(70px, 14vw, 110px) 0 clamp(50px, 9vw, 80px); }
 }
