@@ -101,27 +101,27 @@ const isPickup = fulfillment === 'pickup';
                 <div class="pos-cko-slots" data-pos-cko-slots></div>
               </fieldset>
 
-              <!-- Customer details -->
+              <!-- Customer details — one field per line. Email is optional. -->
               <fieldset class="pos-cko-fs">
                 <legend class="pos-cko-legend">Your details</legend>
                 <label class="pos-cko-field">
                   <span>Name</span>
                   <input type="text" name="name" autocomplete="name" required />
                 </label>
-                <div class="pos-cko-row">
-                  <label class="pos-cko-field">
-                    <span>Phone</span>
-                    <input type="tel" name="phone" autocomplete="tel" required />
-                  </label>
-                  <label class="pos-cko-field">
-                    <span>Email</span>
-                    <input type="email" name="email" autocomplete="email" required />
-                  </label>
-                </div>
-                <label class="pos-cko-field" data-pos-cko-address-field hidden>
-                  <span>Delivery address</span>
-                  <input type="text" name="address" autocomplete="street-address" />
+                <label class="pos-cko-field">
+                  <span>Phone</span>
+                  <input type="tel" name="phone" autocomplete="tel" required />
                 </label>
+                <label class="pos-cko-field">
+                  <span>Email <em class="pos-cko-optional">(optional)</em></span>
+                  <input type="email" name="email" autocomplete="email" />
+                </label>
+                {fulfillment === 'delivery' && (
+                  <label class="pos-cko-field" data-pos-cko-address-field>
+                    <span>Delivery address</span>
+                    <input type="text" name="address" autocomplete="street-address" required />
+                  </label>
+                )}
               </fieldset>
 
               <!-- Demo-mode line + place order -->

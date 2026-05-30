@@ -379,7 +379,6 @@
   const checkoutForm     = $('[data-pos-checkout-form]');
   const slotsContainer   = $('[data-pos-cko-slots]');
   const timeLegend       = $('[data-pos-cko-time-legend]');
-  const addressField     = $('[data-pos-cko-address-field]');
   const ckoTotalEl       = $('[data-pos-cko-total]');
 
   // Time-slot generation: ASAP + next 4 15-min slots
@@ -424,12 +423,7 @@
     checkoutOpenBtn.classList.add('is-open');
     // Fulfillment-specific
     timeLegend.textContent = fulfillment === 'pickup' ? 'Pickup time' : 'Delivery time';
-    addressField.hidden = fulfillment !== 'delivery';
-    if (fulfillment === 'delivery') {
-      addressField.querySelector('input').required = true;
-    } else {
-      addressField.querySelector('input').required = false;
-    }
+    // The address field only exists in the delivery template — no toggle needed.
     renderSlots();
     ckoTotalEl.textContent = '$' + computeSubtotal();
     // Scroll the form into view so the user can see what just opened

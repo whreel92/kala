@@ -3619,6 +3619,15 @@ img, video, svg { max-width: 100%; height: auto; }
   color: var(--slate);
   letter-spacing: .02em;
 }
+.pos-cko-optional {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11.5px;
+  color: var(--stone-dark);
+  letter-spacing: .01em;
+  margin-left: 4px;
+  text-transform: none;
+}
 .pos-cko-field input {
   font-family: var(--font-body);
   font-size: 15px;
