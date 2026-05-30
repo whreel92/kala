@@ -92,7 +92,169 @@
       .replace(/'/g, '&#39;');
   }
 
-  /* Subsequent feature blocks (detail panel, cart, checkout, confirmation)
-     are added in following tasks. */
+  /* ─── Cart state (in-memory only for now; localStorage in Task 6) ─── */
+
+  let cart = [];    // [{ lineId, itemId, catId, name, image, basePrice, modifiers: [{groupId, optionId, label, delta}], qty, lineTotal }]
+
+  const newLineId = () => 'l-' + Math.random().toString(36).slice(2, 9);
+
+  /* ─── Detail panel ─── */
+
+  const detail        = $('[data-pos-detail]');
+  const detailImg     = $('[data-pos-detail-img]');
+  const detailName    = $('[data-pos-detail-name]');
+  const detailBase    = $('[data-pos-detail-base-price]');
+  const detailDesc    = $('[data-pos-detail-desc]');
+  const detailMods    = $('[data-pos-detail-mods]');
+  const detailQtyEl   = $('[data-pos-detail-qty]');
+  const detailQtyMinus= $('[data-pos-detail-qty-minus]');
+  const detailQtyPlus = $('[data-pos-detail-qty-plus]');
+  const detailAdd     = $('[data-pos-detail-add]');
+  const detailTotalEl = $('[data-pos-detail-total]');
+
+  let detailState = null;
+  // { item, selections: { [groupId]: optionId }, qty }
+
+  const findItem = (catId, itemId) => {
+    const cat = menu.categories.find(c => c.id === catId);
+    if (!cat) return null;
+    return cat.items.find(i => i.id === itemId) || null;
+  };
+
+  const computeDetailTotal = () => {
+    if (!detailState) return 0;
+    const { item, selections, qty } = detailState;
+    let unit = item.price;
+    item.modifiers.forEach(group => {
+      const selOptId = selections[group.id];
+      if (!selOptId) return;
+      const opt = group.options.find(o => o.id === selOptId);
+      if (opt) unit += opt.delta;
+    });
+    return unit * qty;
+  };
+
+  const renderDetail = () => {
+    if (!detailState) return;
+    const { item, selections, qty } = detailState;
+
+    detailImg.src = item.image;
+    detailImg.alt = item.name;
+    detailName.textContent = item.name;
+    detailBase.textContent = '$' + item.price;
+    detailDesc.textContent = item.description;
+    detailQtyEl.textContent = String(qty);
+    detailTotalEl.textContent = '$' + computeDetailTotal();
+
+    // Modifier groups
+    detailMods.innerHTML = item.modifiers.map(group => `
+      <div class="pos-mod-group" data-group-id="${group.id}">
+        <div class="pos-mod-group-head">
+          <span class="pos-mod-group-name">${escapeHtml(group.name)}</span>
+          <span class="pos-mod-group-req">${group.required ? 'Required' : 'Optional'}</span>
+        </div>
+        <div class="pos-mod-options">
+          ${group.options.map(opt => {
+            const isSel = selections[group.id] === opt.id;
+            const deltaStr = opt.delta > 0 ? `<span class="pos-mod-delta">+$${opt.delta}</span>` : '';
+            return `<button type="button" class="pos-mod-pill ${isSel ? 'is-selected' : ''}" data-opt-id="${opt.id}">${escapeHtml(opt.label)}${deltaStr}</button>`;
+          }).join('')}
+        </div>
+      </div>
+    `).join('');
+
+    // Wire pill clicks
+    detailMods.querySelectorAll('.pos-mod-group').forEach(groupEl => {
+      const gid = groupEl.dataset.groupId;
+      groupEl.querySelectorAll('.pos-mod-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          detailState.selections[gid] = pill.dataset.optId;
+          renderDetail();
+        });
+      });
+    });
+  };
+
+  const openDetail = (catId, itemId) => {
+    const item = findItem(catId, itemId);
+    if (!item) return;
+
+    // Default selections: first option of each REQUIRED group; nothing for optional
+    const selections = {};
+    item.modifiers.forEach(g => {
+      if (g.required && g.options.length) selections[g.id] = g.options[0].id;
+    });
+
+    detailState = { item, selections, qty: 1 };
+    detail.hidden = false;
+    // Force a reflow so the transition runs
+    requestAnimationFrame(() => detail.classList.add('is-open'));
+    renderDetail();
+    // Focus the close button so keyboard users can dismiss
+    setTimeout(() => $('[data-pos-detail-close]', detail)?.focus(), 100);
+  };
+
+  const closeDetail = () => {
+    detail.classList.remove('is-open');
+    setTimeout(() => {
+      detail.hidden = true;
+      detailState = null;
+    }, 300);
+  };
+
+  // Open on item card click
+  menuContainer.addEventListener('click', (e) => {
+    const card = e.target.closest('.pos-item-card');
+    if (!card) return;
+    openDetail(card.dataset.catId, card.dataset.itemId);
+  });
+
+  // Close on backdrop, close button, Esc
+  $$('[data-pos-detail-close]').forEach(el => el.addEventListener('click', closeDetail));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !detail.hidden) closeDetail();
+  });
+
+  // Quantity stepper
+  detailQtyMinus.addEventListener('click', () => {
+    if (!detailState) return;
+    if (detailState.qty <= 1) return;
+    detailState.qty--;
+    renderDetail();
+  });
+  detailQtyPlus.addEventListener('click', () => {
+    if (!detailState) return;
+    detailState.qty++;
+    renderDetail();
+  });
+
+  // Add to cart — stores the line and closes the panel.
+  // Cart sidebar render is wired in Task 6.
+  detailAdd.addEventListener('click', () => {
+    if (!detailState) return;
+    const { item, selections, qty } = detailState;
+    const modifiers = item.modifiers.map(g => {
+      const selOptId = selections[g.id];
+      if (!selOptId) return null;
+      const opt = g.options.find(o => o.id === selOptId);
+      if (!opt) return null;
+      return { groupId: g.id, optionId: opt.id, label: opt.label, delta: opt.delta };
+    }).filter(Boolean);
+
+    const lineTotal = computeDetailTotal();
+    cart.push({
+      lineId: newLineId(),
+      itemId: item.id,
+      catId: detailState.item.id,
+      name: item.name,
+      image: item.image,
+      basePrice: item.price,
+      modifiers,
+      qty,
+      lineTotal
+    });
+
+    closeDetail();
+  });
 
 })();

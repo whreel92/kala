@@ -76,7 +76,32 @@ const isPickup = fulfillment === 'pickup';
 
   <!-- Item detail panel (hidden) -->
   <div class="pos-detail" data-pos-detail hidden role="dialog" aria-modal="true" aria-label="Customize item">
-    <!-- Filled in by Task 5 -->
+    <div class="pos-detail-backdrop" data-pos-detail-close></div>
+    <div class="pos-detail-panel" role="document">
+      <button type="button" class="pos-detail-close" data-pos-detail-close aria-label="Close">×</button>
+      <div class="pos-detail-image">
+        <img data-pos-detail-img src="" alt="" />
+      </div>
+      <div class="pos-detail-body">
+        <div class="pos-detail-head">
+          <h2 data-pos-detail-name></h2>
+          <span class="pos-detail-base-price" data-pos-detail-base-price></span>
+        </div>
+        <p class="pos-detail-desc" data-pos-detail-desc></p>
+        <div data-pos-detail-mods></div>
+        <div class="pos-detail-qty">
+          <span class="pos-detail-qty-label">Quantity</span>
+          <div class="pos-detail-qty-stepper">
+            <button type="button" class="pos-qty-btn" data-pos-detail-qty-minus aria-label="Decrease quantity">−</button>
+            <span class="pos-qty-value" data-pos-detail-qty>1</span>
+            <button type="button" class="pos-qty-btn" data-pos-detail-qty-plus aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary btn-lg pos-detail-add" data-pos-detail-add>
+          Add to cart · <span data-pos-detail-total>$0</span>
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Confirmation screen (hidden) -->
