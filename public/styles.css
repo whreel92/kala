@@ -2913,6 +2913,19 @@ img, video, svg { max-width: 100%; height: auto; }
 }
 .olive-tracker.is-active { opacity: 1; }
 
+/* Bounce-on-arrival: a small drop-and-settle motion overlaid on the
+   tracker's translated position. Triggered by adding .is-landed via JS. */
+.olive-tracker.is-landed .olive-falling {
+  animation: oliveBounce .42s cubic-bezier(.55, .06, .68, .19) 1;
+}
+@keyframes oliveBounce {
+  0%   { transform: translateY(0); }
+  35%  { transform: translateY(8px); }
+  60%  { transform: translateY(-3px); }
+  85%  { transform: translateY(2px); }
+  100% { transform: translateY(0); }
+}
+
 .olive-falling {
   width: clamp(36px, 4vw, 56px);
   height: auto;

@@ -88,6 +88,15 @@
         const inZone = y > zoneTop - window.innerHeight * 0.05 && y < zoneBottom + 100;
         tracker.classList.toggle('is-active', inZone);
 
+        // Bounce-on-arrival: add .is-landed when progress first crosses .95;
+        // remove it when progress drops back below .92, so re-scrolling up and
+        // back down re-fires the bounce. Hysteresis prevents flicker.
+        if (progress >= 0.95) {
+          tracker.classList.add('is-landed');
+        } else if (progress < 0.92) {
+          tracker.classList.remove('is-landed');
+        }
+
         // Hide the static landed copy until the falling olive has finished,
         // so we don't see two olives at once.
         landedOlive.style.opacity = progress >= 1 ? '1' : '0';
