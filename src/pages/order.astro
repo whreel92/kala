@@ -1,0 +1,130 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base
+  title="Order Online — KALA Greek and More"
+  description="Order online from KALA — Pickup, delivery, and catering across the coast."
+  current="/order"
+>
+
+  <!-- Page header -->
+  <section class="page-header has-bg is-order">
+    <div class="container">
+      <h1>ORDER ONLINE</h1>
+      <span class="page-sub">Pickup, delivery, or catering</span>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium nisi
+        tincidunt eu. Donec euismod tempor lectus, vivamus sit amet libero.
+      </p>
+    </div>
+  </section>
+
+  <!-- Greek Key Divider -->
+  <div class="meander-divider" aria-hidden="true"></div>
+
+  <!-- Order options -->
+  <section class="order-options">
+    <div class="container">
+      <div class="order-options-grid">
+
+        <!-- Pickup -->
+        <article class="order-card">
+          <div class="order-card-image">
+            <img src="/public/order_pickup.png" alt="A brown kraft-paper takeaway parcel tied with raffia twine and a sprig of olive branch, resting on a wooden counter beside a painted blue-and-white ceramic dish of Kalamata olives and a folded blue-striped linen, with a customer's hand reaching to lift it." loading="lazy" />
+          </div>
+          <div class="order-card-body">
+            <span class="meta">Ready in 15–25 min</span>
+            <h3>Pickup</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis
+              pellentesque magna — pick up at our harbor location.
+            </p>
+            <a href="#" class="btn btn-primary btn-sm">
+              Start Pickup Order
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Delivery -->
+        <article class="order-card">
+          <div class="order-card-image">
+            <img src="/public/order_delivery.png" alt="A woven basket of brown kraft-paper takeaway parcels with a glass cruet of olive oil and a sprig of olive branch on a sun-warmed white stucco doorstep, beside a weathered cobalt-blue wooden door with pink bougainvillea spilling above and a painted blue-and-white ceramic planter of fresh herbs." loading="lazy" />
+          </div>
+          <div class="order-card-body">
+            <span class="meta">Through partner platforms</span>
+            <h3>Delivery</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut
+              sollicitudin ligula — door-to-door across the coast.
+            </p>
+            <a href="#" class="btn btn-primary btn-sm">
+              Choose Platform
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Catering -->
+        <article class="order-card">
+          <div class="order-card-image">
+            <img src="/public/order_catering.png" alt="An abundant Greek catering spread on a wooden table dressed with a blue-and-white striped linen — a horiatiki salad in a painted blue-and-white ceramic bowl, hummus, grilled pita, souvlaki skewers, Kalamata olives, halved roast lemon, olive oil cruet, olive branches, and lit candles in painted ceramic holders." loading="lazy" />
+          </div>
+          <div class="order-card-body">
+            <span class="meta">48 hours notice</span>
+            <h3>Catering</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod
+              tempor lectus — events, offices, and gatherings.
+            </p>
+            <a href="contact.html" class="btn btn-primary btn-sm">
+              Plan an Event
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="steps">
+    <div class="container">
+      <header class="section-header" style="text-align: center; max-width: 620px; margin: 0 auto;">
+        <span class="eyebrow">How it works</span>
+        <h2 class="section-title">Three steps, <em>one good meal</em></h2>
+        <p class="section-sub" style="margin: 0 auto;">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet
+          libero in lacus.
+        </p>
+      </header>
+
+      <div class="steps-grid">
+        <article class="step">
+          <span class="step-num">01</span>
+          <h3>Build your order</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Choose from the full menu.</p>
+        </article>
+        <article class="step">
+          <span class="step-num">02</span>
+          <h3>Pick a time</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Confirm pickup or delivery.</p>
+        </article>
+        <article class="step">
+          <span class="step-num">03</span>
+          <h3>Pay &amp; eat</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Secure checkout, then enjoy.</p>
+        </article>
+      </div>
+
+      <div style="text-align: center; margin-top: clamp(32px, 5vw, 50px);">
+        <a href="menu.html" class="btn btn-outline btn-lg">
+          Browse the Full Menu
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</Base>
