@@ -267,6 +267,18 @@ p { margin: 0 0 1em; }
   color: var(--blue-primary);
   border-color: var(--white);
 }
+/* On the home hero (light backdrop) the ghost button needs a brand-blue
+   outline + label to be legible. */
+.hero .btn-ghost {
+  background: rgba(255, 255, 255, .45);
+  color: var(--blue-primary);
+  border-color: rgba(25, 75, 158, .35);
+}
+.hero .btn-ghost:hover {
+  background: var(--white);
+  color: var(--blue-primary);
+  border-color: var(--blue-primary);
+}
 
 /* ===================== Eyebrow ==================== */
 .eyebrow {
@@ -278,6 +290,9 @@ p { margin: 0 0 1em; }
   color: var(--blue-primary);
 }
 .eyebrow-light { color: rgba(255,255,255,.85); }
+/* On the home page hero the eyebrow sits on the misty light-blue
+   backdrop — switch to brand blue for legibility and brand cohesion. */
+.hero .eyebrow-light { color: var(--blue-primary); opacity: .82; }
 .eyebrow::before {
   content: '';
   display: inline-block;
@@ -308,8 +323,37 @@ p { margin: 0 0 1em; }
   background: linear-gradient(160deg, #1d3a6e, #0562AA 60%, #608DC5);
   transition: background 1s var(--ease);
 }
+/* After the video fades, the hero backdrop becomes a layered, soft
+   coastal-sky palette: a faint warm spotlight behind the wordmark, a
+   deeper navy wash hugging the corners, all over a misty base gradient. */
 .hero.is-revealed .hero-media {
-  background: linear-gradient(160deg, #E2EAF3 0%, #C5D5E6 50%, #9BB4CD 100%);
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 38%,
+      rgba(255, 255, 255, .55) 0%,
+      rgba(255, 255, 255, 0) 70%),
+    radial-gradient(ellipse 90% 80% at 50% 110%,
+      rgba(25, 75, 158, .18) 0%,
+      rgba(25, 75, 158, 0) 65%),
+    linear-gradient(180deg, #D5E1EE 0%, #E6EEF6 38%, #DCE6F1 72%, #C7D6E5 100%);
+}
+/* Hairline of brand blue near the top of the hero — quiet ornament that
+   anchors the page to the brand without shouting. */
+.hero.is-revealed::before {
+  content: '';
+  position: absolute;
+  top: clamp(36px, 6vh, 64px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 1px;
+  background: linear-gradient(90deg,
+    rgba(25, 75, 158, 0),
+    rgba(25, 75, 158, .55) 50%,
+    rgba(25, 75, 158, 0));
+  opacity: 0;
+  animation: kalaRiseIn .8s var(--ease) both;
+  animation-delay: .05s;
+  z-index: 1;
 }
 .hero-media img,
 .hero-media .hero-bg-video {
@@ -396,11 +440,6 @@ p { margin: 0 0 1em; }
   text-align: center;
   max-width: 760px;
   margin: 0 auto;
-  /* Soft halo so the copy stays legible on bright video frames now that
-     the gradient overlay has been removed. */
-  text-shadow:
-    0 2px 18px rgba(20, 22, 30, .55),
-    0 1px 3px rgba(20, 22, 30, .55);
 }
 /* Hide hero copy until the cinematic intro video has played through. The
    JS in index.astro adds .is-revealed to .hero on the video's `ended`
@@ -560,35 +599,44 @@ p { margin: 0 0 1em; }
   display: block;
   font-family: var(--font-wordmark);
   font-size: clamp(80px, 14vw, 200px);
-  letter-spacing: .08em;
+  letter-spacing: .06em;
   font-weight: 600;
   color: var(--blue-primary);
+  /* Quiet, paper-like depth: a hair of highlight on top, a soft brand
+     shadow underneath. No competing white halo. */
   text-shadow:
-    0 0 28px rgba(255, 255, 255, .55),
-    0 2px 30px rgba(0, 0, 0, .35);
+    0 1px 0 rgba(255, 255, 255, .35),
+    0 10px 36px rgba(25, 75, 158, .18);
 }
 .title-italic {
   font-style: italic;
   font-weight: 400;
   font-size: clamp(38px, 6.4vw, 90px);
-  letter-spacing: -.01em;
-  color: rgba(255,255,255,.94);
+  letter-spacing: -.005em;
+  color: #FFFFFF;
   margin-top: -.04em;
+  /* Soft drop so white stays readable on the misty-blue backdrop */
+  text-shadow:
+    0 1px 1px rgba(20, 22, 30, .14),
+    0 6px 22px rgba(20, 22, 30, .22);
 }
 .title-italic .amp {
   color: var(--blue-primary);
-  font-style: normal;
-  font-weight: 400;
+  font-style: italic;
+  font-weight: 500;
   padding: 0 .08em;
+  text-shadow: 0 6px 22px rgba(25, 75, 158, .22);
 }
 
 .hero-sub {
-  font-size: clamp(15px, 1.4vw, 18px);
-  color: rgba(255,255,255,.86);
-  max-width: 560px;
+  font-size: clamp(15.5px, 1.4vw, 18px);
+  color: var(--slate);
+  max-width: 520px;
   line-height: 1.65;
-  margin: 0 auto 32px;
+  margin: 0 auto 34px;
   text-align: center;
+  font-weight: 400;
+  letter-spacing: .005em;
 }
 
 .hero-buttons {
@@ -603,28 +651,34 @@ p { margin: 0 0 1em; }
   display: inline-flex;
   align-items: center;
   gap: 26px;
-  padding: 16px 24px;
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.18);
+  padding: 14px 26px;
+  background: rgba(255, 255, 255, .55);
+  border: 1px solid rgba(25, 75, 158, .12);
   border-radius: 999px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, .8) inset,
+    0 14px 30px -16px rgba(25, 75, 158, .22);
 }
 .meta-item { display: flex; flex-direction: column; gap: 2px; line-height: 1.2; }
 .meta-label {
-  font-size: 11px;
-  letter-spacing: .2em;
+  font-size: 10.5px;
+  letter-spacing: .22em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.6);
+  color: var(--slate);
+  font-weight: 600;
+  opacity: .75;
 }
 .meta-value {
   font-size: 14.5px;
   font-weight: 500;
-  color: var(--white);
+  color: var(--charcoal);
+  letter-spacing: .005em;
 }
 .meta-divider {
   width: 1px; height: 28px;
-  background: rgba(255,255,255,.2);
+  background: rgba(25, 75, 158, .18);
 }
 
 .scroll-cue {
@@ -637,7 +691,8 @@ p { margin: 0 0 1em; }
   font-size: 11px;
   letter-spacing: .3em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.75);
+  color: var(--slate);
+  opacity: .65;
   z-index: 2;
 }
 .scroll-cue svg { width: 14px; height: 24px; }
