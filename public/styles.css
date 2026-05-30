@@ -367,16 +367,20 @@ p { margin: 0 0 1em; }
 }
 .hero-media img,
 .hero-media .hero-bg-video {
-  /* Contain-fit so the entire engraving animation is always visible,
-     and anchor to the TOP of the hero so the video meets the bottom of
-     the sticky nav with no gap on every viewport. Any letterbox area
-     appears at the bottom only, filled by the cream backdrop. */
+  /* Cover-fit on every viewport so the engraving fills the entire hero
+     section background — no letterbox bands, the video always touches
+     the bottom of the sticky nav. The video is cropped vertically /
+     horizontally as needed; on tall phone portraits this means only
+     the centre slice of the engraving shows, which is the accepted
+     tradeoff for a fully-filled background. */
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center top;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  object-position: center center;
   display: block;
 }
 .hero-media img {
