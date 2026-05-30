@@ -69,7 +69,67 @@ const isPickup = fulfillment === 'pickup';
 
       <!-- Checkout form (hidden until "Proceed to checkout") -->
       <div class="pos-checkout" data-pos-checkout hidden>
-        <!-- Filled in by Task 7 -->
+        <header class="pos-checkout-head">
+          <button type="button" class="pos-checkout-back" data-pos-checkout-close aria-label="Back to cart">
+            ← Back to cart
+          </button>
+          <h2>Checkout</h2>
+        </header>
+
+        <form class="pos-checkout-form" data-pos-checkout-form novalidate>
+          <!-- Time -->
+          <fieldset class="pos-cko-fs">
+            <legend class="pos-cko-legend" data-pos-cko-time-legend>Pickup time</legend>
+            <div class="pos-cko-slots" data-pos-cko-slots>
+              <!-- Slot pills inserted by JS -->
+            </div>
+          </fieldset>
+
+          <!-- Customer details -->
+          <fieldset class="pos-cko-fs">
+            <legend class="pos-cko-legend">Your details</legend>
+            <label class="pos-cko-field">
+              <span>Name</span>
+              <input type="text" name="name" autocomplete="name" required />
+            </label>
+            <label class="pos-cko-field">
+              <span>Phone</span>
+              <input type="tel" name="phone" autocomplete="tel" required />
+            </label>
+            <label class="pos-cko-field">
+              <span>Email</span>
+              <input type="email" name="email" autocomplete="email" required />
+            </label>
+            <label class="pos-cko-field" data-pos-cko-address-field hidden>
+              <span>Delivery address</span>
+              <input type="text" name="address" autocomplete="street-address" />
+            </label>
+          </fieldset>
+
+          <!-- Payment (disabled / demo) -->
+          <fieldset class="pos-cko-fs pos-cko-pay">
+            <legend class="pos-cko-legend">Payment</legend>
+            <p class="pos-cko-demo-banner">Demo mode — no real payment is processed.</p>
+            <label class="pos-cko-field">
+              <span>Card number</span>
+              <input type="text" name="card" placeholder="•••• •••• •••• ••••" disabled />
+            </label>
+            <div class="pos-cko-row">
+              <label class="pos-cko-field">
+                <span>Expiry</span>
+                <input type="text" name="expiry" placeholder="MM / YY" disabled />
+              </label>
+              <label class="pos-cko-field">
+                <span>CVC</span>
+                <input type="text" name="cvc" placeholder="•••" disabled />
+              </label>
+            </div>
+          </fieldset>
+
+          <button type="submit" class="btn btn-primary btn-lg pos-cko-submit">
+            Place order · <span data-pos-cko-total>$0</span>
+          </button>
+        </form>
       </div>
     </aside>
   </div>

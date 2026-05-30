@@ -371,4 +371,101 @@
   // Initial render
   renderCart();
 
+  /* ─── Checkout ─── */
+
+  const checkoutEl       = $('[data-pos-checkout]');
+  const checkoutOpenBtn  = $('[data-pos-checkout-open]');
+  const checkoutCloseBtn = $('[data-pos-checkout-close]');
+  const cartContainer    = $('.pos-cart');
+  const checkoutForm     = $('[data-pos-checkout-form]');
+  const slotsContainer   = $('[data-pos-cko-slots]');
+  const timeLegend       = $('[data-pos-cko-time-legend]');
+  const addressField     = $('[data-pos-cko-address-field]');
+  const ckoTotalEl       = $('[data-pos-cko-total]');
+
+  // Time-slot generation: ASAP + next 4 15-min slots
+  const buildSlots = () => {
+    const readyMin = (menu.fulfillment[fulfillment] && menu.fulfillment[fulfillment].ready_minutes) || 25;
+    const now = new Date();
+    // Round up to next 15-min mark for the first non-ASAP slot
+    const next = new Date(now.getTime() + readyMin * 60000);
+    next.setMinutes(Math.ceil(next.getMinutes() / 15) * 15, 0, 0);
+
+    const fmt = (d) => {
+      let h = d.getHours();
+      const m = d.getMinutes();
+      const ampm = h >= 12 ? 'p' : 'a';
+      h = ((h + 11) % 12) + 1;
+      return `${h}:${m.toString().padStart(2, '0')}${ampm}`;
+    };
+
+    const slots = [{ value: 'asap', label: `ASAP (~${readyMin} min)` }];
+    for (let i = 0; i < 4; i++) {
+      const d = new Date(next.getTime() + i * 15 * 60000);
+      slots.push({ value: d.toISOString(), label: fmt(d) });
+    }
+    return slots;
+  };
+
+  const renderSlots = () => {
+    const slots = buildSlots();
+    slotsContainer.innerHTML = slots.map((s, i) => `
+      <button type="button" class="pos-cko-slot ${i === 0 ? 'is-selected' : ''}" data-slot-value="${escapeHtml(s.value)}" data-slot-label="${escapeHtml(s.label)}">
+        ${escapeHtml(s.label)}
+      </button>
+    `).join('');
+  };
+
+  const openCheckout = () => {
+    cartContainer.hidden = true;
+    checkoutEl.hidden = false;
+    // Fulfillment-specific
+    timeLegend.textContent = fulfillment === 'pickup' ? 'Pickup time' : 'Delivery time';
+    addressField.hidden = fulfillment !== 'delivery';
+    if (fulfillment === 'delivery') {
+      addressField.querySelector('input').required = true;
+    }
+    renderSlots();
+    ckoTotalEl.textContent = '$' + computeSubtotal();
+  };
+
+  const closeCheckout = () => {
+    checkoutEl.hidden = true;
+    cartContainer.hidden = false;
+  };
+
+  checkoutOpenBtn.addEventListener('click', () => {
+    if (cart.length === 0) return;   // shouldn't happen but defensive
+    openCheckout();
+  });
+  checkoutCloseBtn.addEventListener('click', closeCheckout);
+
+  // Slot pill click selects exclusively
+  slotsContainer.addEventListener('click', (e) => {
+    const pill = e.target.closest('.pos-cko-slot');
+    if (!pill) return;
+    slotsContainer.querySelectorAll('.pos-cko-slot').forEach(p => p.classList.remove('is-selected'));
+    pill.classList.add('is-selected');
+  });
+
+  // Submit handler — confirmation render in Task 8.
+  // For now, prevent submission and console.log the order.
+  checkoutForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fd = new FormData(checkoutForm);
+    const selectedSlot = slotsContainer.querySelector('.pos-cko-slot.is-selected');
+    const order = {
+      fulfillment,
+      slot: selectedSlot ? selectedSlot.dataset.slotLabel : 'ASAP',
+      name: fd.get('name'),
+      phone: fd.get('phone'),
+      email: fd.get('email'),
+      address: fd.get('address') || null,
+      items: cart,
+      subtotal: computeSubtotal()
+    };
+    console.log('[KALA POS] Order placed (demo):', order);
+    // Task 8 hooks in here to render the confirmation screen.
+  });
+
 })();

@@ -3386,3 +3386,134 @@ img, video, svg { max-width: 100%; height: auto; }
 .pos-checkout-btn {
   width: 100%;
 }
+
+/* Inline checkout */
+.pos-checkout[hidden] { display: none; }
+.pos-checkout {
+  background: var(--white);
+  border: 1px solid rgba(34,37,46,.08);
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: var(--shadow-soft);
+  max-height: calc(100vh - 110px);
+  overflow-y: auto;
+}
+.pos-checkout-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.pos-checkout-head h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 24px;
+  color: var(--charcoal);
+  margin: 0;
+}
+.pos-checkout-back {
+  background: transparent;
+  border: none;
+  color: var(--blue-primary);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: .03em;
+  cursor: pointer;
+  padding: 0;
+}
+
+.pos-checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.pos-cko-fs {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pos-cko-legend {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--slate);
+  padding: 0;
+  margin-bottom: 4px;
+}
+
+/* Time slot pills */
+.pos-cko-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pos-cko-slot {
+  background: var(--white);
+  border: 1px solid rgba(34,37,46,.18);
+  color: var(--charcoal);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: background .15s var(--ease), color .15s var(--ease), border-color .15s var(--ease);
+}
+.pos-cko-slot:hover { border-color: var(--blue-primary); }
+.pos-cko-slot.is-selected {
+  background: var(--blue-primary);
+  border-color: var(--blue-primary);
+  color: var(--white);
+}
+
+/* Form fields */
+.pos-cko-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pos-cko-field span {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--slate);
+  letter-spacing: .02em;
+}
+.pos-cko-field input {
+  font-family: var(--font-body);
+  font-size: 15px;
+  padding: 10px 12px;
+  border: 1px solid rgba(34,37,46,.15);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--charcoal);
+}
+.pos-cko-field input:focus {
+  outline: none;
+  border-color: var(--blue-primary);
+  box-shadow: 0 0 0 3px rgba(25,75,158,.12);
+}
+.pos-cko-field input:disabled {
+  background: var(--cream);
+  color: var(--stone-dark);
+  cursor: not-allowed;
+}
+.pos-cko-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.pos-cko-demo-banner {
+  background: var(--blue-tint);
+  color: var(--blue-primary);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  margin: 0 0 4px;
+}
+.pos-cko-submit {
+  width: 100%;
+  margin-top: 4px;
+}
