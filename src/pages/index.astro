@@ -1,0 +1,290 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base
+  title="KALA — Greek and More"
+  description="KALA — Greek and More. A coastal Mediterranean restaurant serving gyros, souvlaki, fresh salads, and Greek classics."
+  current="/"
+>
+
+<!-- Hero (cream / minimal) -->
+<section class="hero hero-cream">
+  <div class="hero-content container">
+    <div class="hero-text">
+      <span class="eyebrow">Coastal · Mediterranean · Family-run</span>
+      <h1 class="hero-title">
+        <span class="title-line">KALA</span>
+        <span class="title-line title-italic">Greek <span class="amp">&amp;</span> More</span>
+      </h1>
+      <p class="hero-sub">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque
+        magna. Praesent ut sollicitudin ligula, vitae laoreet justo. Curabitur dapibus laoreet
+        eros.
+      </p>
+      <div class="hero-buttons">
+        <a href="/order" class="btn btn-primary btn-lg">
+          Order Online
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="/reservations" class="btn btn-ghost btn-lg">Make a Reservation</a>
+      </div>
+
+      <div class="hero-meta">
+        <div class="meta-item">
+          <span class="meta-label">Open today</span>
+          <span class="meta-value">11:00a – 10:00p</span>
+        </div>
+        <span class="meta-divider"></span>
+        <div class="meta-item">
+          <span class="meta-label">Find us</span>
+          <span class="meta-value">1500 Queen Anne Ave N</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-hand-wrap" aria-hidden="true">
+      <img src="/public/hand_olive.png" alt="" class="hero-hand" loading="eager" />
+    </div>
+  </div>
+
+  <a href="#feta-landing" class="scroll-cue" aria-label="Scroll to see the olive land">
+    <span>scroll</span>
+    <svg viewBox="0 0 14 24" aria-hidden="true">
+      <rect x="0.5" y="0.5" width="13" height="23" rx="6.5" fill="none" stroke="currentColor"/>
+      <circle cx="7" cy="7" r="2" fill="currentColor"/>
+    </svg>
+  </a>
+</section>
+
+<!-- A Taste of Greece — auto-scrolling dish marquee -->
+<section class="dish-marquee" aria-label="A taste of Greek dishes from KALA">
+  <div class="dish-marquee-eyebrow">
+    <span class="eyebrow">A taste of Greece</span>
+  </div>
+  <div class="dish-marquee-viewport">
+    <div class="dish-marquee-track">
+      <a href="/menu#gyros" class="dish-tile">
+        <img src="/public/e04b7c58-8d54-487c-9f41-5f660e52bc91.png" alt="Classic pork gyro wrapped in warm pita with tzatziki, tomato, onion, and fries." loading="lazy" />
+        <span class="dish-tile-name">Gyros</span>
+      </a>
+      <a href="/menu#souvlaki" class="dish-tile">
+        <img src="/public/e35b56c1-78a3-4f00-bc59-fef11d51ab97.png" alt="Grilled chicken souvlaki skewers with lemon and oregano." loading="lazy" />
+        <span class="dish-tile-name">Chicken Souvlaki</span>
+      </a>
+      <a href="/menu#salads" class="dish-tile">
+        <img src="/public/b428f5ae-26b3-47b3-944d-cc950b096d0f.png" alt="Horiatiki — traditional Greek salad with tomato, cucumber, feta, and olives." loading="lazy" />
+        <span class="dish-tile-name">Horiatiki</span>
+      </a>
+      <a href="/menu#dips" class="dish-tile">
+        <img src="/public/c243bbfd-cba9-4c8b-b273-3abc24c8f935.png" alt="Tzatziki — creamy yogurt and cucumber dip with herbs." loading="lazy" />
+        <span class="dish-tile-name">Tzatziki</span>
+      </a>
+      <a href="/menu#seafood" class="dish-tile">
+        <img src="/public/branzino.png" alt="Whole grilled branzino with lemon and herbs." loading="lazy" />
+        <span class="dish-tile-name">Whole Branzino</span>
+      </a>
+      <a href="/menu#seafood" class="dish-tile">
+        <img src="/public/grilled-octopus.png" alt="Grilled octopus with lemon, olive oil, and fresh herbs." loading="lazy" />
+        <span class="dish-tile-name">Grilled Octopus</span>
+      </a>
+      <a href="/menu#souvlaki" class="dish-tile">
+        <img src="/public/f654d18d-85e3-4c10-ae90-00769deaa21e.png" alt="Grilled lamb skewers with rosemary and lemon." loading="lazy" />
+        <span class="dish-tile-name">Lamb Skewers</span>
+      </a>
+      <a href="/menu#salads" class="dish-tile">
+        <img src="/public/6b99cc72-6194-477d-81ca-f8102c1d044d.png" alt="Watermelon and feta salad with mint and olive oil." loading="lazy" />
+        <span class="dish-tile-name">Watermelon &amp; Feta</span>
+      </a>
+      <!-- duplicate set for seamless loop -->
+      <a href="/menu#gyros" class="dish-tile" aria-hidden="true" tabindex="-1">
+        <img src="/public/e04b7c58-8d54-487c-9f41-5f660e52bc91.png" alt="" loading="lazy" />
+        <span class="dish-tile-name">Gyros</span>
+      </a>
+      <a href="/menu#souvlaki" class="dish-tile" aria-hidden="true" tabindex="-1">
+        <img src="/public/e35b56c1-78a3-4f00-bc59-fef11d51ab97.png" alt="" loading="lazy" />
+        <span class="dish-tile-name">Chicken Souvlaki</span>
+      </a>
+      <a href="/menu#salads" class="dish-tile" aria-hidden="true" tabindex="-1">
+        <img src="/public/b428f5ae-26b3-47b3-944d-cc950b096d0f.png" alt="" loading="lazy" />
+        <span class="dish-tile-name">Horiatiki</span>
+      </a>
+      <a href="/menu#dips" class="dish-tile" aria-hidden="true" tabindex="-1">
+        <img src="/public/c243bbfd-cba9-4c8b-b273-3abc24c8f935.png" alt="" loading="lazy" />
+        <span class="dish-tile-name">Tzatziki</span>
+      </a>
+      <a href="/menu#seafood" class="dish-tile" aria-hidden="true" tabindex="-1">
+        <img src="/public/branzino.png" alt="" loading="lazy" />
+        <span class="dish-tile-name">Whole Branzino</span>
+      </a>
+      <a href="/menu#seafood" class="dish-tile" aria-hidden="true" tabindex="-1">
+        <img src="/public/grilled-octopus.png" alt="" loading="lazy" />
+        <span class="dish-tile-name">Grilled Octopus</span>
+      </a>
+      <a href="/menu#souvlaki" class="dish-tile" aria-hidden="true" tabindex="-1">
+        <img src="/public/f654d18d-85e3-4c10-ae90-00769deaa21e.png" alt="" loading="lazy" />
+        <span class="dish-tile-name">Lamb Skewers</span>
+      </a>
+      <a href="/menu#salads" class="dish-tile" aria-hidden="true" tabindex="-1">
+        <img src="/public/6b99cc72-6194-477d-81ca-f8102c1d044d.png" alt="" loading="lazy" />
+        <span class="dish-tile-name">Watermelon &amp; Feta</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Greek Key Divider -->
+<div class="meander-divider" aria-hidden="true"></div>
+
+<!-- Order Callout -->
+<section class="callout" id="callout">
+  <div class="container">
+    <div class="callout-frame">
+      <span class="callout-eyebrow">Lunch Service</span>
+      <h2 class="callout-title">
+        Available for Lunch <em>Tuesday – Saturday</em>
+      </h2>
+      <p class="callout-sub">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet
+        libero in lacus efficitur tincidunt.
+      </p>
+      <a href="/order" class="btn btn-primary btn-lg">
+        Order for Pickup or Delivery
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div class="callout-corner top-left" aria-hidden="true"></div>
+      <div class="callout-corner top-right" aria-hidden="true"></div>
+      <div class="callout-corner bottom-left" aria-hidden="true"></div>
+      <div class="callout-corner bottom-right" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Menu Preview -->
+<section class="menu-section" id="menu">
+  <div class="container">
+    <header class="section-header">
+      <span class="eyebrow">From the kitchen</span>
+      <h2 class="section-title">
+        A taste of <em>Greece</em>
+        <br/>and beyond
+      </h2>
+      <p class="section-sub">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam erat volutpat.
+        Nullam vehicula, urna at imperdiet placerat.
+      </p>
+    </header>
+
+    <div class="menu-grid">
+      <article class="menu-card">
+        <div class="card-image"><img src="/public/image%202.png" alt="" loading="lazy" /></div>
+        <div class="card-body">
+          <h3>Gyros</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
+          <span class="card-arrow" aria-hidden="true">→</span>
+        </div>
+      </article>
+
+      <article class="menu-card">
+        <div class="card-image"><img src="/public/image%203.png" alt="" loading="lazy" /></div>
+        <div class="card-body">
+          <h3>Souvlaki</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
+          <span class="card-arrow" aria-hidden="true">→</span>
+        </div>
+      </article>
+
+      <article class="menu-card">
+        <div class="card-image"><img src="/public/image%204.png" alt="" loading="lazy" /></div>
+        <div class="card-body">
+          <h3>Greek Salads</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
+          <span class="card-arrow" aria-hidden="true">→</span>
+        </div>
+      </article>
+
+      <article class="menu-card">
+        <div class="card-image"><img src="/public/image%205.png" alt="" loading="lazy" /></div>
+        <div class="card-body">
+          <h3>Dips &amp; Spreads</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
+          <span class="card-arrow" aria-hidden="true">→</span>
+        </div>
+      </article>
+
+      <article class="menu-card">
+        <div class="card-image"><img src="/public/image%206.png" alt="" loading="lazy" /></div>
+        <div class="card-body">
+          <h3>Seafood</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
+          <span class="card-arrow" aria-hidden="true">→</span>
+        </div>
+      </article>
+
+      <article class="menu-card">
+        <div class="card-image"><img src="/public/image%207.png" alt="" loading="lazy" /></div>
+        <div class="card-body">
+          <h3>Wine</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
+          <span class="card-arrow" aria-hidden="true">→</span>
+        </div>
+      </article>
+
+      <article class="menu-card">
+        <div class="card-image"><img src="/public/image%208.png" alt="" loading="lazy" /></div>
+        <div class="card-body">
+          <h3>Desserts</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
+          <span class="card-arrow" aria-hidden="true">→</span>
+        </div>
+      </article>
+
+      <a href="/menu" class="menu-card menu-card-cta">
+        <div>
+          <span class="eyebrow">Hungry?</span>
+          <h3>View the Full Menu</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar.</p>
+        </div>
+        <span class="card-arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Story / Animation Section -->
+<section class="story" id="story">
+  <div class="container story-grid">
+    <div class="story-text">
+      <span class="eyebrow">Our Story</span>
+      <h2 class="section-title">
+        Made by hand,
+        <em>shared by the table</em>
+      </h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis
+        pellentesque magna. Praesent ut sollicitudin ligula, vitae laoreet justo.
+      </p>
+      <p>
+        Curabitur dapibus laoreet eros, vitae faucibus ipsum tincidunt vitae. Nam
+        ultrices, magna a porttitor laoreet, sapien lorem feugiat lectus, eget
+        tincidunt lacus eros vitae nibh.
+      </p>
+      <a href="/our-story" class="link-arrow">Read our story <span>→</span></a>
+    </div>
+
+    <div class="story-visual" aria-hidden="true">
+      <div class="vis-glow"></div>
+
+      <img src="/public/hand_olive.png" alt="" class="hand hand-olive" loading="lazy" />
+      <img src="/public/hand_wine.png"  alt="" class="hand hand-wine"  loading="lazy" />
+
+      <svg class="key-ribbon" viewBox="0 0 600 40" preserveAspectRatio="none">
+        <pattern id="meander" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M0 30 H 24 V 10 H 16 V 22 H 8 V 4 H 32 V 22 H 40" fill="none" stroke="#194B9E" stroke-width="2"/>
+        </pattern>
+        <rect width="600" height="40" fill="url(#meander)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+</Base>
