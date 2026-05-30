@@ -559,7 +559,7 @@ p { margin: 0 0 1em; }
   margin-top: -.04em;
 }
 .title-italic .amp {
-  color: var(--blue-soft);
+  color: var(--blue-primary);
   font-style: normal;
   font-weight: 400;
   padding: 0 .08em;
