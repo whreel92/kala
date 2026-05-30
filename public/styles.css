@@ -2806,3 +2806,39 @@ img, video, svg { max-width: 100%; height: auto; }
 @media (prefers-reduced-motion: reduce) {
   .hero-title-circle { animation: none; }
 }
+
+/* ──────────────────────────────────────────────
+   Olive-drop scroll choreography
+   ────────────────────────────────────────────── */
+
+.transition-band {
+  position: relative;
+  background: var(--cream);
+  min-height: 65vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8vh 0 12vh;
+}
+.transition-line {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  color: var(--charcoal);
+  opacity: .78;
+  text-align: center;
+  max-width: 32ch;
+  margin: 0 auto;
+  line-height: 1.25;
+}
+.meander-divider-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@media (max-width: 700px) {
+  .transition-band { min-height: 50vh; padding: 6vh 0 8vh; }
+}
