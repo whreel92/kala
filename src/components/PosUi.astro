@@ -166,7 +166,29 @@ const isPickup = fulfillment === 'pickup';
 
   <!-- Confirmation screen (hidden) -->
   <div class="pos-confirm" data-pos-confirm hidden>
-    <!-- Filled in by Task 8 -->
+    <div class="pos-confirm-card container">
+      <div class="meander-divider" aria-hidden="true"></div>
+      <span class="eyebrow pos-confirm-eyebrow">Order placed</span>
+      <h2 class="pos-confirm-thanks">Thank you, <span data-pos-confirm-name></span>.</h2>
+      <p class="pos-confirm-order-no">Order <strong data-pos-confirm-no></strong></p>
+      <p class="pos-confirm-eta" data-pos-confirm-eta></p>
+
+      <div class="pos-confirm-receipt">
+        <h3>Your order</h3>
+        <ul data-pos-confirm-items></ul>
+        <div class="pos-confirm-subtotal">
+          <span>Subtotal</span>
+          <span data-pos-confirm-subtotal></span>
+        </div>
+      </div>
+
+      <div class="pos-confirm-actions">
+        <a href="/" class="btn btn-primary btn-lg">Back to home</a>
+        <button type="button" class="btn btn-ghost btn-lg" disabled aria-disabled="true" title="Tracking not available in demo">
+          Track order
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Mobile sticky cart bar (hidden on desktop) -->

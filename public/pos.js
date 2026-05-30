@@ -448,8 +448,6 @@
     pill.classList.add('is-selected');
   });
 
-  // Submit handler — confirmation render in Task 8.
-  // For now, prevent submission and console.log the order.
   checkoutForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const fd = new FormData(checkoutForm);
@@ -457,15 +455,64 @@
     const order = {
       fulfillment,
       slot: selectedSlot ? selectedSlot.dataset.slotLabel : 'ASAP',
-      name: fd.get('name'),
+      name: (fd.get('name') || '').toString().trim() || 'guest',
       phone: fd.get('phone'),
       email: fd.get('email'),
       address: fd.get('address') || null,
-      items: cart,
-      subtotal: computeSubtotal()
+      items: cart.slice(),
+      subtotal: computeSubtotal(),
+      orderNo: 'KALA-' + Math.floor(100000 + Math.random() * 900000).toString()
     };
-    console.log('[KALA POS] Order placed (demo):', order);
-    // Task 8 hooks in here to render the confirmation screen.
+    renderConfirmation(order);
+    // Clear cart from state + storage
+    cart = [];
+    saveCart();
   });
+
+  /* ─── Confirmation ─── */
+
+  const confirmEl       = $('[data-pos-confirm]');
+  const confirmName     = $('[data-pos-confirm-name]');
+  const confirmNo       = $('[data-pos-confirm-no]');
+  const confirmEta      = $('[data-pos-confirm-eta]');
+  const confirmItems    = $('[data-pos-confirm-items]');
+  const confirmSubtotal = $('[data-pos-confirm-subtotal]');
+
+  const renderConfirmation = (order) => {
+    confirmName.textContent = order.name;
+    confirmNo.textContent = order.orderNo;
+
+    const ready = order.slot.startsWith('ASAP')
+      ? new Date(Date.now() + (menu.fulfillment[fulfillment].ready_minutes || 25) * 60000)
+      : null;
+    const etaLabel = order.slot.startsWith('ASAP')
+      ? `${fulfillment === 'pickup' ? 'Pickup' : 'Delivery'} ready by ~${formatTime(ready)}`
+      : `${fulfillment === 'pickup' ? 'Pickup' : 'Delivery'} at ${order.slot}`;
+    confirmEta.textContent = etaLabel;
+
+    confirmItems.innerHTML = order.items.map(line => `
+      <li>
+        <div>
+          <strong>${escapeHtml(line.name)}</strong>
+          ${formatModSummary(line.modifiers) ? `<span class="pos-confirm-line-meta">${escapeHtml(formatModSummary(line.modifiers))}</span>` : ''}
+          ${line.qty > 1 ? `<span class="pos-confirm-line-meta">Qty ${line.qty}</span>` : ''}
+        </div>
+        <span>$${line.lineTotal}</span>
+      </li>
+    `).join('');
+    confirmSubtotal.textContent = '$' + order.subtotal;
+
+    root.classList.add('is-confirming');
+    confirmEl.hidden = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const formatTime = (d) => {
+    let h = d.getHours();
+    const m = d.getMinutes();
+    const ampm = h >= 12 ? 'p' : 'a';
+    h = ((h + 11) % 12) + 1;
+    return `${h}:${m.toString().padStart(2, '0')}${ampm}`;
+  };
 
 })();
