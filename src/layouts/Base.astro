@@ -84,7 +84,7 @@ const isActive = (path: string) => current === path ? 'is-active' : '';
     </div>
   </header>
 
-  <div class="mobile-menu" id="mobileMenu" aria-hidden="true" transition:persist>
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true" inert transition:persist>
     <a href="/menu">Menu</a>
     <a href="/our-story">Our Story</a>
     <a href="/contact">Contact</a>
@@ -203,7 +203,10 @@ const isActive = (path: string) => current === path ? 'is-active' : '';
     </div>
   </div>
 
-  <script src="/menu-data.js" is:inline data-astro-rerun></script>
+  {/* menu-data.js declares top-level consts and assigns window.KALA_MENU
+      once. It must NOT carry data-astro-rerun, otherwise the second
+      execution on a view transition throws "Identifier already declared". */}
+  <script src="/menu-data.js" is:inline></script>
   <script src="/pos.js" is:inline data-astro-rerun></script>
   <script src="/script.js" is:inline data-astro-rerun></script>
 </body>

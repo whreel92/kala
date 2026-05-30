@@ -61,16 +61,28 @@
     const navToggle = $('#navToggle');
     const mobileMenu = $('#mobileMenu');
     if (navToggle && mobileMenu) {
+      // Use inert + aria-hidden together. inert blocks focus and pointer
+      // events for the closed menu, avoiding the "aria-hidden on an element
+      // with a focused descendant" accessibility warning that fires when a
+      // link inside the menu still holds focus at the moment we hide it.
       const closeMenu = () => {
+        // Move focus out of the menu first so the browser doesn't trap it
+        // on an element that's about to be marked inert.
+        if (mobileMenu.contains(document.activeElement)) {
+          document.activeElement.blur();
+        }
         mobileMenu.classList.remove('open');
         navToggle.setAttribute('aria-expanded', 'false');
         mobileMenu.setAttribute('aria-hidden', 'true');
+        mobileMenu.setAttribute('inert', '');
         document.body.style.overflow = '';
       };
       navToggle.addEventListener('click', () => {
         const open = mobileMenu.classList.toggle('open');
         navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
+        if (open) mobileMenu.removeAttribute('inert');
+        else mobileMenu.setAttribute('inert', '');
         document.body.style.overflow = open ? 'hidden' : '';
       });
       mobileMenu.querySelectorAll('a').forEach(a => {

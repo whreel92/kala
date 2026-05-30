@@ -551,13 +551,20 @@
   const openMobileCart = () => {
     cartCol.classList.add('is-open');
     cartCol.setAttribute('aria-hidden', 'false');
+    cartCol.removeAttribute('inert');
     document.body.style.overflow = 'hidden';
     // Focus the close button so keyboard users can dismiss it quickly
     setTimeout(() => cartCloseBtns[0]?.focus(), 80);
   };
   const closeMobileCart = () => {
+    // Drop focus before we mark the panel inert, otherwise the browser
+    // fires the "aria-hidden on focused descendant" warning.
+    if (cartCol.contains(document.activeElement)) {
+      document.activeElement.blur();
+    }
     cartCol.classList.remove('is-open');
     cartCol.setAttribute('aria-hidden', 'true');
+    cartCol.setAttribute('inert', '');
     document.body.style.overflow = '';
   };
 
