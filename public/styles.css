@@ -1165,6 +1165,9 @@ p { margin: 0 0 1em; }
 .visit-map {
   position: relative;
   aspect-ratio: 4 / 3.6;
+  /* Safety floor: if the column ever collapses to zero width, the map
+     still has something to measure so Leaflet can render its tiles. */
+  min-height: 320px;
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--cream);

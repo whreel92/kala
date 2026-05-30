@@ -112,71 +112,104 @@ import Base from '../layouts/Base.astro';
       <script is:inline data-astro-rerun>
         (() => {
           const mount = document.querySelector('[data-kala-map]');
-          if (!mount || typeof L === 'undefined') return;
-          if (mount.dataset.posMapInit === 'true') return;
-          mount.dataset.posMapInit = 'true';
+          if (!mount) return;
+          if (mount.dataset.kalaMapInit === 'true') return;
 
-          // 1500 Queen Anne Ave N, Seattle, WA 98109
-          const KALA_LATLNG = [47.63613, -122.35713];
-
-          const map = L.map(mount, {
-            zoomControl: true,
-            scrollWheelZoom: false,
-            attributionControl: true,
-          }).setView(KALA_LATLNG, 16);
-
-          const layers = {
-            default: L.tileLayer(
-              'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-              {
-                maxZoom: 19,
-                attribution:
-                  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-              }
-            ),
-            satellite: L.tileLayer(
-              'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-              {
-                maxZoom: 19,
-                attribution:
-                  'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics',
-              }
-            ),
+          // Leaflet may not have finished executing yet when this inline
+          // script runs (especially after a view transition where both the
+          // CDN script tag and this one are re-inserted at the same time).
+          // Poll briefly until `L` shows up, then init.
+          const waitForLeaflet = (attempt) => {
+            if (typeof L !== 'undefined') return initMap();
+            if (attempt > 60) {
+              console.warn('[KALA map] Leaflet failed to load — giving up.');
+              return;
+            }
+            setTimeout(() => waitForLeaflet(attempt + 1), 100);
           };
 
-          layers.default.addTo(map);
+          const initMap = () => {
+            // Re-check the init guard in case multiple invocations queued
+            if (mount.dataset.kalaMapInit === 'true') return;
+            mount.dataset.kalaMapInit = 'true';
 
-          // Branded pin
-          const icon = L.divIcon({
-            className: 'kala-map-pin',
-            html: '<span class="kala-pin-ring"></span><span class="kala-pin-dot"></span>',
-            iconSize: [28, 28],
-            iconAnchor: [14, 14],
-          });
-          L.marker(KALA_LATLNG, { icon, title: 'KALA · Greek and More' })
-            .addTo(map)
-            .bindPopup(
-              '<strong>KALA &middot; Greek and More</strong><br/>1500 Queen Anne Ave N<br/>Seattle, WA 98109'
-            );
+            // 1500 Queen Anne Ave N, Seattle, WA 98109
+            const KALA_LATLNG = [47.63613, -122.35713];
 
-          // Type toggle
-          const buttons = document.querySelectorAll('.map-type-btn');
-          buttons.forEach((btn) => {
-            btn.addEventListener('click', () => {
-              const want = btn.dataset.mapType;
-              Object.entries(layers).forEach(([key, layer]) => {
-                if (key === want) layer.addTo(map);
-                else map.removeLayer(layer);
-              });
-              buttons.forEach((b) =>
-                b.classList.toggle('is-active', b === btn)
-              );
+            const map = L.map(mount, {
+              zoomControl: true,
+              scrollWheelZoom: false,
+              attributionControl: true,
+            }).setView(KALA_LATLNG, 16);
+
+            const layers = {
+              default: L.tileLayer(
+                'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                {
+                  maxZoom: 19,
+                  attribution:
+                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                }
+              ),
+              satellite: L.tileLayer(
+                'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                {
+                  maxZoom: 19,
+                  attribution:
+                    'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics',
+                }
+              ),
+            };
+
+            layers.default.addTo(map);
+
+            // Branded pin
+            const icon = L.divIcon({
+              className: 'kala-map-pin',
+              html: '<span class="kala-pin-ring"></span><span class="kala-pin-dot"></span>',
+              iconSize: [28, 28],
+              iconAnchor: [14, 14],
             });
-          });
+            L.marker(KALA_LATLNG, { icon, title: 'KALA · Greek and More' })
+              .addTo(map)
+              .bindPopup(
+                '<strong>KALA &middot; Greek and More</strong><br/>1500 Queen Anne Ave N<br/>Seattle, WA 98109'
+              );
 
-          // Tile rendering can break if Leaflet measures the container before
-          // images/fonts settle; nudge it after the first frame.
-          requestAnimationFrame(() => map.invalidateSize());
+            // Type toggle — scoped to the same .visit-map so multiple maps
+            // on a page (future-proof) wouldn't clobber each other.
+            const wrap = mount.closest('.visit-map') || document;
+            const buttons = wrap.querySelectorAll('.map-type-btn');
+            buttons.forEach((btn) => {
+              btn.addEventListener('click', () => {
+                const want = btn.dataset.mapType;
+                Object.entries(layers).forEach(([key, layer]) => {
+                  if (key === want) layer.addTo(map);
+                  else map.removeLayer(layer);
+                });
+                buttons.forEach((b) =>
+                  b.classList.toggle('is-active', b === btn)
+                );
+                // Tile sizes can stale after layer swap on some UAs.
+                map.invalidateSize();
+              });
+            });
+
+            // Tile rendering can break if Leaflet measures the container
+            // before fonts / images / layout settle. Nudge it twice:
+            // once on the next frame and once after a short delay.
+            requestAnimationFrame(() => map.invalidateSize());
+            setTimeout(() => map.invalidateSize(), 300);
+
+            // Also revalidate when the viewport resizes or when the page
+            // becomes visible again (back/forward cache).
+            window.addEventListener('resize', () => map.invalidateSize());
+            document.addEventListener('visibilitychange', () => {
+              if (!document.hidden) map.invalidateSize();
+            });
+          };
+
+          waitForLeaflet(0);
         })();
       </script>
     </div>
