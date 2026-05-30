@@ -40,7 +40,6 @@
     const nav         = document.getElementById('nav');
     const stickyOrder = document.getElementById('stickyOrder');
     const scrollCue   = document.querySelector('.scroll-cue');
-    const heroMedia   = document.querySelector('.hero-media');
     const hero        = document.querySelector('.hero') || document.querySelector('.page-header');
 
     if (nav) nav.classList.toggle('is-scrolled', y > 16);
@@ -51,11 +50,6 @@
     }
 
     if (scrollCue) scrollCue.classList.toggle('is-hidden', y > 80);
-
-    if (heroMedia && !prefersReducedMotion) {
-      const offset = Math.min(y * 0.22, 180);
-      heroMedia.style.transform = `translate3d(0, ${offset}px, 0)`;
-    }
   };
   if (isFirstRun) window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();

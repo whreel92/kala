@@ -319,14 +319,12 @@ p { margin: 0 0 1em; }
   text-align: center;
 }
 .hero-media {
-  /* Extend 200px above the hero so the parallax scroll transform never
-     reveals a gap at the top, and add a small bleed at the sides to hide
-     any sub-pixel cracks when the viewport hits awkward widths. */
+  /* Fill the hero exactly so the engraving video touches the bottom of
+     the sticky nav on every viewport. (Parallax was removed in
+     script.js so we no longer need a top buffer to absorb its scroll
+     transform.) */
   position: absolute;
-  top: -200px;
-  left: -1px;
-  right: -1px;
-  bottom: 0;
+  inset: 0;
   z-index: -1;
   /* Warm cream fallback so the page never paints on a blue while the
      looping engraving video is downloading. */
@@ -369,15 +367,16 @@ p { margin: 0 0 1em; }
 }
 .hero-media img,
 .hero-media .hero-bg-video {
-  /* Contain-fit on every viewport so the entire engraving animation is
-     always visible. Cream backdrop fills any letterbox that appears on
-     viewports whose aspect ratio doesn't match the 16:9 video. */
+  /* Contain-fit so the entire engraving animation is always visible,
+     and anchor to the TOP of the hero so the video meets the bottom of
+     the sticky nav with no gap on every viewport. Any letterbox area
+     appears at the bottom only, filled by the cream backdrop. */
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  object-position: center center;
+  object-position: center top;
   display: block;
 }
 .hero-media img {
@@ -2657,9 +2656,6 @@ body.page-fading { opacity: 0; }
 
 /* ----- Magnetic primary CTA prep ----- */
 .btn-primary.btn-lg { will-change: transform; }
-
-/* ----- Hero parallax wrapper baseline ----- */
-.hero-media { will-change: transform; }
 
 /* ----- Chapter rail (our-story.html) ----- */
 .chapter-rail {
