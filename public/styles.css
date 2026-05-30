@@ -3624,3 +3624,103 @@ img, video, svg { max-width: 100%; height: auto; }
 .pos-ui.is-confirming .pos-grid,
 .pos-ui.is-confirming .pos-detail,
 .pos-ui.is-confirming .pos-mobile-bar { display: none; }
+
+/* ============================================================
+   Mobile bottom bar (only ≤900px)
+============================================================ */
+.pos-mobile-bar[hidden] { display: none; }
+.pos-mobile-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  background: var(--blue-primary);
+  color: var(--white);
+  border: none;
+  padding: 14px 20px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 -8px 20px -10px rgba(20,22,30,.35);
+}
+.pos-mobile-bar-count { letter-spacing: .02em; }
+.pos-mobile-bar-arrow { font-size: 18px; }
+
+@media (min-width: 901px) {
+  .pos-mobile-bar { display: none !important; }
+}
+
+/* Cart-as-sheet on mobile */
+@media (max-width: 900px) {
+  .pos-cart-col {
+    /* Override the desktop "display: none" — we now toggle visibility via JS */
+    display: block;
+    position: fixed;
+    inset: 0;
+    top: auto;
+    bottom: 0;
+    z-index: 35;
+    max-height: 90vh;
+    transform: translateY(100%);
+    transition: transform .35s var(--ease);
+    background: var(--white);
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 -10px 30px -10px rgba(20,22,30,.3);
+  }
+  .pos-cart-col.is-open { transform: translateY(0); }
+  .pos-cart {
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    max-height: 90vh;
+    height: 90vh;
+    padding-top: 30px;
+    position: relative;
+  }
+  .pos-cart::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 4px;
+    background: rgba(34,37,46,.18);
+    border-radius: 999px;
+  }
+  .pos-checkout {
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    max-height: 90vh;
+  }
+
+  /* Detail panel as a bottom sheet */
+  .pos-detail { justify-content: stretch; }
+  .pos-detail-panel {
+    width: 100%;
+    height: 90vh;
+    transform: translateY(100%);
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+  }
+  .pos-detail.is-open .pos-detail-panel { transform: translateY(0); }
+  .pos-detail-image { aspect-ratio: 3 / 2; }
+}
+
+/* Item card grid narrower phones */
+@media (max-width: 480px) {
+  .pos-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .pos-item-body { padding: 12px 12px 14px; }
+  .pos-item-head h3 { font-size: 16px; }
+}

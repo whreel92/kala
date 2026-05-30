@@ -515,4 +515,72 @@
     return `${h}:${m.toString().padStart(2, '0')}${ampm}`;
   };
 
+  /* ─── Mobile bottom bar ─── */
+
+  const mobileBar = $('[data-pos-mobile-bar]');
+  const mobileBarCount = $('.pos-mobile-bar-count', mobileBar);
+  const cartCol = $('.pos-cart-col');
+
+  const isMobile = () => window.matchMedia('(max-width: 900px)').matches;
+
+  const updateMobileBar = () => {
+    const onMobile = isMobile();
+    // Always render the count; we leave actual show/hide to media query + cart count
+    const count = cart.reduce((n, l) => n + l.qty, 0);
+    const subtotal = computeSubtotal();
+    if (count === 0 || !onMobile) {
+      mobileBar.hidden = true;
+      return;
+    }
+    mobileBar.hidden = false;
+    mobileBarCount.textContent = `Cart (${count}) · $${subtotal}`;
+  };
+
+  const openMobileCart = () => {
+    cartCol.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  };
+  const closeMobileCart = () => {
+    cartCol.classList.remove('is-open');
+    document.body.style.overflow = '';
+  };
+
+  mobileBar.addEventListener('click', openMobileCart);
+
+  // Tap outside the cart sheet closes it (i.e., on the backdrop area above the sheet).
+  // We can implement this by closing when the user taps anywhere that's not inside .pos-cart-col while it's open.
+  document.addEventListener('click', (e) => {
+    if (!isMobile()) return;
+    if (!cartCol.classList.contains('is-open')) return;
+    if (cartCol.contains(e.target)) return;
+    if (mobileBar.contains(e.target)) return;
+    closeMobileCart();
+  });
+
+  // Esc closes the mobile cart sheet
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && cartCol.classList.contains('is-open')) closeMobileCart();
+  });
+
+  // After every cart mutation, re-check the bar
+  const _origRenderCart = renderCart;
+  const wrappedRenderCart = () => {
+    _origRenderCart();
+    updateMobileBar();
+  };
+  // Replace the renderCart reference globally is tricky inside this IIFE.
+  // Instead, just call updateMobileBar after every known mutation point:
+  //   - initial load (done above)
+  //   - cart line click handler
+  //   - detail-panel add-to-cart handler
+  // Easiest: hook the events we already have.
+  cartItemsEl.addEventListener('click', updateMobileBar);
+  detailAdd.addEventListener('click', () => setTimeout(updateMobileBar, 0));
+
+  // Also re-check on resize (entering/leaving mobile)
+  window.addEventListener('resize', updateMobileBar);
+
+  // Initial run
+  updateMobileBar();
+
 })();
