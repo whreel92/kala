@@ -168,18 +168,6 @@
     }
   }
 
-  /* ─────────────────── Mobile bottom-bar active state ─────────────────── */
-  const mobileBar = $('.mobile-bar');
-  if (mobileBar) {
-    // Normalize to a leading "/<name>" form, dropping any trailing .html
-    const raw = location.pathname.toLowerCase();
-    const key = raw.replace(/\.html$/, '').replace(/\/$/, '') || '/';
-    mobileBar.querySelectorAll('a').forEach(a => {
-      const href = (a.getAttribute('href') || '').toLowerCase().replace(/\.html$/, '');
-      if (href && href === key) a.classList.add('is-current');
-    });
-  }
-
   /* ─────────────────── Menu page: filter chips ─────────────────── */
   const menuJump = $('.menu-jump');
   if (menuJump && $('.menu-item-card')) {

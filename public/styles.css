@@ -1397,50 +1397,7 @@ p { margin: 0 0 1em; }
   width: 18px; height: 18px;
 }
 
-/* ====================== Mobile Bottom Bar ====================== */
-.mobile-bar {
-  display: none;
-  position: fixed;
-  left: 12px;
-  right: 12px;
-  bottom: 12px;
-  z-index: 75;
-  background: var(--blue-primary);
-  border-radius: 22px;
-  padding: 8px;
-  box-shadow: 0 4px 12px rgba(25,75,158,.2), 0 20px 50px rgba(25,75,158,.28);
-}
-.mobile-bar a {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  padding: 10px 4px 8px;
-  color: var(--white);
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  border-radius: 16px;
-  transition: background .25s var(--ease), transform .2s var(--ease);
-}
-.mobile-bar a:active {
-  background: rgba(255,255,255,.15);
-  transform: scale(.96);
-}
-.mobile-bar a svg { width: 22px; height: 22px; }
-.mobile-bar { display: flex; }
-@media (min-width: 880px) {
-  .mobile-bar { display: none; }
-}
-
-/* Add bottom padding on mobile so bar doesn't cover footer */
-@media (max-width: 879px) {
-  body { padding-bottom: 86px; }
-  .sticky-order { display: none; }
-}
+/* (Mobile Call/Location/Takeout/Reserve bottom bar removed.) */
 
 /* ====================== Responsive — global ====================== */
 @media (max-width: 1024px) {
@@ -2409,23 +2366,6 @@ select.form-control {
   will-change: transform, width;
   border-radius: 2px;
 }
-
-/* ----- Mobile bottom-bar active state ----- */
-.mobile-bar a.is-current {
-  background: rgba(255,255,255,.16);
-}
-.mobile-bar a.is-current::before {
-  content: '';
-  position: absolute;
-  top: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 18px;
-  height: 2px;
-  background: rgba(255,255,255,.9);
-  border-radius: 2px;
-}
-.mobile-bar a { position: relative; }
 
 /* ----- Full-screen mobile menu ----- */
 @media (max-width: 880px) {
@@ -4146,26 +4086,10 @@ body:has(.pos-cart-col.is-open) .pos-mobile-bar { opacity: 0; pointer-events: no
    ============   POS pages: suppress redundant chrome    ============
    ===================================================================== */
 
-/* The site's persistent "Order Online" pill and the mobile bottom nav
-   are redundant on /order-pickup and /order-delivery — the user is
-   already ordering. Hide both whenever the POS UI is present. */
-body:has(.pos-ui) .sticky-order,
-body:has(.pos-ui) .mobile-bar {
-  display: none !important;
-}
-
-/* The POS pages don't need the global mobile-bar's bottom-padding offset
-   either, since both the bar and offset are hidden. */
-@media (max-width: 879px) {
-  body:has(.pos-ui) { padding-bottom: 0; }
-}
+/* The site's persistent "Order Online" pill is redundant on
+   /order-pickup and /order-delivery — the user is already ordering. */
+body:has(.pos-ui) .sticky-order { display: none !important; }
 
 /* Fallback for browsers that don't yet support :has() — set via JS on
    the body element when a POS UI mounts. */
-body.is-pos .sticky-order,
-body.is-pos .mobile-bar {
-  display: none !important;
-}
-@media (max-width: 879px) {
-  body.is-pos { padding-bottom: 0; }
-}
+body.is-pos .sticky-order { display: none !important; }

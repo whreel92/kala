@@ -183,26 +183,6 @@ const isActive = (path: string) => current === path ? 'is-active' : '';
     <span>Order Online</span>
   </a>
 
-  <!-- Mobile Bottom Anchor Bar -->
-  <nav class="mobile-bar" aria-label="Quick actions" transition:persist>
-    <a href="tel:5551234567">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h3.5l2 5.5L8 10a11 11 0 0 0 6 6l1.5-2.5L21 15.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-      <span>Call</span>
-    </a>
-    <a href="/contact">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
-      <span>Location</span>
-    </a>
-    <a href="/order">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.5 11a2 2 0 0 1-2 1.7H8.5a2 2 0 0 1-2-1.7L5 8Zm3-3a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>Takeout</span>
-    </a>
-    <a href="/reservations">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 10h17M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-      <span>Reserve</span>
-    </a>
-  </nav>
-
   <!-- Coming-soon modal (shared, fires on any [data-social-link] click) -->
   <div class="social-modal" data-social-modal hidden role="dialog" aria-modal="true" aria-labelledby="social-modal-title" transition:persist>
     <div class="social-modal-backdrop" data-social-modal-close></div>
