@@ -416,6 +416,23 @@
     `).join('');
   };
 
+  const ckoSummaryItemsEl    = $('[data-pos-cko-summary-items]');
+  const ckoSummarySubtotalEl = $('[data-pos-cko-summary-subtotal]');
+
+  const renderCheckoutSummary = () => {
+    ckoSummaryItemsEl.innerHTML = cart.map(line => `
+      <li>
+        <div>
+          <strong>${escapeHtml(line.name)}</strong>
+          ${formatModSummary(line.modifiers) ? `<span class="pos-cko-summary-meta">${escapeHtml(formatModSummary(line.modifiers))}</span>` : ''}
+          ${line.qty > 1 ? `<span class="pos-cko-summary-meta">Qty ${line.qty}</span>` : ''}
+        </div>
+        <span>$${line.lineTotal}</span>
+      </li>
+    `).join('');
+    ckoSummarySubtotalEl.textContent = '$' + computeSubtotal();
+  };
+
   const openCheckout = () => {
     cartContainer.hidden = true;
     checkoutEl.hidden = false;
@@ -426,6 +443,7 @@
       addressField.querySelector('input').required = true;
     }
     renderSlots();
+    renderCheckoutSummary();
     ckoTotalEl.textContent = '$' + computeSubtotal();
   };
 
@@ -521,7 +539,7 @@
   const mobileBarCount = $('.pos-mobile-bar-count', mobileBar);
   const cartCol = $('.pos-cart-col');
 
-  const isMobile = () => window.matchMedia('(max-width: 900px)').matches;
+  const isMobile = () => window.matchMedia('(max-width: 760px)').matches;
 
   const updateMobileBar = () => {
     const onMobile = isMobile();
@@ -574,6 +592,47 @@
   //   - cart line click handler
   //   - detail-panel add-to-cart handler
   // Easiest: hook the events we already have.
+  /* ─── Add-to-cart toast ─── */
+
+  const toastEl       = $('[data-pos-toast]');
+  const toastName     = $('[data-pos-toast-name]');
+  const toastSub      = $('[data-pos-toast-sub]');
+  const toastViewBtn  = $('[data-pos-toast-view]');
+
+  let toastTimer = null;
+
+  const showToast = (line) => {
+    toastName.textContent = line.name + ' added';
+    const sub = [];
+    if (formatModSummary(line.modifiers)) sub.push(formatModSummary(line.modifiers));
+    sub.push('$' + line.lineTotal);
+    toastSub.textContent = sub.join(' · ');
+    toastEl.hidden = false;
+    // Force reflow then add class for transition
+    requestAnimationFrame(() => toastEl.classList.add('is-shown'));
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toastEl.classList.remove('is-shown');
+      setTimeout(() => { toastEl.hidden = true; }, 300);
+    }, 2200);
+  };
+
+  // Fire after add-to-cart. The detail-panel handler in Task 5 pushed to cart,
+  // the Task 6 handler saved + rendered. Now we fire the toast.
+  detailAdd.addEventListener('click', () => {
+    // The most recently added line is the last entry in cart.
+    // By the time this handler runs, the others have already executed.
+    const justAdded = cart[cart.length - 1];
+    if (justAdded) showToast(justAdded);
+  });
+
+  // View button opens the cart (on mobile, opens the cart sheet)
+  toastViewBtn.addEventListener('click', () => {
+    toastEl.classList.remove('is-shown');
+    setTimeout(() => { toastEl.hidden = true; }, 200);
+    if (isMobile()) openMobileCart();
+  });
+
   cartItemsEl.addEventListener('click', updateMobileBar);
   detailAdd.addEventListener('click', () => setTimeout(updateMobileBar, 0));
 

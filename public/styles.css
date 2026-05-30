@@ -3011,7 +3011,7 @@ img, video, svg { max-width: 100%; height: auto; }
 }
 
 /* Single-column collapse */
-@media (max-width: 900px) {
+@media (max-width: 760px) {
   .pos-grid {
     grid-template-columns: 1fr;
   }
@@ -3626,7 +3626,7 @@ img, video, svg { max-width: 100%; height: auto; }
 .pos-ui.is-confirming .pos-mobile-bar { display: none; }
 
 /* ============================================================
-   Mobile bottom bar (only ≤900px)
+   Mobile bottom bar (only ≤760px)
 ============================================================ */
 .pos-mobile-bar[hidden] { display: none; }
 .pos-mobile-bar {
@@ -3651,12 +3651,12 @@ img, video, svg { max-width: 100%; height: auto; }
 .pos-mobile-bar-count { letter-spacing: .02em; }
 .pos-mobile-bar-arrow { font-size: 18px; }
 
-@media (min-width: 901px) {
+@media (min-width: 761px) {
   .pos-mobile-bar { display: none !important; }
 }
 
 /* Cart-as-sheet on mobile */
-@media (max-width: 900px) {
+@media (max-width: 760px) {
   .pos-cart-col {
     /* Override the desktop "display: none" — we now toggle visibility via JS */
     display: block;
@@ -3723,4 +3723,151 @@ img, video, svg { max-width: 100%; height: auto; }
   }
   .pos-item-body { padding: 12px 12px 14px; }
   .pos-item-head h3 { font-size: 16px; }
+}
+
+/* Checkout order summary */
+.pos-cko-summary {
+  background: var(--cream);
+  border-radius: 12px;
+  padding: 16px 18px;
+  border: 1px solid rgba(34,37,46,.06);
+}
+.pos-cko-summary-head h3 {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--slate);
+  margin: 0 0 12px;
+}
+.pos-cko-summary-items {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+}
+.pos-cko-summary-items li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(34,37,46,.08);
+  font-size: 14px;
+  color: var(--charcoal);
+}
+.pos-cko-summary-items li:last-child { border-bottom: none; }
+.pos-cko-summary-items strong {
+  font-weight: 600;
+  font-size: 14.5px;
+}
+.pos-cko-summary-meta {
+  display: block;
+  font-size: 12.5px;
+  color: var(--slate);
+  font-weight: 400;
+  margin-top: 2px;
+}
+.pos-cko-summary-subtotal {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  color: var(--charcoal);
+  font-size: 15px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(34,37,46,.12);
+}
+
+/* Add-to-cart toast */
+.pos-toast[hidden] { display: none; }
+.pos-toast {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+  z-index: 70;
+  opacity: 0;
+  transition: opacity .25s var(--ease), transform .25s var(--ease);
+  pointer-events: none;
+  width: calc(100% - 24px);
+  max-width: 420px;
+}
+.pos-toast.is-shown {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+.pos-toast-inner {
+  background: var(--charcoal);
+  color: var(--white);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 12px 30px -10px rgba(20,22,30,.45);
+}
+.pos-toast-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--blue-primary);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.pos-toast-body {
+  flex: 1;
+  min-width: 0;
+}
+.pos-toast-body strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pos-toast-sub {
+  display: block;
+  font-size: 12.5px;
+  opacity: .8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pos-toast-view {
+  background: var(--blue-primary);
+  color: var(--white);
+  border: none;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* On desktop the cart is already visible — hide the toast so we don't double up */
+@media (min-width: 761px) {
+  .pos-toast { display: none !important; }
+}
+
+/* If the mobile cart bar is visible, lift the toast above it */
+@media (max-width: 760px) {
+  .pos-toast { bottom: calc(env(safe-area-inset-bottom, 0px) + 70px); }
+}
+
+/* Tablet — tighter two-column gap and slightly smaller cart */
+@media (min-width: 761px) and (max-width: 1024px) {
+  .pos-grid {
+    gap: 24px;
+    grid-template-columns: minmax(0, 1.7fr) minmax(260px, 0.8fr);
+  }
+  .pos-cart { padding: 18px; }
+  .pos-header { padding: clamp(28px, 4vw, 56px) 0 clamp(20px, 3vw, 32px); }
 }

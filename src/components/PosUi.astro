@@ -77,6 +77,18 @@ const isPickup = fulfillment === 'pickup';
         </header>
 
         <form class="pos-checkout-form" data-pos-checkout-form novalidate>
+          <!-- Order summary (populated by JS on open) -->
+          <section class="pos-cko-summary" data-pos-cko-summary aria-label="Your order">
+            <header class="pos-cko-summary-head">
+              <h3>Your order</h3>
+            </header>
+            <ul class="pos-cko-summary-items" data-pos-cko-summary-items></ul>
+            <div class="pos-cko-summary-subtotal">
+              <span>Subtotal</span>
+              <span data-pos-cko-summary-subtotal>$0</span>
+            </div>
+          </section>
+
           <!-- Time -->
           <fieldset class="pos-cko-fs">
             <legend class="pos-cko-legend" data-pos-cko-time-legend>Pickup time</legend>
@@ -188,6 +200,18 @@ const isPickup = fulfillment === 'pickup';
           Track order
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- Add-to-cart toast (mobile + tablet, ephemeral) -->
+  <div class="pos-toast" data-pos-toast hidden role="status" aria-live="polite">
+    <div class="pos-toast-inner">
+      <span class="pos-toast-icon">✓</span>
+      <div class="pos-toast-body">
+        <strong data-pos-toast-name>Added</strong>
+        <span class="pos-toast-sub" data-pos-toast-sub></span>
+      </div>
+      <button type="button" class="pos-toast-view" data-pos-toast-view>View</button>
     </div>
   </div>
 
