@@ -2643,8 +2643,6 @@ body.page-fading { opacity: 0; }
   pointer-events: none;
 }
 
-/* ----- Hero parallax wrapper baseline ----- */
-.hero-media { will-change: transform; }
 
 /* ====================================================================
    Responsive tuning — consolidated coverage for ALL devices
@@ -2774,6 +2772,4 @@ img, video, svg { max-width: 100%; height: auto; }
 /* --- Honor reduced-motion across new animations --- */
 @media (prefers-reduced-motion: reduce) {
   .hero-title-circle { animation: none; }
-  .hero-ill-frame { animation: none; opacity: 1; }
-  .ill-frame-2, .ill-frame-3 { display: none; }
 }
