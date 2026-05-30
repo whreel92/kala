@@ -21,7 +21,6 @@ import Base from '../layouts/Base.astro';
     >
       <source src="/public/video/new_hero.mp4" type="video/mp4" />
     </video>
-    <div class="hero-gradient"></div>
     <div class="hero-illustration" aria-hidden="true">
       <img src="/public/hero-overlay-kf1.png" alt="" class="hero-ill-frame ill-frame-1" loading="eager" />
       <img src="/public/hero-overlay-kf2.png" alt="" class="hero-ill-frame ill-frame-2" loading="eager" />
@@ -100,12 +99,32 @@ import Base from '../layouts/Base.astro';
     };
 
     // Primary trigger: video finished playing through
-    video.addEventListener('ended', revealOnce, { once: true });
-    // Fallbacks: if the video fails, can't play, or stalls, reveal anyway
-    video.addEventListener('error', revealOnce, { once: true });
-    video.addEventListener('stalled', () => setTimeout(revealOnce, 4000), { once: true });
+    video.addEventListener('ended', revealOnce);
+    // Backup: timeupdate is cheap and fires the whole way through. We catch
+    // the last sliver of playback in case `ended` is flaky on this UA.
+    video.addEventListener('timeupdate', () => {
+      if (video.duration && isFinite(video.duration) &&
+          video.currentTime >= video.duration - 0.2) {
+        revealOnce();
+      }
+    });
+    // Backup: a no-loop video naturally pauses on its last frame
+    video.addEventListener('pause', revealOnce);
+    // Failure modes
+    video.addEventListener('error', revealOnce);
+    video.addEventListener('stalled', () => setTimeout(revealOnce, 3000));
+    // If autoplay was blocked (rare, since muted), reveal so the page is usable
+    video.addEventListener('suspend', () => setTimeout(() => {
+      if (video.paused && video.currentTime === 0) revealOnce();
+    }, 1500));
+    // Once we know the video duration, schedule a duration-based fallback
+    video.addEventListener('loadedmetadata', () => {
+      if (video.duration && isFinite(video.duration)) {
+        setTimeout(revealOnce, (video.duration + 0.5) * 1000);
+      }
+    });
     // Hard ceiling so users never sit in front of a blank hero
-    setTimeout(revealOnce, 14000);
+    setTimeout(revealOnce, 12000);
   })();
 </script>
 
