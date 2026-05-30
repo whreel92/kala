@@ -2894,3 +2894,36 @@ img, video, svg { max-width: 100%; height: auto; }
   .feta-landing { min-height: 70vh; }
   .feta-stage { width: clamp(180px, 60vw, 240px); }
 }
+
+/* The falling-olive element. Fixed-positioned, pinned to horizontal center.
+   Its vertical position is driven by the JS scroll handler in script.js,
+   which writes a px value to --olive-y on the body. CSS interpolates here. */
+.olive-tracker {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate3d(-50%, var(--olive-y, -200px), 0);
+  pointer-events: none;
+  z-index: 5;
+  /* Hidden by default; JS adds .is-active when in the drop zone */
+  opacity: 0;
+  transition: opacity .25s ease-out;
+  will-change: transform;
+}
+.olive-tracker.is-active { opacity: 1; }
+
+.olive-falling {
+  width: clamp(36px, 4vw, 56px);
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 700px) {
+  .olive-falling { width: clamp(28px, 7vw, 40px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hide the falling olive entirely; the .olive-landed in the feta band
+     remains as the static end state. */
+  .olive-tracker { display: none; }
+}
