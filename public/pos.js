@@ -375,8 +375,7 @@
 
   const checkoutEl       = $('[data-pos-checkout]');
   const checkoutOpenBtn  = $('[data-pos-checkout-open]');
-  const checkoutCloseBtn = $('[data-pos-checkout-close]');
-  const cartContainer    = $('.pos-cart');
+  const checkoutCloseBtn = $('[data-pos-checkout-close]');   // may be null now
   const checkoutForm     = $('[data-pos-checkout-form]');
   const slotsContainer   = $('[data-pos-cko-slots]');
   const timeLegend       = $('[data-pos-cko-time-legend]');
@@ -416,47 +415,42 @@
     `).join('');
   };
 
-  const ckoSummaryItemsEl    = $('[data-pos-cko-summary-items]');
-  const ckoSummarySubtotalEl = $('[data-pos-cko-summary-subtotal]');
-
-  const renderCheckoutSummary = () => {
-    ckoSummaryItemsEl.innerHTML = cart.map(line => `
-      <li>
-        <div>
-          <strong>${escapeHtml(line.name)}</strong>
-          ${formatModSummary(line.modifiers) ? `<span class="pos-cko-summary-meta">${escapeHtml(formatModSummary(line.modifiers))}</span>` : ''}
-          ${line.qty > 1 ? `<span class="pos-cko-summary-meta">Qty ${line.qty}</span>` : ''}
-        </div>
-        <span>$${line.lineTotal}</span>
-      </li>
-    `).join('');
-    ckoSummarySubtotalEl.textContent = '$' + computeSubtotal();
-  };
-
   const openCheckout = () => {
-    cartContainer.hidden = true;
+    // No panel swap — just expand the inline dropdown below the button.
     checkoutEl.hidden = false;
+    // Force a reflow so transition runs
+    requestAnimationFrame(() => checkoutEl.classList.add('is-open'));
+    checkoutOpenBtn.setAttribute('aria-expanded', 'true');
+    checkoutOpenBtn.classList.add('is-open');
     // Fulfillment-specific
     timeLegend.textContent = fulfillment === 'pickup' ? 'Pickup time' : 'Delivery time';
     addressField.hidden = fulfillment !== 'delivery';
     if (fulfillment === 'delivery') {
       addressField.querySelector('input').required = true;
+    } else {
+      addressField.querySelector('input').required = false;
     }
     renderSlots();
-    renderCheckoutSummary();
     ckoTotalEl.textContent = '$' + computeSubtotal();
+    // Scroll the form into view so the user can see what just opened
+    setTimeout(() => {
+      checkoutEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
   };
 
   const closeCheckout = () => {
-    checkoutEl.hidden = true;
-    cartContainer.hidden = false;
+    checkoutEl.classList.remove('is-open');
+    setTimeout(() => { checkoutEl.hidden = true; }, 250);
+    checkoutOpenBtn.setAttribute('aria-expanded', 'false');
+    checkoutOpenBtn.classList.remove('is-open');
   };
 
   checkoutOpenBtn.addEventListener('click', () => {
     if (cart.length === 0) return;   // shouldn't happen but defensive
-    openCheckout();
+    if (checkoutEl.hidden) openCheckout();
+    else closeCheckout();
   });
-  checkoutCloseBtn.addEventListener('click', closeCheckout);
+  if (checkoutCloseBtn) checkoutCloseBtn.addEventListener('click', closeCheckout);
 
   // Slot pill click selects exclusively
   slotsContainer.addEventListener('click', (e) => {
