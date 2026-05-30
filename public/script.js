@@ -10,23 +10,34 @@
   const finePointer =
     window.matchMedia('(pointer: fine)').matches;
 
+  // Astro's ClientRouter re-executes `is:inline` body scripts on every view
+  // transition. Anything appended to a persisted region (body, nav) would
+  // duplicate without this guard. Per-page handlers below still re-attach
+  // because main is swapped fresh.
+  const isFirstRun = !window.__kalaSiteChrome;
+  window.__kalaSiteChrome = true;
+
   /* ─────────────────── Scroll progress hairline ─────────────────── */
-  const progressBar = document.createElement('div');
-  progressBar.className = 'scroll-progress';
-  document.body.appendChild(progressBar);
+  let progressBar = $('.scroll-progress');
+  if (!progressBar) {
+    progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    document.body.appendChild(progressBar);
+  }
 
   /* ─────────────────── Sticky nav + scroll-driven UI ─────────────────── */
-  const nav         = $('#nav');
-  const stickyOrder = $('#stickyOrder');
-  const scrollCue   = $('.scroll-cue');
-  const heroMedia   = $('.hero-media');
-  const hero        = $('.hero') || $('.page-header');
-
+  // Refs re-queried every scroll because main is swapped between pages.
   const onScroll = () => {
     const y    = window.scrollY;
     const docH = document.documentElement.scrollHeight - window.innerHeight;
     const pct  = docH > 0 ? Math.min(100, (y / docH) * 100) : 0;
     progressBar.style.setProperty('--progress', `${pct}%`);
+
+    const nav         = document.getElementById('nav');
+    const stickyOrder = document.getElementById('stickyOrder');
+    const scrollCue   = document.querySelector('.scroll-cue');
+    const heroMedia   = document.querySelector('.hero-media');
+    const hero        = document.querySelector('.hero') || document.querySelector('.page-header');
 
     if (nav) nav.classList.toggle('is-scrolled', y > 16);
 
@@ -42,31 +53,35 @@
       heroMedia.style.transform = `translate3d(0, ${offset}px, 0)`;
     }
   };
-  window.addEventListener('scroll', onScroll, { passive: true });
+  if (isFirstRun) window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
   /* ─────────────────── Mobile menu (full-screen overlay) ─────────────────── */
-  const navToggle = $('#navToggle');
-  const mobileMenu = $('#mobileMenu');
-  if (navToggle && mobileMenu) {
-    const closeMenu = () => {
-      mobileMenu.classList.remove('open');
-      navToggle.setAttribute('aria-expanded', 'false');
-      mobileMenu.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    };
-    navToggle.addEventListener('click', () => {
-      const open = mobileMenu.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
-      document.body.style.overflow = open ? 'hidden' : '';
-    });
-    mobileMenu.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', closeMenu);
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenu();
-    });
+  // navToggle and mobileMenu are inside transition:persist regions, so
+  // listeners only need to be attached once.
+  if (isFirstRun) {
+    const navToggle = $('#navToggle');
+    const mobileMenu = $('#mobileMenu');
+    if (navToggle && mobileMenu) {
+      const closeMenu = () => {
+        mobileMenu.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      };
+      navToggle.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
+        document.body.style.overflow = open ? 'hidden' : '';
+      });
+      mobileMenu.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', closeMenu);
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenu();
+      });
+    }
   }
 
   /* ─────────────────── Reveal-on-scroll (staggered) ─────────────────── */
@@ -74,7 +89,9 @@
     const revealEls = $$(
       '.menu-card, .section-header, .visit-info, .visit-map, .story-text, ' +
       '.story-visual, .menu-category-head, .story-block-text, .story-block-image, ' +
-      '.value-card, .pull-quote, .page-header, .menu-item-card, .order-card, .step'
+      '.value-card, .pull-quote, .page-header, .menu-item-card, .order-card, .step, ' +
+      '.callout-frame, .invite-inner, .menu-cta > .container, .walk-in-inner, ' +
+      '.reserve-card, .dish-marquee-eyebrow'
     );
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -86,6 +103,8 @@
     }, { threshold: 0.14, rootMargin: '0px 0px -40px 0px' });
 
     revealEls.forEach(el => {
+      // Skip if already revealed (e.g. on view-transition rerun)
+      if (el.classList.contains('in-view')) return;
       const parent = el.parentElement;
       const peers  = parent
         ? Array.from(parent.children).filter(c => revealEls.includes(c))
@@ -98,20 +117,21 @@
     });
   }
 
-  /* ─────────────────── Auto-active nav + magic underline ─────────────────── */
+  /* ─────────────────── Magic sliding underline on primary nav ─────────────────── */
+  // .nav-links lives inside transition:persist #nav, so we only create the
+  // sliding element once. The active class is already set server-side via the
+  // `current` prop in Base.astro; on each transition we just reposition based
+  // on whichever link is active now.
   const navLinks = $('.nav-links');
   if (navLinks) {
-    const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    let magic = navLinks.querySelector('.nav-magic');
+    if (!magic) {
+      magic = document.createElement('span');
+      magic.className = 'nav-magic';
+      navLinks.appendChild(magic);
+    }
+
     const links = $$('a', navLinks);
-    links.forEach(a => {
-      const href = (a.getAttribute('href') || '').toLowerCase();
-      if (href === path) a.classList.add('is-active');
-    });
-
-    const magic = document.createElement('span');
-    magic.className = 'nav-magic';
-    navLinks.appendChild(magic);
-
     const positionMagic = (target) => {
       if (!target) {
         magic.style.opacity = '0';
@@ -123,34 +143,37 @@
       magic.style.width     = `${r.width}px`;
       magic.style.transform = `translateX(${r.left - pr.left}px)`;
     };
-    const active = navLinks.querySelector('a.is-active');
-    requestAnimationFrame(() => active ? positionMagic(active) : (magic.style.opacity = '0'));
-
-    links.forEach(a => a.addEventListener('mouseenter', () => positionMagic(a)));
-    navLinks.addEventListener('mouseleave', () => {
-      if (active) positionMagic(active);
+    const getActive = () => navLinks.querySelector('a.is-active');
+    requestAnimationFrame(() => {
+      const a = getActive();
+      if (a) positionMagic(a);
       else magic.style.opacity = '0';
     });
-    window.addEventListener('resize', () => {
-      const hovered = navLinks.querySelector('a:hover') || active;
-      if (hovered) positionMagic(hovered);
-    });
+
+    if (isFirstRun) {
+      links.forEach(a => a.addEventListener('mouseenter', () => positionMagic(a)));
+      navLinks.addEventListener('mouseleave', () => {
+        const a = getActive();
+        if (a) positionMagic(a);
+        else magic.style.opacity = '0';
+      });
+      window.addEventListener('resize', () => {
+        const a = navLinks.querySelector('a:hover') || getActive();
+        if (a) positionMagic(a);
+      });
+    }
   }
 
   /* ─────────────────── Mobile bottom-bar active state ─────────────────── */
   const mobileBar = $('.mobile-bar');
   if (mobileBar) {
-    const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-    const map = {
-      'order.html': 'a[href="order.html"]',
-      'contact.html': 'a[href="contact.html"]',
-      'reservations.html': 'a[href="reservations.html"]',
-    };
-    const sel = map[path];
-    if (sel) {
-      const el = mobileBar.querySelector(sel);
-      if (el) el.classList.add('is-current');
-    }
+    // Normalize to a leading "/<name>" form, dropping any trailing .html
+    const raw = location.pathname.toLowerCase();
+    const key = raw.replace(/\.html$/, '').replace(/\/$/, '') || '/';
+    mobileBar.querySelectorAll('a').forEach(a => {
+      const href = (a.getAttribute('href') || '').toLowerCase().replace(/\.html$/, '');
+      if (href && href === key) a.classList.add('is-current');
+    });
   }
 
   /* ─────────────────── Menu page: filter chips ─────────────────── */
@@ -506,26 +529,13 @@
     }
   }
 
-  /* ─────────────────── Page-fade transition between pages ─────────────────── */
-  if (!prefersReducedMotion) {
-    document.addEventListener('click', (e) => {
-      const a = e.target.closest('a');
-      if (!a) return;
-      const href = a.getAttribute('href');
-      if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
-      if (a.target === '_blank' || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button !== 0) return;
-      let url;
-      try { url = new URL(href, location.href); } catch { return; }
-      if (url.origin !== location.origin) return;
-      if (url.pathname === location.pathname && url.search === location.search) return;
-      e.preventDefault();
-      document.body.classList.add('page-fading');
-      setTimeout(() => { location.href = href; }, 210);
-    });
-    window.addEventListener('pageshow', () => {
-      document.body.classList.remove('page-fading');
-    });
-  }
+  /* ─────────────────── Page-fade transition ─────────────────── */
+  // Astro's ClientRouter handles cross-document transitions via the View
+  // Transitions API. We just clear any lingering fade class on pageshow so a
+  // back-button navigation never leaves the body invisible.
+  window.addEventListener('pageshow', () => {
+    document.body.classList.remove('page-fading');
+  });
 
   /* ─────────────────── Coming-soon modal (social links) ─────────────────── */
   const socialModal = $('[data-social-modal]');

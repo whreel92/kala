@@ -43,7 +43,9 @@ import Base from '../layouts/Base.astro';
           <img
             src="/public/fammm.png"
             alt="The KALA family gathered around the table."
-            loading="lazy" />
+            loading="eager"
+            fetchpriority="high"
+            decoding="async" />
           <span class="caption">Family</span>
         </div>
       </div>
@@ -78,7 +80,7 @@ import Base from '../layouts/Base.astro';
             Nam ultrices, magna a porttitor laoreet, sapien lorem feugiat lectus, eget
             tincidunt lacus eros vitae nibh.
           </p>
-          <a href="menu.html" class="link-arrow">Browse the menu <span>→</span></a>
+          <a href="/menu" class="link-arrow">Browse the menu <span>→</span></a>
         </div>
         <div class="story-block-image">
           <img
@@ -167,11 +169,11 @@ import Base from '../layouts/Base.astro';
         lacus efficitur tincidunt.
       </p>
       <div class="invite-actions">
-        <a href="reservations.html" class="btn btn-primary btn-lg">
+        <a href="/reservations" class="btn btn-primary btn-lg">
           Make a Reservation
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a href="contact.html" class="btn btn-outline btn-lg">Get Directions</a>
+        <a href="/contact" class="btn btn-outline btn-lg">Get Directions</a>
       </div>
     </div>
   </section>

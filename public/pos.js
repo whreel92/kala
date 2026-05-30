@@ -185,7 +185,7 @@
       if (g.required && g.options.length) selections[g.id] = g.options[0].id;
     });
 
-    detailState = { item, selections, qty: 1 };
+    detailState = { item, catId, selections, qty: 1 };
     detail.hidden = false;
     // Force a reflow so the transition runs
     requestAnimationFrame(() => detail.classList.add('is-open'));
@@ -245,7 +245,7 @@
     cart.push({
       lineId: newLineId(),
       itemId: item.id,
-      catId: detailState.item.id,
+      catId: detailState.catId,
       name: item.name,
       image: item.image,
       basePrice: item.price,
