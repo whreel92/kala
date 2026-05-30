@@ -30,15 +30,14 @@ import Base from '../layouts/Base.astro';
 
   <div class="hero-content container">
     <div class="hero-text">
-      <span class="eyebrow eyebrow-light">Coastal · Mediterranean · Family-run</span>
+      <span class="eyebrow eyebrow-light">Coastal · Mediterranean · Destination</span>
       <h1 class="hero-title">
         <span class="title-line">KALA</span>
         <span class="title-line title-italic">Greek <span class="amp">&amp;</span> More</span>
       </h1>
       <p class="hero-sub">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque
-        magna. Praesent ut sollicitudin ligula, vitae laoreet justo. Curabitur dapibus laoreet
-        eros.
+        Savor coastal Mediterranean flavors,<br />
+        family-run warmth.
       </p>
       <div class="hero-buttons">
         <a href="/order" class="btn btn-primary btn-lg">
@@ -81,7 +80,14 @@ import Base from '../layouts/Base.astro';
     if (hero.dataset.kalaHeroInit === 'true') return;
     hero.dataset.kalaHeroInit = 'true';
 
-    const reveal = () => hero.classList.add('is-revealed');
+    const reveal = (videoEl) => {
+      hero.classList.add('is-revealed');
+      // Stop playback so we're not holding a video decoder open behind the
+      // hidden element, and so audio (if any track sneaks in) stays silent.
+      if (videoEl) {
+        try { videoEl.pause(); } catch (_) {}
+      }
+    };
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       reveal();
@@ -95,7 +101,7 @@ import Base from '../layouts/Base.astro';
     const revealOnce = () => {
       if (revealed) return;
       revealed = true;
-      reveal();
+      reveal(video);
     };
 
     // Primary trigger: video finished playing through
