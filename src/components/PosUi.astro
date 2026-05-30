@@ -1,0 +1,92 @@
+---
+interface Props {
+  fulfillment: 'pickup' | 'delivery';
+}
+const { fulfillment } = Astro.props;
+const isPickup = fulfillment === 'pickup';
+---
+
+<section
+  class="pos-ui"
+  data-pos-ui
+  data-fulfillment={fulfillment}
+>
+
+  <!-- Page header -->
+  <div class="pos-header container">
+    <span class="eyebrow">{isPickup ? 'Pickup' : 'Delivery'}</span>
+    <h1>{isPickup ? 'Order for Pickup' : 'Order for Delivery'}</h1>
+    <p class="pos-header-sub">
+      {isPickup
+        ? 'Ready in about 25 minutes at 1500 Queen Anne Ave N.'
+        : 'Delivered in about 45 minutes across Queen Anne.'}
+    </p>
+  </div>
+
+  <!-- Main two-column layout -->
+  <div class="pos-grid container">
+
+    <!-- Menu column (left) -->
+    <div class="pos-menu-col">
+      <!-- Category jump chips (populated by JS) -->
+      <nav class="pos-cats" aria-label="Menu categories">
+        <div class="pos-cats-inner" data-pos-cats></div>
+      </nav>
+
+      <!-- Menu sections (populated by JS) -->
+      <div class="pos-menu" data-pos-menu>
+        <!-- pos.js fills this in on mount -->
+      </div>
+    </div>
+
+    <!-- Cart column (right, sticky on desktop) -->
+    <aside class="pos-cart-col" aria-label="Your order">
+      <div class="pos-cart" data-pos-cart>
+        <header class="pos-cart-head">
+          <h2>Your order</h2>
+        </header>
+
+        <!-- Empty state -->
+        <div class="pos-cart-empty" data-pos-cart-empty>
+          <p class="pos-cart-empty-line">Your order is empty.</p>
+          <p class="pos-cart-empty-sub">Pick a dish from the menu to start.</p>
+        </div>
+
+        <!-- Line items (populated by JS) -->
+        <ul class="pos-cart-items" data-pos-cart-items hidden></ul>
+
+        <!-- Footer (subtotal + checkout button) -->
+        <footer class="pos-cart-foot" data-pos-cart-foot hidden>
+          <div class="pos-cart-subtotal">
+            <span>Subtotal</span>
+            <span data-pos-cart-subtotal>$0</span>
+          </div>
+          <button type="button" class="btn btn-primary btn-lg pos-checkout-btn" data-pos-checkout-open>
+            Proceed to checkout
+          </button>
+        </footer>
+      </div>
+
+      <!-- Checkout form (hidden until "Proceed to checkout") -->
+      <div class="pos-checkout" data-pos-checkout hidden>
+        <!-- Filled in by Task 7 -->
+      </div>
+    </aside>
+  </div>
+
+  <!-- Item detail panel (hidden) -->
+  <div class="pos-detail" data-pos-detail hidden role="dialog" aria-modal="true" aria-label="Customize item">
+    <!-- Filled in by Task 5 -->
+  </div>
+
+  <!-- Confirmation screen (hidden) -->
+  <div class="pos-confirm" data-pos-confirm hidden>
+    <!-- Filled in by Task 8 -->
+  </div>
+
+  <!-- Mobile sticky cart bar (hidden on desktop) -->
+  <button type="button" class="pos-mobile-bar" data-pos-mobile-bar hidden>
+    <span class="pos-mobile-bar-count">Cart</span>
+    <span class="pos-mobile-bar-arrow">›</span>
+  </button>
+</section>
