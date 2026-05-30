@@ -19,6 +19,7 @@
   const nav         = $('#nav');
   const stickyOrder = $('#stickyOrder');
   const scrollCue   = $('.scroll-cue');
+  const heroMedia   = $('.hero-media');
   const hero        = $('.hero') || $('.page-header');
 
   const onScroll = () => {
@@ -35,97 +36,14 @@
     }
 
     if (scrollCue) scrollCue.classList.toggle('is-hidden', y > 80);
+
+    if (heroMedia && !prefersReducedMotion) {
+      const offset = Math.min(y * 0.22, 180);
+      heroMedia.style.transform = `translate3d(0, ${offset}px, 0)`;
+    }
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
-
-  /* ─────────────────── Homepage olive-drop scroll animation ─────────────────── */
-  const tracker = $('[data-olive-tracker]');
-  if (tracker && !prefersReducedMotion) {
-    const heroHand   = $('.hero-hand');
-    const fetaStage  = $('.feta-stage');
-    const landedOlive = $('.olive-landed');
-
-    if (heroHand && fetaStage && landedOlive) {
-      // Anchors. Recomputed on layout changes.
-      let startY = 0;   // viewport-relative Y where the olive starts (hand fingertip)
-      let endY   = 0;   // viewport-relative Y where the olive lands on the feta
-      let zoneTop = 0;     // document-absolute top of drop zone
-      let zoneBottom = 0;  // document-absolute bottom of drop zone
-      let scheduled = false;
-
-      const measure = () => {
-        // Hand fingertip ≈ horizontal-center-of-hand, ~38% from top of hand image.
-        const handRect = heroHand.getBoundingClientRect();
-        const handFingertipPageY = handRect.top + window.scrollY + handRect.height * 0.38;
-
-        // Olive lands on top edge of feta block (matches .olive-landed top: 18%).
-        const landedRect = landedOlive.getBoundingClientRect();
-        const landingPageY = landedRect.top + window.scrollY + landedRect.height / 2;
-
-        zoneTop    = handFingertipPageY - window.innerHeight * 0.05;
-        zoneBottom = landingPageY;
-
-        startY = handFingertipPageY;
-        endY   = landingPageY;
-      };
-
-      const update = () => {
-        scheduled = false;
-        const y = window.scrollY;
-        // progress: 0 when scroll is at zoneTop (or above), 1 when scroll past zoneBottom
-        let progress = (y - zoneTop) / (zoneBottom - zoneTop);
-        if (progress < 0) progress = 0;
-        if (progress > 1) progress = 1;
-
-        // Olive's viewport-Y is interpolated: at progress=0 it's at the hand fingertip,
-        // at progress=1 it's at the landing point. Subtract scrollY to convert
-        // page-space to viewport-space (since the tracker is position: fixed).
-        const oliveY = startY + (endY - startY) * progress - y;
-        tracker.style.setProperty('--olive-y', `${oliveY}px`);
-
-        // Activate (fade in) while inside the zone
-        const inZone = y > zoneTop - window.innerHeight * 0.05 && y < zoneBottom + 100;
-        tracker.classList.toggle('is-active', inZone);
-
-        // Bounce-on-arrival: add .is-landed when progress first crosses .95;
-        // remove it when progress drops back below .92, so re-scrolling up and
-        // back down re-fires the bounce. Hysteresis prevents flicker.
-        if (progress >= 0.95) {
-          tracker.classList.add('is-landed');
-        } else if (progress < 0.92) {
-          tracker.classList.remove('is-landed');
-        }
-
-        // Hide the static landed copy until the falling olive has finished,
-        // so we don't see two olives at once.
-        landedOlive.style.opacity = progress >= 1 ? '1' : '0';
-      };
-
-      const onScrollOlive = () => {
-        if (scheduled) return;
-        scheduled = true;
-        requestAnimationFrame(update);
-      };
-
-      // Measure once initial layout settles; remeasure on resize.
-      const remeasure = () => {
-        measure();
-        update();
-      };
-      if ('ResizeObserver' in window) {
-        const ro = new ResizeObserver(remeasure);
-        ro.observe(document.body);
-      } else {
-        window.addEventListener('resize', remeasure);
-      }
-
-      window.addEventListener('scroll', onScrollOlive, { passive: true });
-      window.addEventListener('load', remeasure);
-      // Initial run (in case load already fired or images are cached)
-      remeasure();
-    }
-  }
 
   /* ─────────────────── Mobile menu (full-screen overlay) ─────────────────── */
   const navToggle = $('#navToggle');

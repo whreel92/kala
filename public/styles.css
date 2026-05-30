@@ -300,27 +300,101 @@ p { margin: 0 0 1em; }
   overflow: hidden;
   text-align: center;
 }
-.hero-cream {
-  background: var(--cream);
-  color: var(--charcoal);
+.hero-media {
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(160deg, #1d3a6e, #0562AA 60%, #608DC5);
+}
+.hero-media img,
+.hero-media .hero-bg-video {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  display: block;
+}
+.hero-media img {
+  animation: heroZoom 18s ease-out forwards;
+}
+/* Engraving-style illustration overlay (KALA sequence) — three keyframe stills
+   crossfading in a loop on top of the hero. mix-blend-mode: multiply drops the
+   pure-white paper background so only the ink lines + photo elements (KALA bottle,
+   feta, olive, glass, wine) appear stamped on the Queen Anne scene. */
+.hero-illustration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  animation: rise 1.2s var(--ease) both;
+  animation-delay: .5s;
+}
+.hero-ill-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: right top;
+  mix-blend-mode: multiply;
+  opacity: 0;
+  animation: heroIllSlideshow 12s ease-in-out infinite both;
+}
+.ill-frame-1 { animation-delay: 0s; }
+.ill-frame-2 { animation-delay: 4s; }
+.ill-frame-3 { animation-delay: 8s; }
+
+@keyframes heroIllSlideshow {
+  0%    { opacity: 0; }
+  5%    { opacity: 1; }
+  28%   { opacity: 1; }
+  33%   { opacity: 0; }
+  100%  { opacity: 0; }
+}
+
+@media (max-width: 900px) {
+  .hero-illustration { display: none; }
+}
+@keyframes heroZoom {
+  from { transform: scale(1.08); }
+  to   { transform: scale(1); }
+}
+.hero-gradient {
+  position: absolute; inset: 0;
+  z-index: 1;
+  background:
+    /* diagonal wash anchoring the text in the bottom-left */
+    linear-gradient(40deg,
+      rgba(20,22,30,.78) 0%,
+      rgba(20,22,30,.55) 30%,
+      rgba(20,22,30,.15) 60%,
+      transparent 85%),
+    /* bottom darkening for the meta pill and scroll cue */
+    linear-gradient(180deg,
+      rgba(20,22,30,.15) 0%,
+      rgba(20,22,30,.35) 45%,
+      rgba(20,22,30,.85) 100%),
+    /* Greek-blue color cast on the left edge */
+    linear-gradient(90deg,
+      rgba(25,75,158,.5) 0%,
+      rgba(25,75,158,.1) 35%,
+      transparent 60%);
 }
 .hero-content {
   position: relative;
   max-width: 1240px;
   width: 100%;
   z-index: 2;
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: clamp(24px, 4vw, 64px);
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 .hero-text {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  max-width: 560px;
+  align-items: center;
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
 }
 .hero-text > * { animation: rise .9s var(--ease) both; }
 .hero-text .eyebrow { animation-delay: .05s; }
@@ -329,79 +403,52 @@ p { margin: 0 0 1em; }
 .hero-buttons       { animation-delay: .45s; }
 .hero-meta          { animation-delay: .6s; }
 
-/* Hero hand — right column */
-.hero-hand-wrap {
+/* Hero video frame (right column) */
+.hero-video-frame {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  max-width: 620px;
+  justify-self: center;
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.22);
+  box-shadow:
+    0 30px 60px -20px rgba(0,0,0,.55),
+    0 8px 24px -8px rgba(0,0,0,.4),
+    inset 0 0 0 1px rgba(255,255,255,.06);
   animation: rise 1s var(--ease) both;
   animation-delay: .35s;
 }
-.hero-hand {
-  width: clamp(220px, 28vw, 360px);
-  height: auto;
+.hero-video-frame::after {
+  /* subtle warm vignette to integrate with the hero */
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,.28) 100%);
+  pointer-events: none;
+}
+.hero-video-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
   display: block;
-  /* hand-olive.png composition has the olive at the fingertip;
-     we center the hand image inside the right column so the olive
-     sits roughly at the horizontal center of the viewport */
-  margin-left: -16%;
 }
 
-/* Cream hero overrides: the old hero rules below assumed a dark video
-   background and set white text colors. On cream they're invisible, so
-   we re-color the relevant pieces here, scoped to .hero-cream only. */
-.hero-cream .title-line { text-shadow: none; }
-.hero-cream .title-italic { color: var(--charcoal); }
-.hero-cream .hero-sub {
-  color: var(--slate);
-  margin-left: 0;
-  margin-right: 0;
-  text-align: left;
-}
-.hero-cream .hero-buttons { justify-content: flex-start; }
-.hero-cream .hero-meta {
-  background: rgba(34, 37, 46, .05);
-  border-color: rgba(34, 37, 46, .12);
-  backdrop-filter: none;
-}
-.hero-cream .meta-label { color: var(--slate); opacity: .65; }
-.hero-cream .meta-value { color: var(--charcoal); }
-.hero-cream .meta-divider { background: rgba(34, 37, 46, .15); }
-.hero-cream .scroll-cue { color: var(--charcoal); opacity: .55; }
-.hero-cream .btn-ghost {
-  background: transparent;
-  color: var(--blue-primary);
-  border-color: var(--blue-primary);
-}
-.hero-cream .btn-ghost:hover {
-  background: var(--blue-primary);
-  color: var(--cream);
+/* Home hero now uses the illustration overlay instead of the framed video on the right */
+.hero-content { grid-template-columns: 1fr; }
+.hero-video-frame { display: none; }
+
+@media (max-width: 900px) {
+  .hero-content {
+    grid-template-columns: 1fr;
+  }
 }
 
 @keyframes rise {
   from { opacity: 0; transform: translateY(28px); }
   to   { opacity: 1; transform: translateY(0); }
-}
-
-@media (max-width: 900px) {
-  .hero-content {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  .hero-text {
-    align-items: center;
-    text-align: center;
-  }
-  .hero-hand-wrap {
-    order: -1; /* hand above text on mobile */
-  }
-  .hero-hand {
-    width: clamp(160px, 50vw, 240px);
-    margin-left: 0;
-  }
-  .hero-cream .hero-sub { text-align: center; }
-  .hero-cream .hero-buttons { justify-content: center; }
 }
 
 .hero-title {
@@ -893,6 +940,12 @@ p { margin: 0 0 1em; }
   animation-timing-function: ease-in-out;
   will-change: transform;
   transition: transform .6s var(--ease), box-shadow .6s var(--ease);
+}
+.hand-olive {
+  top: 4%;
+  left: -6%;
+  width: 68%;
+  transform: rotate(-3deg);
 }
 .hand-wine {
   bottom: 2%;
@@ -2594,6 +2647,9 @@ body.page-fading { opacity: 0; }
 /* ----- Magnetic primary CTA prep ----- */
 .btn-primary.btn-lg { will-change: transform; }
 
+/* ----- Hero parallax wrapper baseline ----- */
+.hero-media { will-change: transform; }
+
 /* ----- Chapter rail (our-story.html) ----- */
 .chapter-rail {
   position: fixed;
@@ -2679,11 +2735,16 @@ body.page-fading { opacity: 0; }
    without breaking position: sticky on the navbar. */
 html { overflow-x: clip; }
 img, video, svg { max-width: 100%; height: auto; }
+.hero-bg-video,
+.hero-media img,
+.hero-ill-frame,
 .page-header.has-bg::after,
+.hero-illustration img,
 .value-card .value-image img,
 .order-card-image img,
 .dish-tile img,
 .menu-item-card .card-image img,
+.hero-video-frame video,
 .story-block-image img { height: 100%; }
 
 /* --- Mid breakpoint (tablet, ≤880px) --- */
@@ -2796,149 +2857,6 @@ img, video, svg { max-width: 100%; height: auto; }
 /* --- Honor reduced-motion across new animations --- */
 @media (prefers-reduced-motion: reduce) {
   .hero-title-circle { animation: none; }
-}
-
-/* ──────────────────────────────────────────────
-   Olive-drop scroll choreography
-   ────────────────────────────────────────────── */
-
-.transition-band {
-  position: relative;
-  background: var(--cream);
-  min-height: 65vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8vh 0 12vh;
-}
-.transition-line {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
-  color: var(--charcoal);
-  opacity: .78;
-  text-align: center;
-  max-width: 32ch;
-  margin: 0 auto;
-  line-height: 1.25;
-}
-.meander-divider-bottom {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-@media (max-width: 700px) {
-  .transition-band { min-height: 50vh; padding: 6vh 0 8vh; }
-}
-
-/* ====================== Feta Landing ====================== */
-.feta-landing {
-  position: relative;
-  background: var(--cream);
-  min-height: 92vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6vh 0;
-}
-.meander-divider-top {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-}
-.feta-landing-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(1.5rem, 3vw, 2.5rem);
-}
-.feta-stage {
-  position: relative;
-  width: clamp(220px, 28vw, 340px);
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-.feta-block {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-.olive-landed {
-  position: absolute;
-  top: 18%;
-  left: 50%;
-  width: 14%;
-  height: auto;
-  transform: translateX(-50%);
-  opacity: 0;          /* shown by JS once falling olive arrives */
-  transition: opacity .25s ease-out;
-}
-.feta-caption {
-  text-align: center;
-  max-width: 42ch;
-}
-.feta-line {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
-  color: var(--charcoal);
-  opacity: .82;
-  margin: .25rem 0 0;
-}
-
-@media (max-width: 700px) {
-  .feta-landing { min-height: 70vh; }
-  .feta-stage { width: clamp(180px, 60vw, 240px); }
-}
-
-/* The falling-olive element. Fixed-positioned, pinned to horizontal center.
-   Its vertical position is driven by the JS scroll handler in script.js,
-   which writes a px value to --olive-y on the body. CSS interpolates here. */
-.olive-tracker {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translate3d(-50%, var(--olive-y, -200px), 0);
-  pointer-events: none;
-  z-index: 5;
-  /* Hidden by default; JS adds .is-active when in the drop zone */
-  opacity: 0;
-  transition: opacity .25s ease-out;
-  will-change: transform;
-}
-.olive-tracker.is-active { opacity: 1; }
-
-/* Bounce-on-arrival: a small drop-and-settle motion overlaid on the
-   tracker's translated position. Triggered by adding .is-landed via JS. */
-.olive-tracker.is-landed .olive-falling {
-  animation: oliveBounce .42s cubic-bezier(.55, .06, .68, .19) 1;
-}
-@keyframes oliveBounce {
-  0%   { transform: translateY(0); }
-  35%  { transform: translateY(8px); }
-  60%  { transform: translateY(-3px); }
-  85%  { transform: translateY(2px); }
-  100% { transform: translateY(0); }
-}
-
-.olive-falling {
-  width: clamp(36px, 4vw, 56px);
-  height: auto;
-  display: block;
-}
-
-@media (max-width: 700px) {
-  .olive-falling { width: clamp(28px, 7vw, 40px); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  /* Hide the falling olive entirely; the .olive-landed in the feta band
-     remains as the static end state. */
-  .olive-tracker { display: none; }
-  .olive-landed { opacity: 1; }
+  .hero-ill-frame { animation: none; opacity: 1; }
+  .ill-frame-2, .ill-frame-3 { display: none; }
 }

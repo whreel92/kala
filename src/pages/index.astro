@@ -7,16 +7,32 @@ import Base from '../layouts/Base.astro';
   current="/"
 >
 
-<!-- Olive-drop scroll tracker (the falling olive; falls from hero to feta landing) -->
-<div class="olive-tracker" aria-hidden="true" data-olive-tracker>
-  <img src="/public/olive.png" alt="" class="olive olive-falling" />
-</div>
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-media">
+    <video
+      class="hero-bg-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      poster="/public/hero-queen-anne-greek-v3.png"
+      aria-label="KALA — Greek coastal Mediterranean atmosphere"
+    >
+      <source src="/public/video/new_hero.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-gradient"></div>
+    <div class="hero-illustration" aria-hidden="true">
+      <img src="/public/hero-overlay-kf1.png" alt="" class="hero-ill-frame ill-frame-1" loading="eager" />
+      <img src="/public/hero-overlay-kf2.png" alt="" class="hero-ill-frame ill-frame-2" loading="eager" />
+      <img src="/public/hero-overlay-kf3.png" alt="" class="hero-ill-frame ill-frame-3" loading="eager" />
+    </div>
+  </div>
 
-<!-- Hero (cream / minimal) -->
-<section class="hero hero-cream">
   <div class="hero-content container">
     <div class="hero-text">
-      <span class="eyebrow">Coastal · Mediterranean · Family-run</span>
+      <span class="eyebrow eyebrow-light">Coastal · Mediterranean · Family-run</span>
       <h1 class="hero-title">
         <span class="title-line">KALA</span>
         <span class="title-line title-italic">Greek <span class="amp">&amp;</span> More</span>
@@ -47,41 +63,27 @@ import Base from '../layouts/Base.astro';
       </div>
     </div>
 
-    <div class="hero-hand-wrap" aria-hidden="true">
-      <img src="/public/hand_olive.png" alt="" class="hero-hand" loading="eager" />
+    <div class="hero-video-frame" aria-hidden="true">
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster="/public/video/hero_video_poster.jpg"
+      >
+        <source src="/public/video/hero_video.mp4" type="video/mp4" />
+      </video>
     </div>
   </div>
 
-  <a href="#feta-landing" class="scroll-cue" aria-label="Scroll to see the olive land">
+  <a href="#callout" class="scroll-cue" aria-label="Scroll to content">
     <span>scroll</span>
     <svg viewBox="0 0 14 24" aria-hidden="true">
       <rect x="0.5" y="0.5" width="13" height="23" rx="6.5" fill="none" stroke="currentColor"/>
       <circle cx="7" cy="7" r="2" fill="currentColor"/>
     </svg>
   </a>
-</section>
-
-<!-- Transition Band — olive falls through this -->
-<section class="transition-band">
-  <div class="container">
-    <p class="transition-line">From hand, to table, to you.</p>
-  </div>
-  <div class="meander-divider meander-divider-bottom" aria-hidden="true"></div>
-</section>
-
-<!-- Feta Landing — olive lands here -->
-<section class="feta-landing" id="feta-landing">
-  <div class="meander-divider meander-divider-top" aria-hidden="true"></div>
-  <div class="container feta-landing-inner">
-    <div class="feta-stage" aria-hidden="true">
-      <img src="/public/olive.png" alt="" class="olive olive-landed" />
-      <img src="/public/feta-block.png" alt="" class="feta-block" />
-    </div>
-    <div class="feta-caption">
-      <span class="eyebrow">Made by hand</span>
-      <p class="feta-line">Greek staples. Simply, carefully prepared.</p>
-    </div>
-  </div>
 </section>
 
 <!-- A Taste of Greece — auto-scrolling dish marquee -->
@@ -302,6 +304,7 @@ import Base from '../layouts/Base.astro';
     <div class="story-visual" aria-hidden="true">
       <div class="vis-glow"></div>
 
+      <img src="/public/hand_olive.png" alt="" class="hand hand-olive" loading="lazy" />
       <img src="/public/hand_wine.png"  alt="" class="hand hand-wine"  loading="lazy" />
 
       <svg class="key-ribbon" viewBox="0 0 600 40" preserveAspectRatio="none">
