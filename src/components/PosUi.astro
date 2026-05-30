@@ -39,11 +39,19 @@ const isPickup = fulfillment === 'pickup';
       </div>
     </div>
 
-    <!-- Cart column (right, sticky on desktop) -->
-    <aside class="pos-cart-col" aria-label="Your order">
-      <div class="pos-cart" data-pos-cart>
+    <!-- Cart panel — hidden by default, opens as a full-screen overlay
+         when the user taps the floating "Your order" button below. -->
+    <aside class="pos-cart-col" aria-label="Your order" aria-hidden="true">
+      <div class="pos-cart-backdrop" data-pos-cart-close aria-hidden="true"></div>
+      <div class="pos-cart" data-pos-cart role="dialog" aria-modal="true" aria-label="Your order">
         <header class="pos-cart-head">
           <h2>Your order</h2>
+          <button
+            type="button"
+            class="pos-cart-close"
+            data-pos-cart-close
+            aria-label="Close cart"
+          >×</button>
         </header>
 
         <!-- Empty state -->
@@ -192,9 +200,15 @@ const isPickup = fulfillment === 'pickup';
     </div>
   </div>
 
-  <!-- Mobile sticky cart bar (hidden on desktop) -->
-  <button type="button" class="pos-mobile-bar" data-pos-mobile-bar hidden>
-    <span class="pos-mobile-bar-count">Cart</span>
-    <span class="pos-mobile-bar-arrow">›</span>
+  <!-- Floating "Your order" button — bottom-right on every viewport.
+       Tapping opens the cart as a full-screen overlay. -->
+  <button type="button" class="pos-mobile-bar" data-pos-mobile-bar aria-label="Open your order">
+    <svg class="pos-mobile-bar-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5 7h14l-1.5 11a2 2 0 0 1-2 1.7H8.5a2 2 0 0 1-2-1.7L5 7Zm3-3a4 4 0 0 1 8 0v3"
+        fill="none" stroke="currentColor" stroke-width="1.8"
+        stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="pos-mobile-bar-count" data-pos-mobile-bar-count>Your order</span>
+    <span class="pos-mobile-bar-badge" data-pos-mobile-bar-badge hidden>0</span>
   </button>
 </section>

@@ -17,6 +17,10 @@
   const isFirstRun = !window.__kalaSiteChrome;
   window.__kalaSiteChrome = true;
 
+  // Sync the `is-pos` body class with whether the current page mounts the POS
+  // UI. pos.js adds the class; we clear it here when the user navigates away.
+  document.body.classList.toggle('is-pos', !!document.querySelector('[data-pos-ui]'));
+
   /* ─────────────────── Scroll progress hairline ─────────────────── */
   let progressBar = $('.scroll-progress');
   if (!progressBar) {

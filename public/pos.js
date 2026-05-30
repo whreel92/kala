@@ -527,65 +527,54 @@
     return `${h}:${m.toString().padStart(2, '0')}${ampm}`;
   };
 
-  /* ─── Mobile bottom bar ─── */
+  /* ─── Floating "Your order" button + full-screen cart overlay ─── */
 
-  const mobileBar = $('[data-pos-mobile-bar]');
-  const mobileBarCount = $('.pos-mobile-bar-count', mobileBar);
-  const cartCol = $('.pos-cart-col');
+  // Mark the body so legacy browsers (no :has()) can still suppress the
+  // global sticky-order / mobile-bar chrome on POS pages.
+  document.body.classList.add('is-pos');
 
-  const isMobile = () => window.matchMedia('(max-width: 760px)').matches;
+  const mobileBar      = $('[data-pos-mobile-bar]');
+  const mobileBarCount = $('[data-pos-mobile-bar-count]') || $('.pos-mobile-bar-count', mobileBar);
+  const mobileBarBadge = $('[data-pos-mobile-bar-badge]');
+  const cartCol        = $('.pos-cart-col');
+  const cartCloseBtns  = $$('[data-pos-cart-close]');
 
   const updateMobileBar = () => {
-    const onMobile = isMobile();
-    // Always render the count; we leave actual show/hide to media query + cart count
     const count = cart.reduce((n, l) => n + l.qty, 0);
     const subtotal = computeSubtotal();
-    if (count === 0 || !onMobile) {
-      mobileBar.hidden = true;
-      return;
+    if (count === 0) {
+      mobileBarCount.textContent = 'Your order';
+      if (mobileBarBadge) mobileBarBadge.hidden = true;
+    } else {
+      mobileBarCount.textContent = `Your order · $${subtotal}`;
+      if (mobileBarBadge) {
+        mobileBarBadge.hidden = false;
+        mobileBarBadge.textContent = String(count);
+      }
     }
-    mobileBar.hidden = false;
-    mobileBarCount.textContent = `Cart (${count}) · $${subtotal}`;
   };
 
   const openMobileCart = () => {
     cartCol.classList.add('is-open');
+    cartCol.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    // Focus the close button so keyboard users can dismiss it quickly
+    setTimeout(() => cartCloseBtns[0]?.focus(), 80);
   };
   const closeMobileCart = () => {
     cartCol.classList.remove('is-open');
+    cartCol.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
   };
 
   mobileBar.addEventListener('click', openMobileCart);
+  cartCloseBtns.forEach(el => el.addEventListener('click', closeMobileCart));
 
-  // Tap outside the cart sheet closes it (i.e., on the backdrop area above the sheet).
-  // We can implement this by closing when the user taps anywhere that's not inside .pos-cart-col while it's open.
-  document.addEventListener('click', (e) => {
-    if (!isMobile()) return;
-    if (!cartCol.classList.contains('is-open')) return;
-    if (cartCol.contains(e.target)) return;
-    if (mobileBar.contains(e.target)) return;
-    closeMobileCart();
-  });
-
-  // Esc closes the mobile cart sheet
+  // Esc closes the cart overlay
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && cartCol.classList.contains('is-open')) closeMobileCart();
   });
 
-  // After every cart mutation, re-check the bar
-  const _origRenderCart = renderCart;
-  const wrappedRenderCart = () => {
-    _origRenderCart();
-    updateMobileBar();
-  };
-  // Replace the renderCart reference globally is tricky inside this IIFE.
-  // Instead, just call updateMobileBar after every known mutation point:
-  //   - initial load (done above)
-  //   - cart line click handler
-  //   - detail-panel add-to-cart handler
-  // Easiest: hook the events we already have.
   /* ─── Add-to-cart toast ─── */
 
   const toastEl       = $('[data-pos-toast]');
@@ -620,18 +609,15 @@
     if (justAdded) showToast(justAdded);
   });
 
-  // View button opens the cart (on mobile, opens the cart sheet)
+  // The toast's "View" button opens the cart overlay on every viewport
   toastViewBtn.addEventListener('click', () => {
     toastEl.classList.remove('is-shown');
     setTimeout(() => { toastEl.hidden = true; }, 200);
-    if (isMobile()) openMobileCart();
+    openMobileCart();
   });
 
   cartItemsEl.addEventListener('click', updateMobileBar);
   detailAdd.addEventListener('click', () => setTimeout(updateMobileBar, 0));
-
-  // Also re-check on resize (entering/leaving mobile)
-  window.addEventListener('resize', updateMobileBar);
 
   // Initial run
   updateMobileBar();

@@ -2888,22 +2888,36 @@ img, video, svg { max-width: 100%; height: auto; }
   margin: 0 auto;
 }
 
-/* Two-column grid */
+/* Single-column layout — the cart is no longer pinned to the right;
+   it lives in a floating button at the bottom-right that expands into a
+   full-screen overlay. */
 .pos-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.9fr);
-  gap: clamp(24px, 3vw, 48px);
+  display: block;
   padding-bottom: clamp(60px, 8vw, 100px);
-  align-items: start;
 }
 .pos-menu-col { min-width: 0; }
+
+/* Cart column is a hidden full-screen overlay until opened via the
+   floating button. */
 .pos-cart-col {
-  position: sticky;
-  top: 88px;             /* below the persistent site nav */
-  align-self: start;
-  max-height: calc(100vh - 110px);
-  overflow: hidden;     /* scroll happens inside .pos-cart */
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: var(--white);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity .28s var(--ease), transform .28s var(--ease);
+  overflow-y: auto;
 }
+.pos-cart-col.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+/* Legacy element from the older bottom-sheet design — keep it out of the
+   way; the full-screen overlay no longer needs a separate backdrop. */
+.pos-cart-backdrop { display: none; }
 
 /* Category chip bar (sticky inside menu column) */
 .pos-cats {
@@ -2972,24 +2986,54 @@ img, video, svg { max-width: 100%; height: auto; }
   font-size: 14.5px;
 }
 
-/* Empty cart state */
+/* Cart panel — centered column inside the full-screen overlay so contents
+   stay readable on wide displays. The overlay's white background fills the
+   actual screen behind it. */
 .pos-cart {
-  background: var(--white);
-  border: 1px solid rgba(34,37,46,.08);
-  border-radius: 14px;
-  padding: 22px;
-  box-shadow: var(--shadow-soft);
-  max-height: calc(100vh - 110px);
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 56px) clamp(20px, 4vw, 32px) clamp(28px, 5vw, 56px);
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+}
+.pos-cart > .pos-cart-empty {
+  align-self: center;
+  width: 100%;
+  max-width: 480px;
+  margin-top: clamp(32px, 6vw, 60px);
+}
+.pos-cart-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 16px;
 }
 .pos-cart-head h2 {
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: clamp(22px, 3vw, 28px);
   font-weight: 500;
-  margin: 0 0 14px;
+  margin: 0;
   color: var(--charcoal);
 }
+.pos-cart-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--cream);
+  color: var(--charcoal);
+  font-size: 22px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background .2s var(--ease), color .2s var(--ease);
+  flex-shrink: 0;
+}
+.pos-cart-close:hover { background: var(--blue-tint); color: var(--blue-primary); }
 .pos-cart-empty {
   background: var(--cream);
   border: 1px dashed rgba(34,37,46,.18);
@@ -3010,14 +3054,8 @@ img, video, svg { max-width: 100%; height: auto; }
   margin: 0;
 }
 
-/* Single-column collapse */
+/* Tighter category chip placement on small screens */
 @media (max-width: 760px) {
-  .pos-grid {
-    grid-template-columns: 1fr;
-  }
-  .pos-cart-col {
-    display: none;          /* mobile uses bottom bar + sheet — added in Task 9 */
-  }
   .pos-cats { top: 60px; }
 }
 
@@ -3632,76 +3670,64 @@ img, video, svg { max-width: 100%; height: auto; }
 .pos-ui.is-confirming .pos-mobile-bar { display: none; }
 
 /* ============================================================
-   Mobile bottom bar (only ≤760px)
+   Floating "Your order" button (all viewports)
+   — bottom-right pill that expands the cart into a full-screen overlay
 ============================================================ */
-.pos-mobile-bar[hidden] { display: none; }
 .pos-mobile-bar {
   position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 30;
+  right: clamp(16px, 2.5vw, 28px);
+  bottom: clamp(16px, 2.5vw, 28px);
+  z-index: 60;
   background: var(--blue-primary);
   color: var(--white);
   border: none;
-  padding: 14px 20px;
+  padding: 13px 20px;
+  border-radius: 999px;
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
-  display: flex;
+  letter-spacing: .04em;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 10px;
   cursor: pointer;
-  box-shadow: 0 -8px 20px -10px rgba(20,22,30,.35);
+  box-shadow: 0 2px 6px rgba(25,75,158,.16), 0 16px 40px rgba(25,75,158,.28);
+  transition: background .25s var(--ease), transform .25s var(--ease), box-shadow .25s var(--ease);
 }
-.pos-mobile-bar-count { letter-spacing: .02em; }
-.pos-mobile-bar-arrow { font-size: 18px; }
-
-@media (min-width: 761px) {
-  .pos-mobile-bar { display: none !important; }
+.pos-mobile-bar:hover {
+  background: var(--blue-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(25,75,158,.22), 0 20px 48px rgba(25,75,158,.32);
 }
+.pos-mobile-bar:active { transform: translateY(0); }
+.pos-mobile-bar-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.pos-mobile-bar-count { white-space: nowrap; }
+.pos-mobile-bar-badge {
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--blue-primary);
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.pos-mobile-bar-badge[hidden] { display: none; }
 
-/* Cart-as-sheet on mobile */
+/* When the cart overlay is open, the floating trigger is redundant. */
+body:has(.pos-cart-col.is-open) .pos-mobile-bar { opacity: 0; pointer-events: none; }
+
+/* On the smallest phones, the detail-panel modal still benefits from
+   bottom-sheet treatment (the cart full-screen overlay already handles
+   itself across all sizes). */
 @media (max-width: 760px) {
-  .pos-cart-col {
-    /* Override the desktop "display: none" — we now toggle visibility via JS */
-    display: block;
-    position: fixed;
-    inset: 0;
-    top: auto;
-    bottom: 0;
-    z-index: 35;
-    max-height: 90vh;
-    transform: translateY(100%);
-    transition: transform .35s var(--ease);
-    background: var(--white);
-    border-top-left-radius: 18px;
-    border-top-right-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 -10px 30px -10px rgba(20,22,30,.3);
-  }
-  .pos-cart-col.is-open { transform: translateY(0); }
-  .pos-cart {
-    border-radius: 0;
-    border: none;
-    box-shadow: none;
-    max-height: 90vh;
-    height: 90vh;
-    padding-top: 30px;
-    position: relative;
-  }
-  .pos-cart::before {
-    content: '';
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 44px;
-    height: 4px;
-    background: rgba(34,37,46,.18);
-    border-radius: 999px;
-  }
-  /* Detail panel as a bottom sheet */
   .pos-detail { justify-content: stretch; }
   .pos-detail-panel {
     width: 100%;
@@ -3799,23 +3825,11 @@ img, video, svg { max-width: 100%; height: auto; }
   flex-shrink: 0;
 }
 
-/* On desktop the cart is already visible — hide the toast so we don't double up */
-@media (min-width: 761px) {
-  .pos-toast { display: none !important; }
-}
+/* Lift the toast above the floating "Your order" pill */
+.pos-toast { bottom: calc(env(safe-area-inset-bottom, 0px) + 80px); }
 
-/* If the mobile cart bar is visible, lift the toast above it */
-@media (max-width: 760px) {
-  .pos-toast { bottom: calc(env(safe-area-inset-bottom, 0px) + 70px); }
-}
-
-/* Tablet — tighter two-column gap and slightly smaller cart */
+/* Tighter POS header on tablet */
 @media (min-width: 761px) and (max-width: 1024px) {
-  .pos-grid {
-    gap: 24px;
-    grid-template-columns: minmax(0, 1.7fr) minmax(260px, 0.8fr);
-  }
-  .pos-cart { padding: 18px; }
   .pos-header { padding: clamp(28px, 4vw, 56px) 0 clamp(20px, 3vw, 32px); }
 }
 
@@ -4015,4 +4029,32 @@ img, video, svg { max-width: 100%; height: auto; }
   .page-header p {
     animation: none;
   }
+}
+
+/* =====================================================================
+   ============   POS pages: suppress redundant chrome    ============
+   ===================================================================== */
+
+/* The site's persistent "Order Online" pill and the mobile bottom nav
+   are redundant on /order-pickup and /order-delivery — the user is
+   already ordering. Hide both whenever the POS UI is present. */
+body:has(.pos-ui) .sticky-order,
+body:has(.pos-ui) .mobile-bar {
+  display: none !important;
+}
+
+/* The POS pages don't need the global mobile-bar's bottom-padding offset
+   either, since both the bar and offset are hidden. */
+@media (max-width: 879px) {
+  body:has(.pos-ui) { padding-bottom: 0; }
+}
+
+/* Fallback for browsers that don't yet support :has() — set via JS on
+   the body element when a POS UI mounts. */
+body.is-pos .sticky-order,
+body.is-pos .mobile-bar {
+  display: none !important;
+}
+@media (max-width: 879px) {
+  body.is-pos { padding-bottom: 0; }
 }
