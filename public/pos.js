@@ -257,4 +257,118 @@
     closeDetail();
   });
 
+  /* ─── Cart render + persistence ─── */
+
+  const CART_KEY = 'kala-cart';
+
+  const cartItemsEl    = $('[data-pos-cart-items]');
+  const cartEmptyEl    = $('[data-pos-cart-empty]');
+  const cartFootEl     = $('[data-pos-cart-foot]');
+  const cartSubtotalEl = $('[data-pos-cart-subtotal]');
+
+  // Load any persisted cart
+  try {
+    const raw = localStorage.getItem(CART_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) cart = parsed;
+    }
+  } catch (e) {
+    console.warn('[KALA POS] Failed to load cart from localStorage', e);
+  }
+
+  const saveCart = () => {
+    try {
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    } catch (e) {
+      console.warn('[KALA POS] Failed to save cart', e);
+    }
+  };
+
+  const computeSubtotal = () => cart.reduce((sum, line) => sum + line.lineTotal, 0);
+
+  const formatModSummary = (modifiers) => {
+    if (!modifiers || !modifiers.length) return '';
+    return modifiers.map(m => m.label).filter(l => l && l !== 'No thanks').join(' · ');
+  };
+
+  const renderCart = () => {
+    const isEmpty = cart.length === 0;
+    cartEmptyEl.hidden = !isEmpty;
+    cartItemsEl.hidden = isEmpty;
+    cartFootEl.hidden  = isEmpty;
+
+    if (!isEmpty) {
+      cartItemsEl.innerHTML = cart.map(line => `
+        <li class="pos-cart-line" data-line-id="${line.lineId}">
+          <div class="pos-cart-line-thumb">
+            <img src="${line.image}" alt="" />
+          </div>
+          <div class="pos-cart-line-body">
+            <p class="pos-cart-line-name">${escapeHtml(line.name)}</p>
+            ${formatModSummary(line.modifiers) ? `<p class="pos-cart-line-mods">${escapeHtml(formatModSummary(line.modifiers))}</p>` : ''}
+            <div class="pos-cart-line-row">
+              <div class="pos-cart-qty-stepper">
+                <button type="button" class="pos-qty-btn" data-cart-qty-minus aria-label="Decrease quantity">−</button>
+                <span class="pos-qty-value">${line.qty}</span>
+                <button type="button" class="pos-qty-btn" data-cart-qty-plus aria-label="Increase quantity">+</button>
+              </div>
+              <span class="pos-cart-line-price">$${line.lineTotal}</span>
+            </div>
+          </div>
+          <button type="button" class="pos-cart-line-remove" data-cart-remove aria-label="Remove ${escapeHtml(line.name)}">×</button>
+        </li>
+      `).join('');
+
+      cartSubtotalEl.textContent = '$' + computeSubtotal();
+    }
+  };
+
+  const recomputeLineTotal = (line) => {
+    let unit = line.basePrice + line.modifiers.reduce((s, m) => s + (m.delta || 0), 0);
+    line.lineTotal = unit * line.qty;
+  };
+
+  const findLine = (lineId) => cart.find(l => l.lineId === lineId);
+
+  // Wire cart interactions via event delegation
+  cartItemsEl.addEventListener('click', (e) => {
+    const lineEl = e.target.closest('.pos-cart-line');
+    if (!lineEl) return;
+    const line = findLine(lineEl.dataset.lineId);
+    if (!line) return;
+
+    if (e.target.closest('[data-cart-qty-minus]')) {
+      if (line.qty > 1) {
+        line.qty--;
+        recomputeLineTotal(line);
+        saveCart();
+        renderCart();
+      }
+    } else if (e.target.closest('[data-cart-qty-plus]')) {
+      line.qty++;
+      recomputeLineTotal(line);
+      saveCart();
+      renderCart();
+    } else if (e.target.closest('[data-cart-remove]')) {
+      cart = cart.filter(l => l.lineId !== line.lineId);
+      saveCart();
+      renderCart();
+    }
+  });
+
+  // Re-render after add-to-cart in the detail panel (extend the existing handler)
+  // We can't easily reach inside the handler above, so we monkey-wrap detailAdd's click:
+  // Instead, observe cart mutations indirectly: wrap the existing handler.
+  const _origDetailAdd = detailAdd.onclick;
+  detailAdd.addEventListener('click', () => {
+    // The add-to-cart logic from Task 5 ran first because it's bound earlier.
+    // Just re-render and persist now.
+    saveCart();
+    renderCart();
+  });
+
+  // Initial render
+  renderCart();
+
 })();
