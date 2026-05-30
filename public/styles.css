@@ -545,7 +545,10 @@ p { margin: 0 0 1em; }
   font-size: clamp(80px, 14vw, 200px);
   letter-spacing: .08em;
   font-weight: 600;
-  text-shadow: 0 2px 30px rgba(0,0,0,.25);
+  color: var(--blue-primary);
+  text-shadow:
+    0 0 28px rgba(255, 255, 255, .55),
+    0 2px 30px rgba(0, 0, 0, .35);
 }
 .title-italic {
   font-style: italic;
@@ -1494,16 +1497,13 @@ p { margin: 0 0 1em; }
 .page-header.has-bg > .container { position: relative; z-index: 1; }
 .page-header.has-bg::before { z-index: 1; }
 
-.page-header.is-menu         { --page-bg-image: url('public/page-bg-menu.png'); }
-.page-header.is-story        { --page-bg-image: url('public/page-bg-story.png'); }
-.page-header.is-contact      { --page-bg-image: url('public/page-bg-contact.png'); }
-.page-header.is-reservations { --page-bg-image: url('public/page-bg-reservations.png'); }
-.page-header.is-order        { --page-bg-image: url('public/page-bg-order.png'); }
-
-/* Story: shift the dawn-vista image upward so the village + olive foreground sit higher in the frame */
-.page-header.is-story::after {
-  background-position: center, center, center bottom;
-}
+/* Per-page background photos removed; subpage headers now render
+   as the cream/white base with only the soft gradient overlay. */
+.page-header.is-menu,
+.page-header.is-story,
+.page-header.is-contact,
+.page-header.is-reservations,
+.page-header.is-order { --page-bg-image: none; }
 .page-header::before {
   content: '';
   position: absolute;
