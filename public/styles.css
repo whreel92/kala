@@ -2897,27 +2897,33 @@ img, video, svg { max-width: 100%; height: auto; }
 }
 .pos-menu-col { min-width: 0; }
 
-/* Cart column is a hidden full-screen overlay until opened via the
-   floating button. */
+/* Cart overlay — centered popup that floats over the menu. The menu
+   stays visible (dimmed/blurred behind) so users feel like they're
+   still on the same page. */
 .pos-cart-col {
   position: fixed;
   inset: 0;
   z-index: 90;
-  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 3vw, 32px);
   opacity: 0;
   pointer-events: none;
-  transform: translateY(12px);
-  transition: opacity .28s var(--ease), transform .28s var(--ease);
-  overflow-y: auto;
+  transition: opacity .25s var(--ease);
 }
 .pos-cart-col.is-open {
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(0);
 }
-/* Legacy element from the older bottom-sheet design — keep it out of the
-   way; the full-screen overlay no longer needs a separate backdrop. */
-.pos-cart-backdrop { display: none; }
+.pos-cart-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 22, 30, .38);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  cursor: pointer;
+}
 
 /* Category chip bar (sticky inside menu column) */
 .pos-cats {
@@ -2986,54 +2992,97 @@ img, video, svg { max-width: 100%; height: auto; }
   font-size: 14.5px;
 }
 
-/* Cart panel — centered column inside the full-screen overlay so contents
-   stay readable on wide displays. The overlay's white background fills the
-   actual screen behind it. */
+/* Cart panel — bounded popup with one scroll area. The "Back to menu"
+   header is sticky so it stays in reach no matter how long the order
+   grows. */
 .pos-cart {
+  position: relative;
+  background: var(--white);
   width: 100%;
-  max-width: 720px;
-  margin: 0 auto;
-  padding: clamp(24px, 4vw, 56px) clamp(20px, 4vw, 32px) clamp(28px, 5vw, 56px);
+  max-width: 540px;
+  max-height: min(85vh, 760px);
+  border-radius: 20px;
+  padding: 0 clamp(20px, 3vw, 28px) clamp(22px, 3vw, 28px);
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  overflow-y: auto;
+  box-shadow:
+    0 30px 60px -22px rgba(20, 22, 30, .42),
+    0 12px 28px -10px rgba(20, 22, 30, .22);
+  transform: translateY(14px) scale(.985);
+  opacity: 0;
+  transition: transform .3s var(--ease), opacity .25s var(--ease);
 }
-.pos-cart > .pos-cart-empty {
-  align-self: center;
-  width: 100%;
-  max-width: 480px;
-  margin-top: clamp(32px, 6vw, 60px);
+.pos-cart-col.is-open .pos-cart {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+.pos-cart-empty {
+  margin: clamp(16px, 4vw, 32px) 0;
+}
+.pos-cart-foot {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid rgba(34, 37, 46, .08);
 }
 .pos-cart-head {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin: 0 0 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  padding: 16px 0 14px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--white);
+  flex-shrink: 0;
+}
+.pos-cart-head::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 8px;
+  background: linear-gradient(180deg, var(--white), rgba(255, 255, 255, 0));
+  pointer-events: none;
 }
 .pos-cart-head h2 {
   font-family: var(--font-display);
-  font-size: clamp(22px, 3vw, 28px);
+  font-size: clamp(24px, 3vw, 28px);
   font-weight: 500;
   margin: 0;
   color: var(--charcoal);
+  line-height: 1.05;
 }
-.pos-cart-close {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--cream);
-  color: var(--charcoal);
-  font-size: 22px;
-  line-height: 1;
+/* "Back to menu" pill — the primary affordance for closing the popup */
+.pos-cart-back {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 6px;
+  margin-left: -8px;
+  padding: 6px 12px 6px 8px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--slate);
+  background: transparent;
   cursor: pointer;
-  transition: background .2s var(--ease), color .2s var(--ease);
-  flex-shrink: 0;
+  transition: background .2s var(--ease), color .2s var(--ease), transform .2s var(--ease);
 }
-.pos-cart-close:hover { background: var(--blue-tint); color: var(--blue-primary); }
+.pos-cart-back svg {
+  width: 16px;
+  height: 16px;
+  transition: transform .2s var(--ease);
+}
+.pos-cart-back:hover {
+  background: var(--blue-tint);
+  color: var(--blue-primary);
+}
+.pos-cart-back:hover svg { transform: translateX(-2px); }
 .pos-cart-empty {
   background: var(--cream);
   border: 1px dashed rgba(34,37,46,.18);
