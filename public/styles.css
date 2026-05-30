@@ -2860,3 +2860,163 @@ img, video, svg { max-width: 100%; height: auto; }
   .hero-ill-frame { animation: none; opacity: 1; }
   .ill-frame-2, .ill-frame-3 { display: none; }
 }
+
+/* ──────────────────────────────────────────────
+   POS / Online ordering UI
+   ────────────────────────────────────────────── */
+
+.pos-ui {
+  background: var(--cream);
+  min-height: 70vh;
+}
+
+.pos-header {
+  padding: clamp(40px, 6vw, 80px) 0 clamp(28px, 4vw, 40px);
+  text-align: center;
+}
+.pos-header h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(40px, 6vw, 64px);
+  margin: 8px 0 14px;
+  color: var(--charcoal);
+}
+.pos-header-sub {
+  color: var(--slate);
+  font-size: clamp(14px, 1.6vw, 17px);
+  max-width: 50ch;
+  margin: 0 auto;
+}
+
+/* Two-column grid */
+.pos-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.9fr);
+  gap: clamp(24px, 3vw, 48px);
+  padding-bottom: clamp(60px, 8vw, 100px);
+  align-items: start;
+}
+.pos-menu-col { min-width: 0; }
+.pos-cart-col {
+  position: sticky;
+  top: 88px;             /* below the persistent site nav */
+  align-self: start;
+  max-height: calc(100vh - 110px);
+  overflow: hidden;     /* scroll happens inside .pos-cart */
+}
+
+/* Category chip bar (sticky inside menu column) */
+.pos-cats {
+  position: sticky;
+  top: 64px;
+  z-index: 4;
+  background: var(--cream);
+  margin: 0 -8px;
+  padding: 8px;
+  border-bottom: 1px solid rgba(34,37,46,.08);
+}
+.pos-cats-inner {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.pos-cats-inner::-webkit-scrollbar { display: none; }
+.pos-cat-chip {
+  flex: 0 0 auto;
+  background: var(--white);
+  border: 1px solid rgba(34,37,46,.12);
+  color: var(--charcoal);
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  cursor: pointer;
+  transition: background .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
+  text-decoration: none;
+}
+.pos-cat-chip:hover {
+  border-color: var(--blue-primary);
+  color: var(--blue-primary);
+}
+.pos-cat-chip.is-active {
+  background: var(--blue-primary);
+  color: var(--white);
+  border-color: var(--blue-primary);
+}
+
+/* Menu sections */
+.pos-menu {
+  padding-top: 24px;
+}
+.pos-cat-section {
+  padding: 24px 0 32px;
+  scroll-margin-top: 140px;   /* so anchor scroll lands below sticky chips */
+}
+.pos-cat-section-head {
+  margin: 0 0 18px;
+}
+.pos-cat-section-head h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(28px, 3.5vw, 38px);
+  color: var(--charcoal);
+  margin: 0 0 4px;
+}
+.pos-cat-section-head p {
+  color: var(--slate);
+  margin: 0;
+  font-size: 14.5px;
+}
+
+/* Empty cart state */
+.pos-cart {
+  background: var(--white);
+  border: 1px solid rgba(34,37,46,.08);
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: var(--shadow-soft);
+  max-height: calc(100vh - 110px);
+  display: flex;
+  flex-direction: column;
+}
+.pos-cart-head h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0 0 14px;
+  color: var(--charcoal);
+}
+.pos-cart-empty {
+  background: var(--cream);
+  border: 1px dashed rgba(34,37,46,.18);
+  border-radius: 10px;
+  padding: 28px 18px;
+  text-align: center;
+}
+.pos-cart-empty-line {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--charcoal);
+  margin: 0 0 4px;
+}
+.pos-cart-empty-sub {
+  color: var(--slate);
+  font-size: 13.5px;
+  margin: 0;
+}
+
+/* Single-column collapse */
+@media (max-width: 900px) {
+  .pos-grid {
+    grid-template-columns: 1fr;
+  }
+  .pos-cart-col {
+    display: none;          /* mobile uses bottom bar + sheet — added in Task 9 */
+  }
+  .pos-cats { top: 60px; }
+}
