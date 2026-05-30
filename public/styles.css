@@ -894,15 +894,6 @@ p { margin: 0 0 1em; }
   will-change: transform;
   transition: transform .6s var(--ease), box-shadow .6s var(--ease);
 }
-.hand-olive {
-  top: 4%;
-  left: -6%;
-  width: 70%;
-  transform: rotate(-3deg);
-  animation-duration: 9s;
-  z-index: 2;
-  --rot: -3deg;
-}
 .hand-wine {
   bottom: 2%;
   right: -6%;
