@@ -83,27 +83,102 @@ import Base from '../layouts/Base.astro';
         </div>
       </div>
 
-      <div class="visit-map" aria-hidden="true">
-        <div class="map-frame">
-          <div class="map-grid"></div>
-          <div class="map-road map-road-h"></div>
-          <div class="map-road map-road-v"></div>
-          <div class="map-road map-road-d"></div>
-          <div class="map-water">
-            <div class="map-wave w1"></div>
-            <div class="map-wave w2"></div>
-            <div class="map-wave w3"></div>
-          </div>
-          <div class="map-pin">
-            <span class="pin-ring"></span>
-            <span class="pin-dot"></span>
-          </div>
-          <div class="map-label">1500 Queen Anne Ave N</div>
-          <div class="map-legend">
-            <span class="legend-dot"></span>KALA · Greek and More
-          </div>
+      <div class="visit-map" aria-label="Map of KALA at 1500 Queen Anne Ave N, Seattle">
+        <div class="map-toolbar" role="group" aria-label="Map type">
+          <button type="button" class="map-type-btn is-active" data-map-type="default">
+            Default
+          </button>
+          <button type="button" class="map-type-btn" data-map-type="satellite">
+            Satellite
+          </button>
         </div>
+        <div id="kala-map" class="map-canvas" data-kala-map></div>
       </div>
+
+      <!-- Leaflet — loaded only on the Contact page -->
+      <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""
+      />
+      <script
+        is:inline
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""
+        data-astro-rerun
+      ></script>
+      <script is:inline data-astro-rerun>
+        (() => {
+          const mount = document.querySelector('[data-kala-map]');
+          if (!mount || typeof L === 'undefined') return;
+          if (mount.dataset.posMapInit === 'true') return;
+          mount.dataset.posMapInit = 'true';
+
+          // 1500 Queen Anne Ave N, Seattle, WA 98109
+          const KALA_LATLNG = [47.63613, -122.35713];
+
+          const map = L.map(mount, {
+            zoomControl: true,
+            scrollWheelZoom: false,
+            attributionControl: true,
+          }).setView(KALA_LATLNG, 16);
+
+          const layers = {
+            default: L.tileLayer(
+              'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+              {
+                maxZoom: 19,
+                attribution:
+                  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+              }
+            ),
+            satellite: L.tileLayer(
+              'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+              {
+                maxZoom: 19,
+                attribution:
+                  'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics',
+              }
+            ),
+          };
+
+          layers.default.addTo(map);
+
+          // Branded pin
+          const icon = L.divIcon({
+            className: 'kala-map-pin',
+            html: '<span class="kala-pin-ring"></span><span class="kala-pin-dot"></span>',
+            iconSize: [28, 28],
+            iconAnchor: [14, 14],
+          });
+          L.marker(KALA_LATLNG, { icon, title: 'KALA · Greek and More' })
+            .addTo(map)
+            .bindPopup(
+              '<strong>KALA &middot; Greek and More</strong><br/>1500 Queen Anne Ave N<br/>Seattle, WA 98109'
+            );
+
+          // Type toggle
+          const buttons = document.querySelectorAll('.map-type-btn');
+          buttons.forEach((btn) => {
+            btn.addEventListener('click', () => {
+              const want = btn.dataset.mapType;
+              Object.entries(layers).forEach(([key, layer]) => {
+                if (key === want) layer.addTo(map);
+                else map.removeLayer(layer);
+              });
+              buttons.forEach((b) =>
+                b.classList.toggle('is-active', b === btn)
+              );
+            });
+          });
+
+          // Tile rendering can break if Leaflet measures the container before
+          // images/fonts settle; nudge it after the first frame.
+          requestAnimationFrame(() => map.invalidateSize());
+        })();
+      </script>
     </div>
   </section>
 
