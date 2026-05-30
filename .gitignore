@@ -10,6 +10,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Astro
+.astro/
+dist/
+
+# Superpowers brainstorming sessions
+.superpowers/
+
 # One-off generator scripts (use .env)
 generate-image.js
 generate-batch.js
