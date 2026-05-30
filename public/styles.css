@@ -2870,12 +2870,13 @@ img, video, svg { max-width: 100%; height: auto; }
 }
 .olive-landed {
   position: absolute;
-  /* sits slightly indented on the top surface of the feta */
   top: 18%;
   left: 50%;
   width: 14%;
   height: auto;
   transform: translateX(-50%);
+  opacity: 0;          /* shown by JS once falling olive arrives */
+  transition: opacity .25s ease-out;
 }
 .feta-caption {
   text-align: center;
@@ -2926,4 +2927,5 @@ img, video, svg { max-width: 100%; height: auto; }
   /* Hide the falling olive entirely; the .olive-landed in the feta band
      remains as the static end state. */
   .olive-tracker { display: none; }
+  .olive-landed { opacity: 1; }
 }
