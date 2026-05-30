@@ -348,6 +348,37 @@ p { margin: 0 0 1em; }
   margin-left: -16%;
 }
 
+/* Cream hero overrides: the old hero rules below assumed a dark video
+   background and set white text colors. On cream they're invisible, so
+   we re-color the relevant pieces here, scoped to .hero-cream only. */
+.hero-cream .title-line { text-shadow: none; }
+.hero-cream .title-italic { color: var(--charcoal); }
+.hero-cream .hero-sub {
+  color: var(--slate);
+  margin-left: 0;
+  margin-right: 0;
+  text-align: left;
+}
+.hero-cream .hero-buttons { justify-content: flex-start; }
+.hero-cream .hero-meta {
+  background: rgba(34, 37, 46, .05);
+  border-color: rgba(34, 37, 46, .12);
+  backdrop-filter: none;
+}
+.hero-cream .meta-label { color: var(--slate); opacity: .65; }
+.hero-cream .meta-value { color: var(--charcoal); }
+.hero-cream .meta-divider { background: rgba(34, 37, 46, .15); }
+.hero-cream .scroll-cue { color: var(--charcoal); opacity: .55; }
+.hero-cream .btn-ghost {
+  background: transparent;
+  color: var(--blue-primary);
+  border-color: var(--blue-primary);
+}
+.hero-cream .btn-ghost:hover {
+  background: var(--blue-primary);
+  color: var(--cream);
+}
+
 @keyframes rise {
   from { opacity: 0; transform: translateY(28px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -369,6 +400,8 @@ p { margin: 0 0 1em; }
     width: clamp(160px, 50vw, 240px);
     margin-left: 0;
   }
+  .hero-cream .hero-sub { text-align: center; }
+  .hero-cream .hero-buttons { justify-content: center; }
 }
 
 .hero-title {
@@ -379,7 +412,7 @@ p { margin: 0 0 1em; }
   margin: 18px 0 22px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 
 /* (Title circle removed — KALA wordmark now floats freely on the hero) */
