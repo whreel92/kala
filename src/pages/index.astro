@@ -14,10 +14,10 @@ import Base from '../layouts/Base.astro';
       class="hero-bg-video"
       autoplay
       muted
-      loop
       playsinline
       preload="auto"
       aria-label="KALA — Greek coastal Mediterranean atmosphere"
+      data-hero-video
     >
       <source src="/public/video/new_hero.mp4" type="video/mp4" />
     </video>
@@ -72,6 +72,42 @@ import Base from '../layouts/Base.astro';
     </svg>
   </a>
 </section>
+
+<!-- Hero cinematic intro: play the video once, then reveal the text. -->
+<script is:inline data-astro-rerun>
+  (() => {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+    // Guard against re-running on view transitions when the hero was already revealed
+    if (hero.dataset.kalaHeroInit === 'true') return;
+    hero.dataset.kalaHeroInit = 'true';
+
+    const reveal = () => hero.classList.add('is-revealed');
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      reveal();
+      return;
+    }
+
+    const video = hero.querySelector('[data-hero-video]');
+    if (!video) { reveal(); return; }
+
+    let revealed = false;
+    const revealOnce = () => {
+      if (revealed) return;
+      revealed = true;
+      reveal();
+    };
+
+    // Primary trigger: video finished playing through
+    video.addEventListener('ended', revealOnce, { once: true });
+    // Fallbacks: if the video fails, can't play, or stalls, reveal anyway
+    video.addEventListener('error', revealOnce, { once: true });
+    video.addEventListener('stalled', () => setTimeout(revealOnce, 4000), { once: true });
+    // Hard ceiling so users never sit in front of a blank hero
+    setTimeout(revealOnce, 14000);
+  })();
+</script>
 
 <!-- A Taste of Greece — auto-scrolling dish marquee -->
 <section class="dish-marquee" aria-label="A taste of Greek dishes from KALA">

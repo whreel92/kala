@@ -396,12 +396,23 @@ p { margin: 0 0 1em; }
   max-width: 760px;
   margin: 0 auto;
 }
-.hero-text > * { animation: rise .9s var(--ease) both; }
-.hero-text .eyebrow { animation-delay: .05s; }
-.hero-title         { animation-delay: .15s; }
-.hero-sub           { animation-delay: .3s; }
-.hero-buttons       { animation-delay: .45s; }
-.hero-meta          { animation-delay: .6s; }
+/* Hide hero copy until the cinematic intro video has played through. The
+   JS in index.astro adds .is-revealed to .hero on the video's `ended`
+   event; reduced-motion users get revealed instantly. */
+.hero-text > * { opacity: 0; }
+.hero.is-revealed .hero-text > * {
+  animation: rise .9s var(--ease) both;
+}
+.hero.is-revealed .hero-text .eyebrow { animation-delay: .05s; }
+.hero.is-revealed .hero-title         { animation-delay: .15s; }
+.hero.is-revealed .hero-sub           { animation-delay: .3s; }
+.hero.is-revealed .hero-buttons       { animation-delay: .45s; }
+.hero.is-revealed .hero-meta          { animation-delay: .6s; }
+
+/* While the video plays, hide the engraving illustration overlay too
+   so the user's eye lands on the moving video and then on the title. */
+.hero:not(.is-revealed) .hero-illustration { opacity: 0; }
+.hero.is-revealed       .hero-illustration { opacity: 1; transition: opacity .6s var(--ease); }
 
 /* Hero video frame (right column) */
 .hero-video-frame {
@@ -3986,34 +3997,17 @@ body:has(.pos-cart-col.is-open) .pos-mobile-bar { opacity: 0; pointer-events: no
 }
 
 /* =====================================================================
-   ============      Subtle on-load entrances (hero, intro)    ============
+   ============      Subtle on-load entrances (subpage headers)    ============
    ===================================================================== */
 
-/* Hero text + buttons gently rise into place on first paint.
-   These elements are above the fold, so we don't wait for scroll. */
 @keyframes kalaRiseIn {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.hero .eyebrow,
-.hero .hero-title,
-.hero .hero-sub,
-.hero .hero-buttons,
-.hero .hero-meta {
-  animation: kalaRiseIn .8s var(--ease) both;
-}
-.hero .hero-title       { animation-delay: .08s; }
-.hero .hero-sub         { animation-delay: .18s; }
-.hero .hero-buttons     { animation-delay: .28s; }
-.hero .hero-meta        { animation-delay: .38s; }
-
-/* The framed hero video on the right side eases up too — slightly later
-   so the eye lands on the title first. */
-.hero .hero-video-frame {
-  animation: kalaRiseIn 1s var(--ease) both;
-  animation-delay: .25s;
-}
+/* Note: the home page hero text intentionally waits for the cinematic
+   intro video to end (handled by the `rise` animation gated on
+   `.hero.is-revealed`, defined earlier in this file). */
 
 /* Subpage headers — gentle fade for the hero strip. */
 .page-header .eyebrow,
@@ -4038,19 +4032,18 @@ body:has(.pos-cart-col.is-open) .pos-mobile-bar { opacity: 0; pointer-events: no
   transform: translateY(-4px);
 }
 
-/* When a user prefers reduced motion, skip the on-load rises entirely. */
+/* When a user prefers reduced motion, skip the on-load rises entirely
+   and show the hero copy + illustration immediately. */
 @media (prefers-reduced-motion: reduce) {
-  .hero .eyebrow,
-  .hero .hero-title,
-  .hero .hero-sub,
-  .hero .hero-buttons,
-  .hero .hero-meta,
-  .hero .hero-video-frame,
+  .hero .hero-text > *,
+  .hero .hero-illustration,
   .page-header .eyebrow,
   .page-header h1,
   .page-header .page-sub,
   .page-header p {
     animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
 
