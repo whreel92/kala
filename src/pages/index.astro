@@ -7,25 +7,21 @@ import Base from '../layouts/Base.astro';
   current="/"
 >
 
-<!-- Hero -->
-<section class="hero">
+<!-- Hero — looping hand-engraving animation behind the brand wordmark -->
+<section class="hero is-revealed">
   <div class="hero-media">
     <video
       class="hero-bg-video"
       autoplay
       muted
+      loop
       playsinline
       preload="auto"
-      aria-label="KALA — Greek coastal Mediterranean atmosphere"
-      data-hero-video
+      poster="/public/hands-composite.png"
+      aria-label="KALA — engraving animation: a hand drops an olive onto feta while another pours wine into a glass"
     >
-      <source src="/public/video/new_hero.mp4" type="video/mp4" />
+      <source src="/public/video/hands-animation.mp4" type="video/mp4" />
     </video>
-    <div class="hero-illustration" aria-hidden="true">
-      <img src="/public/hero-overlay-kf1.png" alt="" class="hero-ill-frame ill-frame-1" loading="eager" />
-      <img src="/public/hero-overlay-kf2.png" alt="" class="hero-ill-frame ill-frame-2" loading="eager" />
-      <img src="/public/hero-overlay-kf3.png" alt="" class="hero-ill-frame ill-frame-3" loading="eager" />
-    </div>
   </div>
 
   <div class="hero-content container">
@@ -71,69 +67,6 @@ import Base from '../layouts/Base.astro';
     </svg>
   </a>
 </section>
-
-<!-- Hero cinematic intro: play the video once, then reveal the text. -->
-<script is:inline data-astro-rerun>
-  (() => {
-    const hero = document.querySelector('.hero');
-    if (!hero) return;
-    // Guard against re-running on view transitions when the hero was already revealed
-    if (hero.dataset.kalaHeroInit === 'true') return;
-    hero.dataset.kalaHeroInit = 'true';
-
-    const reveal = (videoEl) => {
-      hero.classList.add('is-revealed');
-      // Stop playback so we're not holding a video decoder open behind the
-      // hidden element, and so audio (if any track sneaks in) stays silent.
-      if (videoEl) {
-        try { videoEl.pause(); } catch (_) {}
-      }
-    };
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      reveal();
-      return;
-    }
-
-    const video = hero.querySelector('[data-hero-video]');
-    if (!video) { reveal(); return; }
-
-    let revealed = false;
-    const revealOnce = () => {
-      if (revealed) return;
-      revealed = true;
-      reveal(video);
-    };
-
-    // Primary trigger: video finished playing through
-    video.addEventListener('ended', revealOnce);
-    // Backup: timeupdate is cheap and fires the whole way through. We catch
-    // the last sliver of playback in case `ended` is flaky on this UA.
-    video.addEventListener('timeupdate', () => {
-      if (video.duration && isFinite(video.duration) &&
-          video.currentTime >= video.duration - 0.2) {
-        revealOnce();
-      }
-    });
-    // Backup: a no-loop video naturally pauses on its last frame
-    video.addEventListener('pause', revealOnce);
-    // Failure modes
-    video.addEventListener('error', revealOnce);
-    video.addEventListener('stalled', () => setTimeout(revealOnce, 3000));
-    // If autoplay was blocked (rare, since muted), reveal so the page is usable
-    video.addEventListener('suspend', () => setTimeout(() => {
-      if (video.paused && video.currentTime === 0) revealOnce();
-    }, 1500));
-    // Once we know the video duration, schedule a duration-based fallback
-    video.addEventListener('loadedmetadata', () => {
-      if (video.duration && isFinite(video.duration)) {
-        setTimeout(revealOnce, (video.duration + 0.5) * 1000);
-      }
-    });
-    // Hard ceiling so users never sit in front of a blank hero
-    setTimeout(revealOnce, 12000);
-  })();
-</script>
 
 <!-- A Taste of Greece — auto-scrolling dish marquee -->
 <section class="dish-marquee" aria-label="A taste of Greek dishes from KALA">
