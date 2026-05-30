@@ -1,0 +1,125 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base
+  title="Reservations — KALA Greek and More"
+  description="Reserve a table at KALA — Greek and More. Choose your party size, date, and time."
+  current="/reservations"
+>
+
+  <!-- Page header -->
+  <section class="page-header has-bg is-reservations">
+    <div class="container">
+      <h1>RESERVATIONS</h1>
+      <span class="page-sub">Save your seat by the harbor</span>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium nisi
+        tincidunt eu. Donec euismod tempor lectus.
+      </p>
+    </div>
+  </section>
+
+  <!-- Greek Key Divider -->
+  <div class="meander-divider" aria-hidden="true"></div>
+
+  <!-- Reservation form -->
+  <section class="reserve-section">
+    <div class="container">
+      <div class="reserve-card">
+        <form class="reserve-form" onsubmit="event.preventDefault();">
+
+          <div class="form-grid">
+            <div class="form-row">
+              <label for="party">Party Size</label>
+              <select id="party" class="form-control" name="party">
+                <option>1 guest</option>
+                <option selected>2 guests</option>
+                <option>3 guests</option>
+                <option>4 guests</option>
+                <option>5 guests</option>
+                <option>6 guests</option>
+                <option>7+ guests · contact us</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="date">Date</label>
+              <input id="date" class="form-control" type="date" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label>Time</label>
+            <div class="time-slots">
+              <button type="button" class="time-chip">5:30p</button>
+              <button type="button" class="time-chip">5:45p</button>
+              <button type="button" class="time-chip">6:00p</button>
+              <button type="button" class="time-chip">6:30p</button>
+              <button type="button" class="time-chip active">7:00p</button>
+              <button type="button" class="time-chip">7:30p</button>
+              <button type="button" class="time-chip">8:00p</button>
+              <button type="button" class="time-chip">8:30p</button>
+              <button type="button" class="time-chip">9:00p</button>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-row">
+              <label for="name">Name</label>
+              <input id="name" class="form-control" type="text" placeholder="Your name" />
+            </div>
+            <div class="form-row">
+              <label for="phone">Phone</label>
+              <input id="phone" class="form-control" type="tel" placeholder="(555) 123-4567" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input id="email" class="form-control" type="email" placeholder="you@example.com" />
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg">
+            Reserve a Table
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <p class="reserve-note">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Confirmation sent to your email.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Walk-ins -->
+  <section class="walk-in">
+    <div class="container walk-in-inner">
+      <span class="eyebrow">Walk-ins welcome</span>
+      <h2>Or just <em>stop by</em></h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque
+        magna — we always save room at the bar.
+      </p>
+    </div>
+  </section>
+
+  <!-- Private events -->
+  <section class="invite">
+    <div class="container invite-inner">
+      <span class="eyebrow">Larger parties</span>
+      <h2>Hosting <em>a celebration?</em></h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet libero
+        in lacus efficitur tincidunt.
+      </p>
+      <div class="invite-actions">
+        <a href="contact.html" class="btn btn-primary btn-lg">
+          Plan a Private Event
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="tel:5551234567" class="btn btn-outline btn-lg">Call the Restaurant</a>
+      </div>
+    </div>
+  </section>
+
+</Base>
