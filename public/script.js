@@ -526,4 +526,47 @@
       document.body.classList.remove('page-fading');
     });
   }
+
+  /* ─────────────────── Coming-soon modal (social links) ─────────────────── */
+  const socialModal = $('[data-social-modal]');
+  const socialLinks = $$('[data-social-link]');
+  if (socialModal && socialLinks.length) {
+    const platformEls = socialModal.querySelectorAll('[data-social-platform]');
+    const closeEls = socialModal.querySelectorAll('[data-social-modal-close]');
+
+    let lastTrigger = null;
+
+    const openSocialModal = (platform, trigger) => {
+      platformEls.forEach(el => { el.textContent = platform; });
+      lastTrigger = trigger || null;
+      socialModal.hidden = false;
+      requestAnimationFrame(() => socialModal.classList.add('is-open'));
+      document.body.style.overflow = 'hidden';
+      // Focus the close button so keyboard users can dismiss
+      setTimeout(() => closeEls[0]?.focus(), 80);
+    };
+
+    const closeSocialModal = () => {
+      socialModal.classList.remove('is-open');
+      setTimeout(() => {
+        socialModal.hidden = true;
+        document.body.style.overflow = '';
+        if (lastTrigger && typeof lastTrigger.focus === 'function') lastTrigger.focus();
+        lastTrigger = null;
+      }, 240);
+    };
+
+    socialLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        openSocialModal(link.dataset.socialLink || 'this', link);
+      });
+    });
+
+    closeEls.forEach(el => el.addEventListener('click', closeSocialModal));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !socialModal.hidden) closeSocialModal();
+    });
+  }
 })();

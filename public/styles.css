@@ -3818,3 +3818,132 @@ img, video, svg { max-width: 100%; height: auto; }
   .pos-cart { padding: 18px; }
   .pos-header { padding: clamp(28px, 4vw, 56px) 0 clamp(20px, 3vw, 32px); }
 }
+
+/* ──────────────────────────────────────────────
+   Coming-soon modal (social links)
+   ────────────────────────────────────────────── */
+
+.social-modal[hidden] { display: none; }
+.social-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  pointer-events: none;
+}
+.social-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 22, 30, 0);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  transition: background .3s var(--ease), backdrop-filter .3s var(--ease);
+  pointer-events: auto;
+}
+.social-modal.is-open .social-modal-backdrop {
+  background: rgba(20, 22, 30, .55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.social-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  background: var(--cream);
+  border-radius: 18px;
+  padding: clamp(28px, 5vw, 44px) clamp(24px, 4vw, 36px) clamp(24px, 4vw, 32px);
+  box-shadow:
+    0 30px 60px -20px rgba(20, 22, 30, .55),
+    0 8px 24px -8px rgba(20, 22, 30, .35),
+    inset 0 0 0 1px rgba(255, 255, 255, .7);
+  text-align: center;
+  transform: translateY(20px) scale(.96);
+  opacity: 0;
+  transition: transform .35s var(--ease), opacity .25s var(--ease);
+  pointer-events: auto;
+}
+.social-modal.is-open .social-modal-card {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.social-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 1px solid rgba(34, 37, 46, .1);
+  color: var(--charcoal);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color .2s var(--ease), transform .2s var(--ease);
+}
+.social-modal-close:hover {
+  border-color: var(--blue-primary);
+  color: var(--blue-primary);
+  transform: scale(1.05);
+}
+
+.social-modal-meander {
+  width: 88px;
+  height: 14px;
+  margin: 4px auto 18px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 14'><path d='M 0 12 H 18 V 4 H 12 V 10 H 6 V 2 H 30 V 10 H 24 V 4 H 36 V 12 H 40' fill='none' stroke='%23194B9E' stroke-width='1.4'/></svg>");
+  background-size: 40px 14px;
+  background-repeat: repeat-x;
+  background-position: center;
+  opacity: .55;
+}
+
+.social-modal-eyebrow {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: var(--blue-primary);
+}
+
+.social-modal-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(30px, 5vw, 40px);
+  color: var(--charcoal);
+  margin: 0 0 12px;
+  line-height: 1.05;
+  letter-spacing: -.01em;
+}
+
+.social-modal-sub {
+  color: var(--slate);
+  font-size: 14.5px;
+  line-height: 1.6;
+  max-width: 32ch;
+  margin: 0 auto 22px;
+}
+.social-modal-sub [data-social-platform] {
+  color: var(--blue-primary);
+  font-weight: 600;
+}
+
+.social-modal-btn {
+  min-width: 140px;
+}
+
+/* Social icon hover — subtle blue shift to match the modal trigger */
+.socials a {
+  transition: color .2s var(--ease), transform .2s var(--ease);
+}
+.socials a:hover {
+  color: var(--blue-primary);
+  transform: translateY(-1px);
+}
