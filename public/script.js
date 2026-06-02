@@ -101,7 +101,7 @@
       '.story-visual, .menu-category-head, .story-block-text, .story-block-image, ' +
       '.value-card, .pull-quote, .page-header, .menu-item-card, .order-card, .step, ' +
       '.callout-frame, .invite-inner, .menu-cta > .container, .walk-in-inner, ' +
-      '.reserve-card, .dish-marquee-eyebrow'
+      '.reserve-card, .dish-marquee-eyebrow, .sharedtable-media, .sharedtable-text'
     );
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
