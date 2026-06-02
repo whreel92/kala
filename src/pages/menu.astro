@@ -22,34 +22,69 @@ import Base from '../layouts/Base.astro';
   <!-- Greek Key Divider -->
   <div class="meander-divider" aria-hidden="true"></div>
 
-  <!-- Sticky category jump -->
-  <div class="menu-jump">
+  <!-- Sticky category nav -->
+  <nav class="menu-jump" aria-label="Menu categories">
     <div class="container menu-jump-inner">
+      <a href="#menu-top" class="is-all">All</a>
       <a href="#dips">Dips &amp; Spreads</a>
-      <a href="#salads">Salads</a>
+      <a href="#salads">Greek Salads</a>
       <a href="#gyros">Gyros</a>
       <a href="#souvlaki">Souvlaki</a>
-      <a href="#seafood">Seafood</a>
-      <a href="#plates">Plates</a>
+      <a href="#seafood">From the Sea</a>
+      <a href="#plates">House Plates</a>
       <a href="#sides">Sides</a>
       <a href="#desserts">Desserts</a>
       <a href="#wine">Wine &amp; Drinks</a>
     </div>
-  </div>
+  </nav>
+
+  <!-- House Favorites -->
+  <section class="favorites" id="menu-top" aria-label="House favorites">
+    <div class="container">
+      <header class="favorites-head">
+        <span class="menu-eyebrow">Start here</span>
+        <h2>House <em>Favorites</em></h2>
+      </header>
+      <div class="favorites-strip">
+        <a class="fav-card" href="#dips">
+          <div class="card-image"><img src="/images/kala/menu/trio-sampler-dips.webp" alt="A trio sampler of Greek dips with warm pita." loading="lazy" decoding="async" /><span class="menu-badge">Popular</span></div>
+          <div class="fav-body"><div class="item-head"><h3>Trio Sampler</h3><span class="price">$15</span></div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
+        </a>
+        <a class="fav-card" href="#souvlaki">
+          <div class="card-image"><img src="/images/kala/menu/chicken-souvlaki-lemon-herbs.webp" alt="Grilled chicken souvlaki skewers with lemon and herbs." loading="lazy" decoding="async" /><span class="menu-badge">House Favorite</span></div>
+          <div class="fav-body"><div class="item-head"><h3>Chicken Souvlaki</h3><span class="price">$16</span></div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
+        </a>
+        <a class="fav-card" href="#salads">
+          <div class="card-image"><img src="/images/kala/menu/horiatiki-salad-editorial.webp" alt="Traditional horiatiki Greek salad with feta and olives." loading="lazy" decoding="async" /><span class="menu-badge">Popular</span></div>
+          <div class="fav-body"><div class="item-head"><h3>Horiatiki Salad</h3><span class="price">$14</span></div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
+        </a>
+        <a class="fav-card" href="#seafood">
+          <div class="card-image"><img src="/images/kala/menu/whole-branzino-coastal.webp" alt="Whole grilled branzino with lemon and herbs." loading="lazy" decoding="async" /><span class="menu-badge">Chef's Pick</span></div>
+          <div class="fav-body"><div class="item-head"><h3>Whole Branzino</h3><span class="price">$32</span></div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
+        </a>
+        <a class="fav-card" href="#desserts">
+          <div class="card-image"><img src="/images/kala/menu/baklava-honey-walnut.webp" alt="Greek baklava with walnuts and honey." loading="lazy" decoding="async" /><span class="menu-badge">Popular</span></div>
+          <div class="fav-body"><div class="item-head"><h3>Baklava</h3><span class="price">$8</span></div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
+        </a>
+      </div>
+    </div>
+  </section>
 
   <!-- Menu -->
   <div class="menu-page">
-    <div class="container">
 
       <!-- Dips & Spreads -->
       <section class="menu-category" id="dips">
+        <div class="container">
         <header class="menu-category-head">
+          <span class="menu-eyebrow">To start</span>
           <h2>Dips <em>&amp; Spreads</em></h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque magna.</p>
+          <span class="menu-head-rule" aria-hidden="true"></span>
         </header>
         <div class="menu-card-grid">
           <article class="menu-item-card">
-            <div class="card-image"><img src="/public/c243bbfd-cba9-4c8b-b273-3abc24c8f935.png" alt="" loading="eager" fetchpriority="high" decoding="async" /></div>
+            <div class="card-image"><img src="/images/kala/menu/tzatziki-blue-white-plate.webp" alt="Tzatziki — creamy yogurt and cucumber dip with herbs." loading="lazy" decoding="async" /></div>
             <div class="card-body">
               <div class="item-head"><h3>Tzatziki</h3><span class="price">$7</span></div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -57,7 +92,7 @@ import Base from '../layouts/Base.astro';
             </div>
           </article>
           <article class="menu-item-card">
-            <div class="card-image"><img src="/public/f60f61a9-fe03-4def-a469-10daef938655.png" alt="" loading="eager" fetchpriority="high" decoding="async" /></div>
+            <div class="card-image"><img src="/public/f60f61a9-fe03-4def-a469-10daef938655.png" alt="" loading="lazy" /></div>
             <div class="card-body">
               <div class="item-head"><h3>Hummus</h3><span class="price">$7</span></div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -65,7 +100,7 @@ import Base from '../layouts/Base.astro';
             </div>
           </article>
           <article class="menu-item-card">
-            <div class="card-image"><img src="/public/43cec23b-962d-4e58-87f7-85393dc37613.png" alt="" loading="eager" fetchpriority="high" decoding="async" /></div>
+            <div class="card-image"><img src="/public/43cec23b-962d-4e58-87f7-85393dc37613.png" alt="" loading="lazy" /></div>
             <div class="card-body">
               <div class="item-head"><h3>Melitzanosalata</h3><span class="price">$7</span></div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.</p>
@@ -73,7 +108,7 @@ import Base from '../layouts/Base.astro';
             </div>
           </article>
           <article class="menu-item-card">
-            <div class="card-image"><img src="/public/8f24fc61-225b-4c7f-b5a3-9a7329009e81.png" alt="" loading="eager" fetchpriority="high" decoding="async" /></div>
+            <div class="card-image"><img src="/public/8f24fc61-225b-4c7f-b5a3-9a7329009e81.png" alt="" loading="lazy" /></div>
             <div class="card-body">
               <div class="item-head"><h3>Taramosalata</h3><span class="price">$8</span></div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -104,24 +139,29 @@ import Base from '../layouts/Base.astro';
             </div>
           </article>
           <article class="menu-item-card">
-            <div class="card-image"><img src="/public/a32760a3-2ece-4947-92bc-303f6cfce5a4.png" alt="" loading="lazy" /></div>
+            <div class="card-image"><img src="/images/kala/menu/trio-sampler-dips.webp" alt="Trio sampler of Greek dips with warm pita." loading="lazy" decoding="async" /></div>
             <div class="card-body">
               <div class="item-head"><h3>Trio Sampler</h3><span class="price">$15</span></div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod.</p>
+              <div class="menu-tags"><span class="menu-tag">House Made</span></div>
             </div>
           </article>
+        </div>
         </div>
       </section>
 
       <!-- Salads -->
-      <section class="menu-category" id="salads">
+      <section class="menu-category is-alt" id="salads">
+        <div class="container">
         <header class="menu-category-head">
+          <span class="menu-eyebrow">Fresh &amp; bright</span>
           <h2>Greek <em>Salads</em></h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus.</p>
+          <span class="menu-head-rule" aria-hidden="true"></span>
         </header>
         <div class="menu-card-grid">
           <article class="menu-item-card">
-            <div class="card-image"><img src="/public/b428f5ae-26b3-47b3-944d-cc950b096d0f.png" alt="" loading="lazy" /></div>
+            <div class="card-image"><img src="/images/kala/menu/horiatiki-salad-editorial.webp" alt="Horiatiki — traditional Greek salad with tomato, cucumber, feta, and olives." loading="lazy" decoding="async" /></div>
             <div class="card-body">
               <div class="item-head"><h3>Horiatiki</h3><span class="price">$14</span></div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
@@ -153,13 +193,17 @@ import Base from '../layouts/Base.astro';
             </div>
           </article>
         </div>
+        </div>
       </section>
 
       <!-- Gyros -->
       <section class="menu-category" id="gyros">
+        <div class="container">
         <header class="menu-category-head">
+          <span class="menu-eyebrow">Wrapped to order</span>
           <h2>Gyros</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut sollicitudin ligula.</p>
+          <span class="menu-head-rule" aria-hidden="true"></span>
         </header>
         <div class="menu-card-grid">
           <article class="menu-item-card">
@@ -192,23 +236,31 @@ import Base from '../layouts/Base.astro';
             </div>
           </article>
         </div>
+        </div>
       </section>
 
-      <!-- Souvlaki -->
-      <section class="menu-category" id="souvlaki">
+      <!-- Souvlaki — featured grill card + grid -->
+      <section class="menu-category is-wash" id="souvlaki">
+        <div class="container">
         <header class="menu-category-head">
+          <span class="menu-eyebrow">From the grill</span>
           <h2>Souvlaki <em>from the Grill</em></h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque magna.</p>
+          <span class="menu-head-rule" aria-hidden="true"></span>
         </header>
+        <a class="menu-feature-card" href="/order">
+          <div class="card-image">
+            <img src="/images/kala/menu/chicken-souvlaki-lemon-herbs.webp" alt="Grilled chicken souvlaki skewers with lemon, oregano, and olive oil." loading="lazy" decoding="async" />
+            <span class="menu-badge">House Favorite</span>
+          </div>
+          <div class="feature-body">
+            <div class="item-head"><h3>Chicken Skewers</h3><span class="price">$16</span></div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque magna, vitae laoreet justo sollicitudin.</p>
+            <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
+            <span class="feature-cta">Order this <span aria-hidden="true">→</span></span>
+          </div>
+        </a>
         <div class="menu-card-grid">
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/e35b56c1-78a3-4f00-bc59-fef11d51ab97.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Chicken Skewers</h3><span class="price">$16</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-            </div>
-          </article>
           <article class="menu-item-card">
             <div class="card-image"><img src="/public/4a6a4add-18f2-429c-b120-36be86135d79.png" alt="" loading="lazy" /></div>
             <div class="card-body">
@@ -234,27 +286,35 @@ import Base from '../layouts/Base.astro';
             </div>
           </article>
         </div>
+        </div>
       </section>
 
-      <!-- Seafood -->
+      <!-- From the Sea — featured hero card + grid -->
       <section class="menu-category" id="seafood">
+        <div class="container">
         <header class="menu-category-head">
+          <span class="menu-eyebrow">Caught for the coast</span>
           <h2>From <em>the Sea</em></h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus.</p>
+          <span class="menu-head-rule" aria-hidden="true"></span>
         </header>
+        <a class="menu-feature-card is-reverse" href="/order">
+          <div class="card-image">
+            <img src="/images/kala/menu/whole-branzino-coastal.webp" alt="Whole grilled branzino with lemon, olive oil, and fresh herbs." loading="lazy" decoding="async" />
+            <span class="menu-badge">Chef's Pick</span>
+          </div>
+          <div class="feature-body">
+            <div class="item-head"><h3>Whole Branzino</h3><span class="price">$32</span></div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus, vivamus sit amet libero in lacus.</p>
+            <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
+            <span class="feature-cta">Order this <span aria-hidden="true">→</span></span>
+          </div>
+        </a>
         <div class="menu-card-grid">
           <article class="menu-item-card">
-            <div class="card-image"><img src="/public/grilled-octopus.png" alt="" loading="lazy" /></div>
+            <div class="card-image"><img src="/images/kala/menu/grilled-octopus-coastal.webp" alt="Grilled octopus with lemon, olive oil, and fresh herbs." loading="lazy" decoding="async" /></div>
             <div class="card-body">
               <div class="item-head"><h3>Grilled Octopus</h3><span class="price">$24</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/branzino.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Whole Branzino</h3><span class="price">$32</span></div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
               <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
             </div>
@@ -275,13 +335,17 @@ import Base from '../layouts/Base.astro';
             </div>
           </article>
         </div>
+        </div>
       </section>
 
       <!-- Plates -->
-      <section class="menu-category" id="plates">
+      <section class="menu-category is-alt" id="plates">
+        <div class="container">
         <header class="menu-category-head">
+          <span class="menu-eyebrow">From the kitchen</span>
           <h2>House <em>Plates</em></h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet libero.</p>
+          <span class="menu-head-rule" aria-hidden="true"></span>
         </header>
         <div class="menu-card-grid">
           <article class="menu-item-card">
@@ -315,15 +379,19 @@ import Base from '../layouts/Base.astro';
             </div>
           </article>
         </div>
+        </div>
       </section>
 
       <!-- Sides -->
       <section class="menu-category" id="sides">
+        <div class="container">
         <header class="menu-category-head">
+          <span class="menu-eyebrow">Alongside</span>
           <h2>Sides</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque.</p>
+          <span class="menu-head-rule" aria-hidden="true"></span>
         </header>
-        <div class="menu-card-grid">
+        <div class="menu-card-grid is-compact">
           <article class="menu-item-card">
             <div class="card-image"><img src="/public/1debfddb-5fce-44a5-bd4c-9957be88836c.png" alt="" loading="lazy" /></div>
             <div class="card-body">
@@ -356,17 +424,21 @@ import Base from '../layouts/Base.astro';
             </div>
           </article>
         </div>
+        </div>
       </section>
 
       <!-- Desserts -->
-      <section class="menu-category" id="desserts">
+      <section class="menu-category is-alt" id="desserts">
+        <div class="container">
         <header class="menu-category-head">
+          <span class="menu-eyebrow">Something sweet</span>
           <h2>Desserts</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus.</p>
+          <span class="menu-head-rule" aria-hidden="true"></span>
         </header>
         <div class="menu-card-grid">
           <article class="menu-item-card">
-            <div class="card-image"><img src="/public/cc9862c0-9623-4361-8113-00f23b857df7.png" alt="" loading="lazy" /></div>
+            <div class="card-image"><img src="/images/kala/menu/baklava-honey-walnut.webp" alt="Baklava — layered phyllo with walnuts and honey." loading="lazy" decoding="async" /></div>
             <div class="card-body">
               <div class="item-head"><h3>Baklava</h3><span class="price">$8</span></div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -395,15 +467,19 @@ import Base from '../layouts/Base.astro';
             </div>
           </article>
         </div>
+        </div>
       </section>
 
-      <!-- Wine -->
-      <section class="menu-category" id="wine">
+      <!-- Wine & Drinks -->
+      <section class="menu-category is-wash" id="wine">
+        <div class="container">
         <header class="menu-category-head">
+          <span class="menu-eyebrow">To drink</span>
           <h2>Wine <em>&amp; Drinks</em></h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet libero.</p>
+          <span class="menu-head-rule" aria-hidden="true"></span>
         </header>
-        <div class="menu-card-grid">
+        <div class="menu-card-grid is-drinks">
           <article class="menu-item-card">
             <div class="card-image"><img src="/public/f3dff88e-f5e1-40a7-b77a-d8dcef65f46d.png" alt="" loading="lazy" /></div>
             <div class="card-body">
@@ -412,7 +488,7 @@ import Base from '../layouts/Base.astro';
             </div>
           </article>
           <article class="menu-item-card">
-            <div class="card-image"><img src="/public/29749a29-2a06-47b7-a671-eaacf3db3cab.png" alt="" loading="lazy" /></div>
+            <div class="card-image"><img src="/images/kala/menu/white-wine-glass-coastal.webp" alt="A chilled glass of crisp white wine." loading="lazy" decoding="async" /></div>
             <div class="card-body">
               <div class="item-head"><h3>House White</h3><span class="price">$9 / $36</span></div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Glass / Bottle.</p>
@@ -461,22 +537,26 @@ import Base from '../layouts/Base.astro';
             </div>
           </article>
         </div>
+        </div>
       </section>
 
-    </div>
   </div>
 
   <!-- Order CTA -->
   <section class="menu-cta">
     <div class="container">
-      <h2>Hungry yet? <em>Let's eat.</em></h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque magna.</p>
-      <div class="hero-buttons" style="justify-content: center;">
-        <a href="/order" class="btn btn-primary btn-lg">
-          Order Online
-          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="/reservations" class="btn btn-outline btn-lg">Make a Reservation</a>
+      <div class="menu-cta-inner">
+        <span class="menu-eyebrow">Come hungry</span>
+        <h2>Hungry yet? <em>Let's eat.</em></h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque magna.</p>
+        <div class="menu-cta-actions">
+          <a href="/order" class="btn btn-primary btn-lg">
+            Order Online
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="/reservations" class="btn btn-outline btn-lg">Make a Reservation</a>
+        </div>
+        <span class="menu-cta-meander" aria-hidden="true"></span>
       </div>
     </div>
   </section>

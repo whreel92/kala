@@ -101,7 +101,8 @@
       '.story-visual, .menu-category-head, .story-block-text, .story-block-image, ' +
       '.value-card, .pull-quote, .page-header, .menu-item-card, .order-card, .step, ' +
       '.callout-frame, .invite-inner, .menu-cta > .container, .walk-in-inner, ' +
-      '.reserve-card, .dish-marquee-eyebrow, .sharedtable-media, .sharedtable-text'
+      '.reserve-card, .dish-marquee-eyebrow, .sharedtable-media, .sharedtable-text, ' +
+      '.favorites-head, .fav-card, .menu-feature-card'
     );
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -174,46 +175,14 @@
     }
   }
 
-  /* ─────────────────── Menu page: filter chips ─────────────────── */
+  /* ─────────────────── Menu page: sticky category nav reference ─────────────────── */
   const menuJump = $('.menu-jump');
-  if (menuJump && $('.menu-item-card')) {
-    const filtersBar = document.createElement('div');
-    filtersBar.className = 'menu-filters';
-    filtersBar.setAttribute('aria-label', 'Dietary filters');
-    filtersBar.innerHTML = `
-      <button type="button" class="menu-filter active" data-filter="all">All</button>
-      <button type="button" class="menu-filter" data-filter="v">Vegetarian</button>
-      <button type="button" class="menu-filter" data-filter="gf">Gluten-Free</button>
-      <button type="button" class="menu-filter" data-filter="spicy">Spicy</button>
-    `;
-    menuJump.insertAdjacentElement('afterend', filtersBar);
-
-    const cards = $$('.menu-item-card');
-    filtersBar.addEventListener('click', (e) => {
-      const btn = e.target.closest('.menu-filter');
-      if (!btn) return;
-      filtersBar.querySelectorAll('.menu-filter').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      cards.forEach(card => {
-        if (filter === 'all') {
-          card.classList.remove('is-hidden');
-        } else {
-          const has = card.querySelector(`.menu-tag.${filter}`);
-          card.classList.toggle('is-hidden', !has);
-        }
-      });
-      $$('.menu-category').forEach(cat => {
-        const visible = cat.querySelectorAll('.menu-item-card:not(.is-hidden)').length;
-        cat.style.display = visible === 0 ? 'none' : '';
-      });
-    });
-  }
 
   /* ─────────────────── Menu page: scroll-spy + now-viewing pill ─────────────────── */
   if (menuJump) {
     const jumpInner = $('.menu-jump-inner');
     const jumpLinks = $$('.menu-jump a');
+    const allLink   = $('.menu-jump a.is-all');
     const byHash = {};
     jumpLinks.forEach(a => {
       const id = a.getAttribute('href').replace('#', '');
@@ -225,39 +194,42 @@
     pill.className = 'now-viewing';
     document.body.appendChild(pill);
 
+    const setActive = (link) => {
+      jumpLinks.forEach(l => l.classList.remove('active'));
+      if (link) link.classList.add('active');
+      if (jumpInner && link && jumpInner.scrollWidth > jumpInner.clientWidth) {
+        const target = link.offsetLeft - jumpInner.clientWidth / 2 + link.offsetWidth / 2;
+        jumpInner.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
+      }
+    };
+
     const visible = new Set();
     const spy = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) visible.add(entry.target);
         else visible.delete(entry.target);
       });
-      if (visible.size === 0 || window.scrollY < 200) {
+      // Near the top (House Favorites / intro) → highlight "All", hide pill.
+      if (visible.size === 0 || window.scrollY < 260) {
         pill.classList.remove('show');
-        jumpLinks.forEach(l => l.classList.remove('active'));
+        setActive(allLink);
         return;
       }
       const top = Array.from(visible).sort((a, b) => a.offsetTop - b.offsetTop)[0];
-      const id = top.id;
-      const link = byHash[id];
-      jumpLinks.forEach(l => l.classList.remove('active'));
-      if (link) link.classList.add('active');
+      const link = byHash[top.id];
+      setActive(link);
       const head = top.querySelector('h2');
       if (head) {
         pill.textContent = head.textContent.replace(/\s+/g, ' ').trim();
         pill.classList.add('show');
       }
-      if (jumpInner && link && jumpInner.scrollWidth > jumpInner.clientWidth) {
-        const target =
-          link.offsetLeft - jumpInner.clientWidth / 2 + link.offsetWidth / 2;
-        jumpInner.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
-      }
     }, { rootMargin: '-30% 0px -55% 0px', threshold: 0 });
 
     categories.forEach(c => spy.observe(c));
 
-    // also hide pill when scrolled near top
+    // also reset to "All" + hide pill when scrolled near top
     window.addEventListener('scroll', () => {
-      if (window.scrollY < 200) pill.classList.remove('show');
+      if (window.scrollY < 260) { pill.classList.remove('show'); setActive(allLink); }
     }, { passive: true });
   }
 
