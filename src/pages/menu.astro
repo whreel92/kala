@@ -1,5 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
+
+// Reusable blue line-art illustrations (monochrome, inherit currentColor)
+const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M42 6c-7 10-11 23-13 38-3 22-2 50 1 84"/><path d="M28 36c-7-5-16-5-22-1 5 7 14 9 22 1Z"/><path d="M31 55c8-6 16-7 23-3-5 7-15 9-23 3Z"/><path d="M27 74c-7-5-16-5-22-1 5 7 14 9 22 1Z"/><path d="M30 93c8-6 16-7 23-3-5 7-15 9-23 3Z"/><ellipse cx="20" cy="46" rx="4.6" ry="6.4" transform="rotate(-24 20 46)"/><ellipse cx="42" cy="65" rx="4.6" ry="6.4" transform="rotate(22 42 65)"/></svg>`;
 ---
 <Base
   title="Menu — KALA Greek and More"
@@ -11,10 +14,10 @@ import Base from '../layouts/Base.astro';
   <section class="page-header has-bg is-menu">
     <div class="container">
       <h1>MENU</h1>
-      <span class="page-sub">A taste of Greece &amp; more</span>
+      <span class="page-sub menu-script-sub">Made by hand, shared by the table</span>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium nisi
-        tincidunt eu. Donec euismod tempor lectus, vivamus sit amet libero.
+        tincidunt eu. Donec euismod tempor lectus.
       </p>
     </div>
   </section>
@@ -22,12 +25,69 @@ import Base from '../layouts/Base.astro';
   <!-- Greek Key Divider -->
   <div class="meander-divider" aria-hidden="true"></div>
 
+  <!-- Printed Mediterranean menu panel (decorative) -->
+  <section class="printed-menu">
+    <div class="container">
+      <div class="printed-panel">
+        <span class="panel-corner tl" aria-hidden="true"></span>
+        <span class="panel-corner tr" aria-hidden="true"></span>
+        <span class="panel-corner bl" aria-hidden="true"></span>
+        <span class="panel-corner br" aria-hidden="true"></span>
+
+        <div class="printed-grid">
+          <div class="printed-left">
+            <div class="printed-title">
+              <span class="printed-script">Mediterranean</span>
+              <span class="printed-serif">MENU</span>
+            </div>
+
+            <div class="printed-teaser">
+              <div class="teaser-group">
+                <h3>Starters</h3>
+                <p>Tzatziki · Hummus · Trio Sampler</p>
+              </div>
+              <div class="teaser-group">
+                <h3>From the Grill</h3>
+                <p>Chicken Souvlaki · Lamb Gyro · Grilled Octopus</p>
+              </div>
+              <div class="teaser-group">
+                <h3>Sweet</h3>
+                <p>Baklava · Loukoumades · Greek Coffee</p>
+              </div>
+            </div>
+
+            <div class="printed-rule" aria-hidden="true"><span class="diamond"></span></div>
+            <p class="printed-footer">
+              <span class="printed-sprig" aria-hidden="true" set:html={oliveSprig} />
+              Good food. Good wine. Good company.
+            </p>
+          </div>
+
+          <div class="printed-right" aria-hidden="true">
+            <svg class="illo-lemon" viewBox="0 0 220 176" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M64 60C44 46 22 50 12 68c20 14 44 10 52-8Z"/>
+              <path d="M22 66c12-2 28 0 38 6" stroke-width="1.1"/>
+              <path d="M96 42C92 18 104 2 126 4c2 24-12 40-30 38Z"/>
+              <path d="M104 38c4-12 12-22 20-28" stroke-width="1.1"/>
+              <ellipse cx="86" cy="108" rx="46" ry="38"/>
+              <path d="M131 100c8-3 15 0 17 6-7 4-15 2-17-6Z"/>
+              <circle cx="160" cy="112" r="40"/>
+              <circle cx="160" cy="112" r="31"/>
+              <path d="M160 112 160 72M160 112 188 84M160 112 200 112M160 112 188 140M160 112 160 152M160 112 132 140M160 112 120 112M160 112 132 84" stroke-width="1.1"/>
+              <path d="M150 96c6 4 14 4 20 0" stroke-width="1.1"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Sticky category nav -->
   <nav class="menu-jump" aria-label="Menu categories">
     <div class="container menu-jump-inner">
       <a href="#menu-top" class="is-all">All</a>
       <a href="#dips">Dips &amp; Spreads</a>
-      <a href="#salads">Greek Salads</a>
+      <a href="#salads">Salads</a>
       <a href="#gyros">Gyros</a>
       <a href="#souvlaki">Souvlaki</a>
       <a href="#seafood">From the Sea</a>
@@ -38,507 +98,544 @@ import Base from '../layouts/Base.astro';
     </div>
   </nav>
 
-  <!-- House Favorites -->
-  <section class="favorites" id="menu-top" aria-label="House favorites">
-    <div class="container">
-      <header class="favorites-head">
-        <span class="menu-eyebrow">Start here</span>
-        <h2>House <em>Favorites</em></h2>
-      </header>
-      <div class="favorites-strip">
-        <a class="fav-card" href="#dips">
-          <div class="card-image"><img src="/images/kala/menu/trio-sampler-dips.webp" alt="A trio sampler of Greek dips with warm pita." loading="lazy" decoding="async" /><span class="menu-badge">Popular</span></div>
-          <div class="fav-body"><div class="item-head"><h3>Trio Sampler</h3><span class="price">$15</span></div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
-        </a>
-        <a class="fav-card" href="#souvlaki">
-          <div class="card-image"><img src="/images/kala/menu/chicken-souvlaki-lemon-herbs.webp" alt="Grilled chicken souvlaki skewers with lemon and herbs." loading="lazy" decoding="async" /><span class="menu-badge">House Favorite</span></div>
-          <div class="fav-body"><div class="item-head"><h3>Chicken Souvlaki</h3><span class="price">$16</span></div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
-        </a>
-        <a class="fav-card" href="#salads">
-          <div class="card-image"><img src="/images/kala/menu/horiatiki-salad-editorial.webp" alt="Traditional horiatiki Greek salad with feta and olives." loading="lazy" decoding="async" /><span class="menu-badge">Popular</span></div>
-          <div class="fav-body"><div class="item-head"><h3>Horiatiki Salad</h3><span class="price">$14</span></div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
-        </a>
-        <a class="fav-card" href="#seafood">
-          <div class="card-image"><img src="/images/kala/menu/whole-branzino-coastal.webp" alt="Whole grilled branzino with lemon and herbs." loading="lazy" decoding="async" /><span class="menu-badge">Chef's Pick</span></div>
-          <div class="fav-body"><div class="item-head"><h3>Whole Branzino</h3><span class="price">$32</span></div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
-        </a>
-        <a class="fav-card" href="#desserts">
-          <div class="card-image"><img src="/images/kala/menu/baklava-honey-walnut.webp" alt="Greek baklava with walnuts and honey." loading="lazy" decoding="async" /><span class="menu-badge">Popular</span></div>
-          <div class="fav-body"><div class="item-head"><h3>Baklava</h3><span class="price">$8</span></div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Menu -->
   <div class="menu-page">
 
-      <!-- Dips & Spreads -->
-      <section class="menu-category" id="dips">
-        <div class="container">
-        <header class="menu-category-head">
-          <span class="menu-eyebrow">To start</span>
-          <h2>Dips <em>&amp; Spreads</em></h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque magna.</p>
-          <span class="menu-head-rule" aria-hidden="true"></span>
+    <!-- House Favorites -->
+    <section class="favorites" id="menu-top" aria-label="House favorites">
+      <div class="container">
+        <header class="favorites-head">
+          <span class="favorites-illo" aria-hidden="true" set:html={oliveSprig} />
+          <h2>House Favorites</h2>
+          <span class="favorites-rule" aria-hidden="true"></span>
         </header>
-        <div class="menu-card-grid">
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/images/kala/menu/tzatziki-blue-white-plate.webp" alt="Tzatziki — creamy yogurt and cucumber dip with herbs." loading="lazy" decoding="async" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Tzatziki</h3><span class="price">$7</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/f60f61a9-fe03-4def-a469-10daef938655.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Hummus</h3><span class="price">$7</span></div>
+        <div class="favorites-strip">
+          <a class="fav-card" href="#dips">
+            <div class="card-image"><img src="/images/kala/menu/trio-sampler-dips.webp" alt="A trio sampler of Greek dips with warm pita." loading="lazy" decoding="async" /><span class="menu-badge">House Favorite</span></div>
+            <div class="fav-body">
+              <div class="item-head"><h3>Trio Sampler</h3><span class="price">$16</span></div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
               <div class="menu-tags"><span class="menu-tag v">V</span><span class="menu-tag gf">GF</span></div>
             </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/43cec23b-962d-4e58-87f7-85393dc37613.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Melitzanosalata</h3><span class="price">$7</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.</p>
-              <div class="menu-tags"><span class="menu-tag v">V</span></div>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/8f24fc61-225b-4c7f-b5a3-9a7329009e81.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Taramosalata</h3><span class="price">$8</span></div>
+          </a>
+          <a class="fav-card" href="#souvlaki">
+            <div class="card-image"><img src="/images/kala/menu/chicken-souvlaki-lemon-herbs.webp" alt="Grilled chicken souvlaki skewers with lemon and herbs." loading="lazy" decoding="async" /></div>
+            <div class="fav-body">
+              <div class="item-head"><h3>Chicken Souvlaki</h3><span class="price">$24</span></div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
             </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/tirokafteri.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Tirokafteri</h3><span class="price">$8</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag spicy">Spicy</span></div>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/skordalia.png" alt="Creamy white Skordalia — Greek garlic-and-potato dip with a pool of golden olive oil and a sprig of parsley, with raw garlic cloves and warm pita on the side." loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Skordalia</h3><span class="price">$7</span></div>
+          </a>
+          <a class="fav-card" href="#salads">
+            <div class="card-image"><img src="/images/kala/menu/horiatiki-salad-editorial.webp" alt="Traditional horiatiki Greek salad with feta and olives." loading="lazy" decoding="async" /></div>
+            <div class="fav-body">
+              <div class="item-head"><h3>Horiatiki Salad</h3><span class="price">$14</span></div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
               <div class="menu-tags"><span class="menu-tag v">V</span><span class="menu-tag gf">GF</span></div>
             </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/fava.png" alt="Creamy pale-yellow Greek Fava — yellow split-pea purée — topped with diced red onion, capers, and parsley, with a halved lemon and warm pita alongside." loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Fava</h3><span class="price">$7</span></div>
+          </a>
+          <a class="fav-card" href="#seafood">
+            <div class="card-image"><img src="/images/kala/menu/whole-branzino-coastal.webp" alt="Whole grilled branzino with lemon and herbs." loading="lazy" decoding="async" /></div>
+            <div class="fav-body">
+              <div class="item-head"><h3>Whole Branzino</h3><span class="price">$34</span></div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag v">V</span><span class="menu-tag gf">GF</span></div>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/images/kala/menu/trio-sampler-dips.webp" alt="Trio sampler of Greek dips with warm pita." loading="lazy" decoding="async" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Trio Sampler</h3><span class="price">$15</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod.</p>
-              <div class="menu-tags"><span class="menu-tag">House Made</span></div>
-            </div>
-          </article>
-        </div>
-        </div>
-      </section>
-
-      <!-- Salads -->
-      <section class="menu-category is-alt" id="salads">
-        <div class="container">
-        <header class="menu-category-head">
-          <span class="menu-eyebrow">Fresh &amp; bright</span>
-          <h2>Greek <em>Salads</em></h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus.</p>
-          <span class="menu-head-rule" aria-hidden="true"></span>
-        </header>
-        <div class="menu-card-grid">
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/images/kala/menu/horiatiki-salad-editorial.webp" alt="Horiatiki — traditional Greek salad with tomato, cucumber, feta, and olives." loading="lazy" decoding="async" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Horiatiki</h3><span class="price">$14</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
               <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
             </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/1edd312e-7622-4c96-80d2-7f9b72e4b99e.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Mixed Greens</h3><span class="price">$11</span></div>
+          </a>
+          <a class="fav-card" href="#desserts">
+            <div class="card-image"><img src="/images/kala/menu/baklava-honey-walnut.webp" alt="Greek baklava with walnuts and honey." loading="lazy" decoding="async" /></div>
+            <div class="fav-body">
+              <div class="item-head"><h3>Baklava</h3><span class="price">$9</span></div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
               <div class="menu-tags"><span class="menu-tag v">V</span></div>
             </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/8bc4ad07-a989-4b76-85da-af9eae80fa73.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Beet &amp; Walnut</h3><span class="price">$13</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/6b99cc72-6194-477d-81ca-f8102c1d044d.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Watermelon &amp; Feta</h3><span class="price">$14</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-            </div>
-          </article>
+          </a>
         </div>
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Gyros -->
-      <section class="menu-category" id="gyros">
-        <div class="container">
-        <header class="menu-category-head">
-          <span class="menu-eyebrow">Wrapped to order</span>
-          <h2>Gyros</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut sollicitudin ligula.</p>
-          <span class="menu-head-rule" aria-hidden="true"></span>
-        </header>
-        <div class="menu-card-grid">
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/e04b7c58-8d54-487c-9f41-5f660e52bc91.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>The Classic Pork</h3><span class="price">$13</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod.</p>
+    <!-- Dips & Spreads -->
+    <section class="menu-category" id="dips">
+      <div class="container">
+        <div class="menu-zone">
+          <aside class="zone-label">
+            <span class="zone-illo" aria-hidden="true" set:html={oliveSprig} />
+            <h2>Dips <em>&amp; Spreads</em></h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque magna.</p>
+          </aside>
+          <div class="zone-content">
+            <div class="menu-card-grid">
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/images/kala/menu/tzatziki-blue-white-plate.webp" alt="Tzatziki — yogurt and cucumber dip with herbs." loading="lazy" decoding="async" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Tzatziki</h3><span class="price">$7</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/images/kala/menu/menu-hummus.webp" alt="Creamy hummus with olive oil and chickpeas." loading="lazy" decoding="async" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Hummus</h3><span class="price">$7</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag v">V</span><span class="menu-tag gf">GF</span></div>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/images/kala/menu/menu-melitzanosalata.webp" alt="Smoky melitzanosalata eggplant dip with olive oil." loading="lazy" decoding="async" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Melitzanosalata</h3><span class="price">$8</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag v">V</span></div>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/images/kala/menu/menu-taramasalata.webp" alt="Pale pink taramasalata dip with olive oil and dill." loading="lazy" decoding="async" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Taramasalata</h3><span class="price">$8</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/tirokafteri.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Tirokafteri</h3><span class="price">$8</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag spicy">Spicy</span></div>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/skordalia.png" alt="Skordalia — Greek garlic and potato dip with olive oil." loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Skordalia</h3><span class="price">$7</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag v">V</span><span class="menu-tag gf">GF</span></div>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/fava.png" alt="Fava — Greek yellow split-pea purée with red onion and capers." loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Fava</h3><span class="price">$7</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag v">V</span><span class="menu-tag gf">GF</span></div>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/images/kala/menu/trio-sampler-dips.webp" alt="Trio sampler of Greek dips with warm pita." loading="lazy" decoding="async" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Trio Sampler</h3><span class="price">$15</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag">House Made</span></div>
+                </div>
+              </article>
             </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/8e01e74a-1220-406b-a82a-796f1a525d84.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Chicken Gyro</h3><span class="price">$13</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/796a6d3d-2ec0-4831-ab7b-ab194896a7e7.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Lamb Gyro</h3><span class="price">$15</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/1ea85671-d0fd-4362-a7a9-a7479a31635d.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Garden Gyro</h3><span class="price">$14</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag v">V</span></div>
-            </div>
-          </article>
-        </div>
-        </div>
-      </section>
-
-      <!-- Souvlaki — featured grill card + grid -->
-      <section class="menu-category is-wash" id="souvlaki">
-        <div class="container">
-        <header class="menu-category-head">
-          <span class="menu-eyebrow">From the grill</span>
-          <h2>Souvlaki <em>from the Grill</em></h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque magna.</p>
-          <span class="menu-head-rule" aria-hidden="true"></span>
-        </header>
-        <a class="menu-feature-card" href="/order">
-          <div class="card-image">
-            <img src="/images/kala/menu/chicken-souvlaki-lemon-herbs.webp" alt="Grilled chicken souvlaki skewers with lemon, oregano, and olive oil." loading="lazy" decoding="async" />
-            <span class="menu-badge">House Favorite</span>
           </div>
-          <div class="feature-body">
-            <div class="item-head"><h3>Chicken Skewers</h3><span class="price">$16</span></div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque magna, vitae laoreet justo sollicitudin.</p>
-            <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-            <span class="feature-cta">Order this <span aria-hidden="true">→</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Salads -->
+    <section class="menu-category" id="salads">
+      <div class="container">
+        <div class="menu-zone">
+          <aside class="zone-label">
+            <span class="zone-illo" aria-hidden="true" set:html={oliveSprig} />
+            <h2>Greek <em>Salads</em></h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus.</p>
+          </aside>
+          <div class="zone-content">
+            <div class="menu-card-grid">
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/images/kala/menu/horiatiki-salad-editorial.webp" alt="Horiatiki — Greek salad with tomato, cucumber, feta, and olives." loading="lazy" decoding="async" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Horiatiki</h3><span class="price">$14</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/1edd312e-7622-4c96-80d2-7f9b72e4b99e.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Mixed Greens</h3><span class="price">$11</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag v">V</span></div>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/8bc4ad07-a989-4b76-85da-af9eae80fa73.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Beet &amp; Walnut</h3><span class="price">$13</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/6b99cc72-6194-477d-81ca-f8102c1d044d.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Watermelon &amp; Feta</h3><span class="price">$14</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
+                </div>
+              </article>
+            </div>
           </div>
-        </a>
-        <div class="menu-card-grid">
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/4a6a4add-18f2-429c-b120-36be86135d79.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Pork Skewers</h3><span class="price">$16</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/f654d18d-85e3-4c10-ae90-00769deaa21e.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Lamb Skewers</h3><span class="price">$19</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</p>
-              <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/421c842a-e4b0-4b83-aae5-75b9c964570f.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Shrimp Skewers</h3><span class="price">$20</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-            </div>
-          </article>
         </div>
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- From the Sea — featured hero card + grid -->
-      <section class="menu-category" id="seafood">
-        <div class="container">
-        <header class="menu-category-head">
-          <span class="menu-eyebrow">Caught for the coast</span>
-          <h2>From <em>the Sea</em></h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus.</p>
-          <span class="menu-head-rule" aria-hidden="true"></span>
-        </header>
-        <a class="menu-feature-card is-reverse" href="/order">
-          <div class="card-image">
-            <img src="/images/kala/menu/whole-branzino-coastal.webp" alt="Whole grilled branzino with lemon, olive oil, and fresh herbs." loading="lazy" decoding="async" />
-            <span class="menu-badge">Chef's Pick</span>
+    <!-- Gyros -->
+    <section class="menu-category" id="gyros">
+      <div class="container">
+        <div class="menu-zone">
+          <aside class="zone-label">
+            <span class="zone-illo" aria-hidden="true" set:html={oliveSprig} />
+            <h2>Gyros</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut sollicitudin ligula.</p>
+          </aside>
+          <div class="zone-content">
+            <div class="menu-card-grid">
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/e04b7c58-8d54-487c-9f41-5f660e52bc91.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>The Classic Pork</h3><span class="price">$13</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/8e01e74a-1220-406b-a82a-796f1a525d84.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Chicken Gyro</h3><span class="price">$13</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/796a6d3d-2ec0-4831-ab7b-ab194896a7e7.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Lamb Gyro</h3><span class="price">$15</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/1ea85671-d0fd-4362-a7a9-a7479a31635d.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Garden Gyro</h3><span class="price">$14</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag v">V</span></div>
+                </div>
+              </article>
+            </div>
           </div>
-          <div class="feature-body">
-            <div class="item-head"><h3>Whole Branzino</h3><span class="price">$32</span></div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus, vivamus sit amet libero in lacus.</p>
-            <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-            <span class="feature-cta">Order this <span aria-hidden="true">→</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Souvlaki — featured + text list -->
+    <section class="menu-category" id="souvlaki">
+      <div class="container">
+        <div class="menu-zone">
+          <aside class="zone-label">
+            <span class="zone-illo" aria-hidden="true" set:html={oliveSprig} />
+            <h2>Souvlaki</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque magna.</p>
+          </aside>
+          <div class="zone-content souvlaki-content">
+            <a class="menu-feature-card" href="/order">
+              <div class="card-image">
+                <img src="/images/kala/menu/chicken-souvlaki-lemon-herbs.webp" alt="Grilled chicken souvlaki skewers with lemon, oregano, and olive oil." loading="lazy" decoding="async" />
+              </div>
+              <div class="feature-body">
+                <div class="item-head"><h3>Chicken Souvlaki</h3><span class="price">$24</span></div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+                <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
+              </div>
+            </a>
+            <ul class="text-list">
+              <li>
+                <div class="text-item-head"><h4>Lamb Souvlaki</h4><span class="price">$26</span></div>
+                <p>Lorem ipsum dolor sit amet.</p>
+                <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
+              </li>
+              <li>
+                <div class="text-item-head"><h4>Pork Souvlaki</h4><span class="price">$23</span></div>
+                <p>Lorem ipsum dolor sit amet.</p>
+                <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
+              </li>
+              <li>
+                <div class="text-item-head"><h4>Shrimp Souvlaki</h4><span class="price">$20</span></div>
+                <p>Lorem ipsum dolor sit amet.</p>
+                <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
+              </li>
+            </ul>
           </div>
-        </a>
-        <div class="menu-card-grid">
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/images/kala/menu/grilled-octopus-coastal.webp" alt="Grilled octopus with lemon, olive oil, and fresh herbs." loading="lazy" decoding="async" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Grilled Octopus</h3><span class="price">$24</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/saganaki-shrimp.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Saganaki Shrimp</h3><span class="price">$18</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag spicy">Spicy</span></div>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/calamari.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Calamari</h3><span class="price">$16</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </article>
         </div>
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Plates -->
-      <section class="menu-category is-alt" id="plates">
-        <div class="container">
-        <header class="menu-category-head">
-          <span class="menu-eyebrow">From the kitchen</span>
-          <h2>House <em>Plates</em></h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet libero.</p>
-          <span class="menu-head-rule" aria-hidden="true"></span>
-        </header>
-        <div class="menu-card-grid">
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/moussaka.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Moussaka</h3><span class="price">$19</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</p>
+    <!-- From the Sea — featured + grid -->
+    <section class="menu-category" id="seafood">
+      <div class="container">
+        <div class="menu-zone">
+          <aside class="zone-label">
+            <span class="zone-illo" aria-hidden="true" set:html={oliveSprig} />
+            <h2>From <em>the Sea</em></h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus.</p>
+          </aside>
+          <div class="zone-content">
+            <a class="menu-feature-card" href="/order">
+              <div class="card-image">
+                <img src="/images/kala/menu/whole-branzino-coastal.webp" alt="Whole grilled branzino with lemon, olive oil, and fresh herbs." loading="lazy" decoding="async" />
+                <span class="menu-badge">Chef's Pick</span>
+              </div>
+              <div class="feature-body">
+                <div class="item-head"><h3>Whole Branzino</h3><span class="price">$32</span></div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus, vivamus sit amet libero in lacus.</p>
+                <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
+              </div>
+            </a>
+            <div class="menu-card-grid">
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/images/kala/menu/grilled-octopus-coastal.webp" alt="Grilled octopus with lemon, olive oil, and herbs." loading="lazy" decoding="async" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Grilled Octopus</h3><span class="price">$24</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/saganaki-shrimp.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Saganaki Shrimp</h3><span class="price">$18</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag spicy">Spicy</span></div>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/calamari.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Calamari</h3><span class="price">$16</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+              </article>
             </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/pastitsio.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Pastitsio</h3><span class="price">$18</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/lamb-kleftiko.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Lamb Kleftiko</h3><span class="price">$26</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/014a33bc-3a11-4396-82a5-8c7e7f5726cf.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Roast Chicken</h3><span class="price">$20</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-            </div>
-          </article>
+          </div>
         </div>
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Sides -->
-      <section class="menu-category" id="sides">
-        <div class="container">
-        <header class="menu-category-head">
-          <span class="menu-eyebrow">Alongside</span>
-          <h2>Sides</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque.</p>
-          <span class="menu-head-rule" aria-hidden="true"></span>
-        </header>
-        <div class="menu-card-grid is-compact">
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/1debfddb-5fce-44a5-bd4c-9957be88836c.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Lemon Potatoes</h3><span class="price">$6</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag v">V</span><span class="menu-tag gf">GF</span></div>
+    <!-- House Plates -->
+    <section class="menu-category" id="plates">
+      <div class="container">
+        <div class="menu-zone">
+          <aside class="zone-label">
+            <span class="zone-illo" aria-hidden="true" set:html={oliveSprig} />
+            <h2>House <em>Plates</em></h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet libero.</p>
+          </aside>
+          <div class="zone-content">
+            <div class="menu-card-grid">
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/moussaka.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Moussaka</h3><span class="price">$19</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/pastitsio.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Pastitsio</h3><span class="price">$18</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/lamb-kleftiko.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Lamb Kleftiko</h3><span class="price">$26</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/014a33bc-3a11-4396-82a5-8c7e7f5726cf.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Roast Chicken</h3><span class="price">$20</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
+                </div>
+              </article>
             </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/c09f71a2-079a-4e68-9360-362d961cb6ac.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Greek Rice</h3><span class="price">$5</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag v">V</span></div>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/94d38a32-02ea-4584-ba7e-9f4187fd90f1.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Spanakopita</h3><span class="price">$8</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/01c5098e-cec5-45ac-b622-86405690a6da.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Dolmades</h3><span class="price">$9</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag v">V</span></div>
-            </div>
-          </article>
+          </div>
         </div>
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Desserts -->
-      <section class="menu-category is-alt" id="desserts">
-        <div class="container">
-        <header class="menu-category-head">
-          <span class="menu-eyebrow">Something sweet</span>
-          <h2>Desserts</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus.</p>
-          <span class="menu-head-rule" aria-hidden="true"></span>
-        </header>
-        <div class="menu-card-grid">
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/images/kala/menu/baklava-honey-walnut.webp" alt="Baklava — layered phyllo with walnuts and honey." loading="lazy" decoding="async" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Baklava</h3><span class="price">$8</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <!-- Sides -->
+    <section class="menu-category" id="sides">
+      <div class="container">
+        <div class="menu-zone">
+          <aside class="zone-label">
+            <span class="zone-illo" aria-hidden="true" set:html={oliveSprig} />
+            <h2>Sides</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque.</p>
+          </aside>
+          <div class="zone-content">
+            <div class="menu-card-grid is-compact">
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/1debfddb-5fce-44a5-bd4c-9957be88836c.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Lemon Potatoes</h3><span class="price">$6</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag v">V</span><span class="menu-tag gf">GF</span></div>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/c09f71a2-079a-4e68-9360-362d961cb6ac.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Greek Rice</h3><span class="price">$5</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag v">V</span></div>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/94d38a32-02ea-4584-ba7e-9f4187fd90f1.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Spanakopita</h3><span class="price">$8</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/01c5098e-cec5-45ac-b622-86405690a6da.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Dolmades</h3><span class="price">$9</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag v">V</span></div>
+                </div>
+              </article>
             </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/f7ff28eb-f2a7-4078-9852-d247d2505b8f.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Galaktoboureko</h3><span class="price">$8</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/5f295419-264c-47da-b6b4-47921e4e288f.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Loukoumades</h3><span class="price">$7</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/02dad55d-cdeb-4a3b-8a08-974bca6bd92d.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Yogurt &amp; Honey</h3><span class="price">$7</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-            </div>
-          </article>
+          </div>
         </div>
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Wine & Drinks -->
-      <section class="menu-category is-wash" id="wine">
-        <div class="container">
-        <header class="menu-category-head">
-          <span class="menu-eyebrow">To drink</span>
-          <h2>Wine <em>&amp; Drinks</em></h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet libero.</p>
-          <span class="menu-head-rule" aria-hidden="true"></span>
-        </header>
-        <div class="menu-card-grid is-drinks">
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/f3dff88e-f5e1-40a7-b77a-d8dcef65f46d.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>House Red</h3><span class="price">$9 / $36</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Glass / Bottle.</p>
+    <!-- Desserts -->
+    <section class="menu-category" id="desserts">
+      <div class="container">
+        <div class="menu-zone">
+          <aside class="zone-label">
+            <span class="zone-illo" aria-hidden="true" set:html={oliveSprig} />
+            <h2>Desserts</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus.</p>
+          </aside>
+          <div class="zone-content">
+            <div class="menu-card-grid">
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/images/kala/menu/baklava-honey-walnut.webp" alt="Baklava — layered phyllo with walnuts and honey." loading="lazy" decoding="async" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Baklava</h3><span class="price">$8</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/f7ff28eb-f2a7-4078-9852-d247d2505b8f.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Galaktoboureko</h3><span class="price">$8</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/5f295419-264c-47da-b6b4-47921e4e288f.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Loukoumades</h3><span class="price">$7</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/02dad55d-cdeb-4a3b-8a08-974bca6bd92d.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Yogurt &amp; Honey</h3><span class="price">$7</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
+                </div>
+              </article>
             </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/images/kala/menu/white-wine-glass-coastal.webp" alt="A chilled glass of crisp white wine." loading="lazy" decoding="async" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>House White</h3><span class="price">$9 / $36</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Glass / Bottle.</p>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/99fbf158-70ee-46cc-bbe1-0449c5976a5a.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Assyrtiko</h3><span class="price">$14 / $54</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Glass / Bottle.</p>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/c40549f9-037d-4fdf-8380-b7fd49956858.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Agiorgitiko</h3><span class="price">$14 / $54</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Glass / Bottle.</p>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/ouzo.png" alt="A tall clear glass of Greek Ouzo over ice with the signature milky louche, a twist of lemon peel on the rim, and a small dish of Kalamata olives, feta, and star anise alongside." loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Ouzo</h3><span class="price">$8</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/8b7afa69-13d8-484b-8974-e82c0fab6bf7.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Greek Coffee</h3><span class="price">$4</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/frappe.png" alt="A tall glass of classic Greek Frappé with a thick creamy foam crown, dark iced coffee, and a blue straw, with koulourakia cookies and coffee beans on a small plate beside it." loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Frappé</h3><span class="price">$5</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </article>
-          <article class="menu-item-card">
-            <div class="card-image"><img src="/public/2fec95ff-4488-44f5-89fb-9e42ed63a107.png" alt="" loading="lazy" /></div>
-            <div class="card-body">
-              <div class="item-head"><h3>Sparkling Water</h3><span class="price">$4</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </article>
+          </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Wine & Drinks -->
+    <section class="menu-category" id="wine">
+      <div class="container">
+        <div class="menu-zone">
+          <aside class="zone-label">
+            <span class="zone-illo zone-illo-glass" aria-hidden="true">
+              <svg viewBox="0 0 48 120" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8h24c0 18-7 30-12 30S12 26 12 8Z"/><path d="M13 17h22"/><path d="M24 38v60"/><path d="M12 110h24"/></svg>
+            </span>
+            <h2>Wine <em>&amp; Drinks</em></h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet libero.</p>
+          </aside>
+          <div class="zone-content">
+            <div class="menu-card-grid is-drinks">
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/f3dff88e-f5e1-40a7-b77a-d8dcef65f46d.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>House Red</h3><span class="price">$9 / $36</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur. Glass / Bottle.</p>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/images/kala/menu/white-wine-glass-coastal.webp" alt="A chilled glass of crisp white wine." loading="lazy" decoding="async" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>House White</h3><span class="price">$9 / $36</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur. Glass / Bottle.</p>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/99fbf158-70ee-46cc-bbe1-0449c5976a5a.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Assyrtiko</h3><span class="price">$14 / $54</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur. Glass / Bottle.</p>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/c40549f9-037d-4fdf-8380-b7fd49956858.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Agiorgitiko</h3><span class="price">$14 / $54</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur. Glass / Bottle.</p>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/ouzo.png" alt="A glass of Greek ouzo over ice with a twist of lemon." loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Ouzo</h3><span class="price">$8</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/8b7afa69-13d8-484b-8974-e82c0fab6bf7.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Greek Coffee</h3><span class="price">$4</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/frappe.png" alt="A tall glass of Greek frappé with creamy foam." loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Frappé</h3><span class="price">$5</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+              </article>
+              <article class="menu-item-card">
+                <div class="card-image"><img src="/public/2fec95ff-4488-44f5-89fb-9e42ed63a107.png" alt="" loading="lazy" /></div>
+                <div class="card-body">
+                  <div class="item-head"><h3>Sparkling Water</h3><span class="price">$4</span></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+              </article>
+            </div>
+          </div>
         </div>
-      </section>
+      </div>
+    </section>
 
   </div>
 
