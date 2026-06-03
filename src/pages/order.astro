@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const oliveBranch = `<svg viewBox="0 0 90 60" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 54C26 48 52 36 84 8"/><path d="M30 40c-6-5-6-12-2-17 6 3 8 11 2 17Z"/><path d="M44 31c-7-3-11-9-10-15 6 2 11 9 10 15Z"/><path d="M40 44c2-7 8-11 14-11-1 6-7 11-14 11Z"/><path d="M55 33c-5-5-6-12-3-17 6 4 7 11 3 17Z"/><path d="M67 22c2-7 8-11 14-10-1 6-7 11-14 10Z"/><ellipse cx="24" cy="48" rx="3.4" ry="4.6" transform="rotate(-28 24 48)"/></svg>`;
 ---
 <Base
   title="Order Online — KALA Greek and More"
@@ -7,85 +9,95 @@ import Base from '../layouts/Base.astro';
   current="/order"
 >
 
-  <!-- Page header -->
-  <section class="page-header has-bg is-order">
-    <div class="container">
-      <h1>ORDER ONLINE</h1>
-      <span class="page-sub">Pickup, delivery, or catering</span>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium nisi
-        tincidunt eu. Donec euismod tempor lectus, vivamus sit amet libero.
-      </p>
-    </div>
-  </section>
+  <div class="order-page">
 
-  <!-- Greek Key Divider -->
-  <div class="meander-divider" aria-hidden="true"></div>
-
-  <!-- Order options -->
-  <section class="order-options">
-    <div class="container">
-      <div class="order-options-grid">
-
-        <!-- Pickup -->
-        <article class="order-card">
-          <div class="order-card-image">
-            <img src="/public/order_pickup.png" alt="A KALA team member behind a wood pickup counter handing a cream takeaway bag with the navy KALA olive-leaf mark to a guest, an olive-branch arrangement in a white vase and Greek coastline photographs in the background." loading="eager" fetchpriority="high" decoding="async" />
-          </div>
-          <div class="order-card-body">
-            <span class="meta">Ready in 15–25 min</span>
-            <h3>Pickup</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis
-              pellentesque magna — pick up at our harbor location.
-            </p>
-            <a href="/order-pickup" class="btn btn-primary btn-sm">
-              Start Pickup Order
-              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-        </article>
-
-        <!-- Delivery -->
-        <article class="order-card">
-          <div class="order-card-image">
-            <img src="/public/order_delivery.png" alt="A KALA delivery handoff at a guest's whitewashed Greek coastal doorstep: a navy KALA insulated bag with the olive-leaf mark, stacked silver foil entrée trays, and a cream paper bag with bougainvillea and an olive sprig in the background." loading="eager" fetchpriority="high" decoding="async" />
-          </div>
-          <div class="order-card-body">
-            <span class="meta">Through partner platforms</span>
-            <h3>Delivery</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut
-              sollicitudin ligula — door-to-door across the coast.
-            </p>
-            <a href="/order-delivery" class="btn btn-primary btn-sm">
-              Choose Platform
-              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-        </article>
-
-        <!-- Catering -->
-        <article class="order-card">
-          <div class="order-card-image">
-            <img src="/public/order_catering.png" alt="A KALA Greek catering spread on a blue-and-white linen runner — chafing trays of souvlaki, lemon potatoes, and moussaka, bowls of hummus, tzatziki, salad, and dolmades, a plate of warm pita, and KALA-napkin-stacked plates beside an olive branch and Santorini coastal artwork." loading="eager" fetchpriority="high" decoding="async" />
-          </div>
-          <div class="order-card-body">
-            <span class="meta">48 hours notice</span>
-            <h3>Catering</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod
-              tempor lectus — events, offices, and gatherings.
-            </p>
-            <a href="/contact" class="btn btn-primary btn-sm">
-              Plan an Event
-              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-        </article>
-
+    <!-- Page header -->
+    <section class="page-header has-bg is-order">
+      <div class="container">
+        <span class="order-hero-olive" aria-hidden="true" set:html={oliveBranch} />
+        <h1>ORDER ONLINE</h1>
+        <span class="page-sub order-script-sub">Pickup, delivery &amp; catering</span>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium nisi
+          tincidunt eu. Donec euismod tempor lectus, vivamus sit amet libero.
+        </p>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- Greek Key Divider -->
+    <div class="meander-divider" aria-hidden="true"></div>
+
+    <!-- Order options -->
+    <section class="order-options">
+      <div class="container">
+        <header class="order-options-head">
+          <span class="os-eyebrow">Three easy ways</span>
+          <h2>How would you like to <em>order?</em></h2>
+        </header>
+
+        <div class="order-options-grid">
+
+          <!-- Pickup -->
+          <article class="order-card">
+            <div class="order-card-image">
+              <img src="/public/order_pickup.png" alt="A KALA team member behind a wood pickup counter handing a cream takeaway bag with the navy KALA olive-leaf mark to a guest, an olive-branch arrangement in a white vase and Greek coastline photographs in the background." loading="lazy" decoding="async" />
+            </div>
+            <div class="order-card-body">
+              <span class="meta">Ready in 15–25 min</span>
+              <h3>Pickup</h3>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis
+                pellentesque magna — pick up at our harbor location.
+              </p>
+              <a href="/order-pickup" class="btn btn-primary btn-sm">
+                Start Pickup Order
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <!-- Delivery -->
+          <article class="order-card">
+            <div class="order-card-image">
+              <img src="/public/order_delivery.png" alt="A KALA delivery handoff at a guest's whitewashed Greek coastal doorstep: a navy KALA insulated bag with the olive-leaf mark, stacked silver foil entrée trays, and a cream paper bag with bougainvillea and an olive sprig in the background." loading="lazy" decoding="async" />
+            </div>
+            <div class="order-card-body">
+              <span class="meta">Through partner platforms</span>
+              <h3>Delivery</h3>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut
+                sollicitudin ligula — door-to-door across the coast.
+              </p>
+              <a href="/order-delivery" class="btn btn-primary btn-sm">
+                Choose Platform
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <!-- Catering -->
+          <article class="order-card">
+            <div class="order-card-image">
+              <img src="/public/order_catering.png" alt="A KALA Greek catering spread on a blue-and-white linen runner — chafing trays of souvlaki, lemon potatoes, and moussaka, bowls of hummus, tzatziki, salad, and dolmades, a plate of warm pita, and KALA-napkin-stacked plates beside an olive branch and Santorini coastal artwork." loading="lazy" decoding="async" />
+            </div>
+            <div class="order-card-body">
+              <span class="meta">48 hours notice</span>
+              <h3>Catering</h3>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod
+                tempor lectus — events, offices, and gatherings.
+              </p>
+              <a href="/contact" class="btn btn-primary btn-sm">
+                Plan an Event
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+  </div>
 
 </Base>
