@@ -1,5 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
+
+// ---- Blue line-art illustrations (monochrome, inherit currentColor) ----
+const oliveBranch = `<svg viewBox="0 0 90 60" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 54C26 48 52 36 84 8"/><path d="M30 40c-6-5-6-12-2-17 6 3 8 11 2 17Z"/><path d="M44 31c-7-3-11-9-10-15 6 2 11 9 10 15Z"/><path d="M40 44c2-7 8-11 14-11-1 6-7 11-14 11Z"/><path d="M55 33c-5-5-6-12-3-17 6 4 7 11 3 17Z"/><path d="M67 22c2-7 8-11 14-10-1 6-7 11-14 10Z"/><ellipse cx="24" cy="48" rx="3.4" ry="4.6" transform="rotate(-28 24 48)"/></svg>`;
+const lemonIllo = `<svg viewBox="0 0 150 120" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M44 42C30 30 14 33 7 47c14 9 30 5 37-5Z"/><path d="M15 45c8-1 19 0 26 4" stroke-width="0.9"/><ellipse cx="58" cy="74" rx="33" ry="27"/><path d="M90 68c6-2 11 0 12 4-5 3-11 2-12-4Z"/><circle cx="112" cy="78" r="28"/><circle cx="112" cy="78" r="22"/><path d="M112 78 112 50M112 78 132 58M112 78 140 78M112 78 132 98M112 78 112 106M112 78 92 98M112 78 84 78M112 78 92 58" stroke-width="0.9"/></svg>`;
+const iconTable = `<svg viewBox="0 0 64 56" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 30h20"/><path d="M26 30l-3 16M38 30l3 16"/><path d="M9 18v16"/><path d="M9 28h11"/><path d="M9 34v10M20 28v16"/><path d="M55 18v16"/><path d="M44 28h11"/><path d="M55 34v10M44 28v16"/></svg>`;
+const iconSailboat = `<svg viewBox="0 0 60 58" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M30 6v32"/><path d="M31 12c10 4 16 13 18 24H31Z"/><path d="M28 14c-8 4-12 11-14 20h14Z"/><path d="M10 42h40l-5 9H15Z"/><path d="M6 53c4-3 7 2 11 0s7-3 11 0 7 2 11 0" stroke-width="1.1"/></svg>`;
+const iconHouse = `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 23 24 9l15 14"/><path d="M13 21v18h22V21"/><path d="M20 39V29h8v10"/></svg>`;
+const iconTarget = `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="24" cy="24" r="13"/><circle cx="24" cy="24" r="4" fill="currentColor" stroke="none"/></svg>`;
+const ctaIllo = `<svg viewBox="0 0 210 130" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M52 26c0 17-8 27-15 27s-15-10-15-27Z"/><path d="M37 53v46"/><path d="M24 99h26"/><path d="M84 30h16v16l5 13v50a4 4 0 0 1-4 4H83a4 4 0 0 1-4-4V59l5-13Z"/><path d="M84 30v-9h16v9"/><path d="M120 96c0 7 10 12 22 12s22-5 22-12Z"/><ellipse cx="132" cy="92" rx="4" ry="5"/><ellipse cx="143" cy="90" rx="4" ry="5"/><ellipse cx="153" cy="93" rx="4" ry="5"/><path d="M176 36c11 11 17 28 15 54"/><path d="M178 50c8-3 15-1 19 4-6 5-15 3-19-4Z"/><path d="M183 68c8-3 15-1 19 4-6 5-15 3-19-4Z"/></svg>`;
+const kalaStamp = `<svg viewBox="0 0 100 100" class="stamp-svg" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#fff" stroke="currentColor" stroke-width="1.1"/><circle cx="50" cy="50" r="41.5" fill="none" stroke="currentColor" stroke-width="0.7"/><defs><path id="kalaTop" d="M50 50 m-34 0 a34 34 0 0 1 68 0"/><path id="kalaBot" d="M50 50 m34 0 a34 34 0 0 1 -68 0"/></defs><text class="stamp-top"><textPath href="#kalaTop" startOffset="50%">KALA</textPath></text><text class="stamp-bot"><textPath href="#kalaBot" startOffset="50%">GREEK &#183; AND &#183; MORE</textPath></text><g transform="translate(50 52) scale(0.42) translate(-45 -30)" stroke-width="2.4">${oliveBranch.replace('<svg viewBox="0 0 90 60" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">','').replace('</svg>','')}</g></svg>`;
 ---
 <Base
   title="Our Story — KALA Greek and More"
@@ -7,242 +17,189 @@ import Base from '../layouts/Base.astro';
   current="/our-story"
 >
 
-  <!-- Page header -->
-  <section class="page-header has-bg is-story">
-    <div class="container">
-      <h1>OUR STORY</h1>
-      <span class="page-sub">rooted in tradition</span>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis
-        pellentesque magna. Praesent ut sollicitudin ligula, vitae laoreet justo.
-      </p>
-    </div>
-  </section>
+  <div class="os-page">
 
-  <!-- Greek Key Divider -->
-  <div class="meander-divider" aria-hidden="true"></div>
+    <!-- Hero -->
+    <section class="os-hero">
+      <div class="container os-hero-grid">
+        <div class="os-hero-text">
+          <span class="os-eyebrow">Our Story <span class="os-eyebrow-line" aria-hidden="true"></span></span>
+          <h1 class="os-hero-title">
+            <span class="line-roman">Made by hand,</span>
+            <span class="line-italic">shared by the table.</span>
+            <span class="os-hero-olive" aria-hidden="true" set:html={oliveBranch} />
+          </h1>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. KALA is a celebration of
+            Greek hospitality, rooted in family, tradition, and the flavors of the Mediterranean.
+            From our kitchen to your table, we serve food made with heart.
+          </p>
+        </div>
 
-  <div class="story-page">
-
-    <!-- Block 1 — family (emotional anchor) -->
-    <section class="story-section">
-      <div class="container">
-        <div class="story-block">
-          <div class="story-block-text">
-            <span class="eyebrow">Our Family</span>
-            <h2>From our family's table to <em>yours</em></h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis
-              pellentesque magna. Praesent ut sollicitudin ligula, vitae laoreet justo.
-            </p>
-            <p>
-              Curabitur dapibus laoreet eros, vitae faucibus ipsum tincidunt vitae. Nam
-              ultrices, magna a porttitor laoreet, sapien lorem feugiat lectus.
-            </p>
-          </div>
-          <figure class="story-block-image">
-            <div class="story-figure-mat">
-              <img
-                src="/images/kala/story/family-table-greek-restaurant.webp"
-                alt="Two generations of hands breaking a rustic loaf of bread over a blue-striped linen, beside a blue-and-white ceramic bowl of Kalamata olives, olive branches, and fresh herbs in soft coastal light."
-                loading="eager"
-                fetchpriority="high"
-                decoding="async"
-                width="1100" height="1473" />
-            </div>
-            <figcaption class="caption">Family</figcaption>
+        <div class="os-hero-media">
+          <span class="os-coastal-bg" aria-hidden="true"></span>
+          <figure class="os-photo-card">
+            <img
+              src="/images/kala/story/os-hero-table.webp"
+              alt="A Greek family-style table seen from above — hands sharing horiatiki salad, dips, warm pita, grilled food, and white wine on blue-and-white ceramics in warm coastal light."
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              width="1100" height="734" />
           </figure>
+          <span class="os-stamp" aria-hidden="true" set:html={kalaStamp} />
         </div>
       </div>
     </section>
 
-    <!-- Pull quote — a visual pause -->
-    <section class="pull-quote-wrap">
-      <div class="pull-quote">
-        <span class="quote-rule" aria-hidden="true"></span>
-        <span class="open-q" aria-hidden="true">&ldquo;</span>
-        <blockquote>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit &mdash;
-          phasellus quis pellentesque magna.
-        </blockquote>
-        <cite>The KALA family</cite>
-        <span class="quote-rule" aria-hidden="true"></span>
-      </div>
-    </section>
+    <!-- Greek key divider -->
+    <div class="meander-divider os-divider" aria-hidden="true"></div>
 
-    <!-- Block 2 — coast (reversed) -->
-    <section class="story-section">
+    <!-- Quote band -->
+    <section class="os-quote">
       <div class="container">
-        <div class="story-block reverse">
-          <div class="story-block-text">
-            <span class="eyebrow">The Coast</span>
-            <h2>Mediterranean, <em>by way of the coast</em></h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod
-              tempor lectus, sed pretium nisi tincidunt eu. Vivamus sit amet libero in
-              lacus efficitur tincidunt.
-            </p>
-            <p>
-              Nam ultrices, magna a porttitor laoreet, sapien lorem feugiat lectus, eget
-              tincidunt lacus eros vitae nibh.
-            </p>
-            <a href="/menu" class="link-arrow">Browse the menu <span>→</span></a>
-          </div>
-          <figure class="story-block-image">
-            <div class="story-figure-mat">
-              <img
-                src="/images/kala/story/coastal-village-greek.webp"
-                alt="A whitewashed Greek fishing village with cobalt-blue domes above a small harbor, a weathered blue fishing boat moored below, pink bougainvillea over a sun-warmed wall, and a blue-and-white ceramic bowl of Kalamata olives in the foreground."
-                loading="lazy"
-                decoding="async"
-                width="1100" height="1473" />
-            </div>
-            <figcaption class="caption">By the coast</figcaption>
-          </figure>
+        <div class="os-quote-band">
+          <span class="os-quote-key left" aria-hidden="true"></span>
+          <span class="os-quote-key right" aria-hidden="true"></span>
+          <span class="os-quote-mark" aria-hidden="true">&ldquo;</span>
+          <blockquote>
+            Food is our love language.<br/>
+            The table is where our story is told.
+          </blockquote>
+          <span class="os-quote-olive" aria-hidden="true" set:html={oliveBranch} />
         </div>
       </div>
     </section>
 
-    <!-- Block 3 — kitchen, with overlapping prep accent -->
-    <section class="story-section is-warm">
-      <div class="container">
-        <div class="story-block">
-          <div class="story-block-text">
-            <span class="eyebrow">The Kitchen</span>
-            <h2>Made by hand, <em>shared by the table</em></h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut sollicitudin
-              ligula, vitae laoreet justo. Curabitur dapibus laoreet eros, vitae faucibus ipsum
-              tincidunt vitae.
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultrices, magna a
-              porttitor laoreet, sapien lorem feugiat lectus.
-            </p>
+    <!-- Coastal roots — image left, text right -->
+    <section class="os-editorial">
+      <div class="container os-ed-grid">
+        <figure class="os-ed-media">
+          <img
+            src="/images/kala/story/os-coastal.webp"
+            alt="A whitewashed Greek wall with bright blue shutters and a gnarled olive tree above the deep-blue Aegean, with white sailboats in the distance."
+            loading="lazy" decoding="async" width="1000" height="667" />
+        </figure>
+        <div class="os-ed-text">
+          <span class="os-eyebrow">Mediterranean, by way of the coast</span>
+          <h2 class="os-ed-title">
+            <span class="line-roman">Coastal roots.</span>
+            <span class="line-italic">Timeless flavors.</span>
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Inspired by the shores of
+            Greece and the traditions of our family kitchen, our menu brings together simple,
+            high-quality ingredients and time-honored recipes passed down for generations.
+          </p>
+          <a href="/menu" class="os-link">Our Food Philosophy <span aria-hidden="true">→</span></a>
+        </div>
+        <span class="os-ed-illo right" aria-hidden="true" set:html={oliveBranch} />
+      </div>
+    </section>
+
+    <!-- Kitchen — text left, image right -->
+    <section class="os-editorial reverse">
+      <div class="container os-ed-grid">
+        <div class="os-ed-text">
+          <span class="os-eyebrow">Made by hand, every day</span>
+          <h2 class="os-ed-title">
+            <span class="line-roman">From our kitchen</span>
+            <span class="line-italic">to your table.</span>
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. We make our dips, bake our
+            bread, and prepare every dish with care — just as we would for our own family.
+          </p>
+          <a href="#journey" class="os-link">Meet the KALA Family <span aria-hidden="true">→</span></a>
+          <span class="os-ed-illo lemon" aria-hidden="true" set:html={lemonIllo} />
+        </div>
+        <figure class="os-ed-media bordered">
+          <img
+            src="/images/kala/story/hands-preparing-greek-food.webp"
+            alt="Hands preparing Greek food on a rustic table — scattering herbs over feta drizzled with olive oil, beside blue-and-white ceramic bowls, a lemon, and a Greek-blue linen towel."
+            loading="lazy" decoding="async" width="1100" height="734" />
+        </figure>
+      </div>
+    </section>
+
+    <!-- Promise strip -->
+    <section class="os-promise">
+      <div class="container os-promise-grid">
+        <div class="promise-col">
+          <span class="promise-icon" aria-hidden="true" set:html={iconTable} />
+          <div class="promise-body">
+            <h3>Hospitality</h3>
+            <p>You're not just guests.<br/>You're family.</p>
           </div>
-          <figure class="story-block-image has-overlap">
-            <div class="story-figure-mat">
-              <img
-                src="/images/kala/story/hands-preparing-greek-food.webp"
-                alt="Hands wearing a gold wedding band scattering fresh thyme onto a white block of Greek feta drizzled with golden olive oil, on a rustic wooden board beside a blue-and-white ceramic bowl of Kalamata olives, a lemon half, and a Greek-blue linen towel."
-                loading="lazy"
-                decoding="async"
-                width="1100" height="1473" />
-            </div>
-            <div class="story-figure-overlap" aria-hidden="true">
-              <img
-                src="/images/kala/story/olive-oil-pita-prep.webp"
-                alt=""
-                loading="lazy"
-                decoding="async" />
-            </div>
-            <figcaption class="caption">At the table</figcaption>
-          </figure>
+        </div>
+        <div class="promise-col">
+          <span class="promise-icon" aria-hidden="true" set:html={oliveBranch} />
+          <div class="promise-body">
+            <h3>Tradition</h3>
+            <p>Recipes passed down.<br/>Flavors that last.</p>
+          </div>
+        </div>
+        <div class="promise-col">
+          <span class="promise-icon" aria-hidden="true" set:html={iconSailboat} />
+          <div class="promise-body">
+            <h3>The Sea</h3>
+            <p>Fresh ingredients.<br/>Inspired by the coast.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Journey timeline -->
-    <section class="story-timeline" aria-label="Our journey">
+    <!-- Our Journey timeline -->
+    <section class="os-journey" id="journey">
+      <span class="os-journey-illo" aria-hidden="true" set:html={oliveBranch} />
       <div class="container">
-        <ol class="timeline-track">
-          <li class="timeline-step">
-            <span class="timeline-dot" aria-hidden="true"></span>
+        <span class="os-eyebrow">Our Journey</span>
+        <ol class="journey-track">
+          <li class="journey-point">
+            <span class="journey-mark" aria-hidden="true" set:html={iconHouse} />
             <h3>Family</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
+            <p>Rooted in family<br/>and tradition.</p>
           </li>
-          <li class="timeline-step">
-            <span class="timeline-dot" aria-hidden="true"></span>
+          <li class="journey-point">
+            <span class="journey-mark is-dot" aria-hidden="true"></span>
             <h3>Coast</h3>
-            <p>Donec euismod tempor lectus, sed pretium nisi.</p>
+            <p>Inspired by the beauty<br/>of the Mediterranean.</p>
           </li>
-          <li class="timeline-step">
-            <span class="timeline-dot" aria-hidden="true"></span>
+          <li class="journey-point">
+            <span class="journey-mark" aria-hidden="true" set:html={iconTarget} />
             <h3>Kitchen</h3>
-            <p>Phasellus quis pellentesque magna, vitae laoreet.</p>
+            <p>Made by hand.<br/>Prepared with care.</p>
           </li>
-          <li class="timeline-step">
-            <span class="timeline-dot" aria-hidden="true"></span>
+          <li class="journey-point">
+            <span class="journey-mark is-dot" aria-hidden="true"></span>
             <h3>Table</h3>
-            <p>Curabitur dapibus laoreet eros, vitae faucibus.</p>
+            <p>Shared with love.<br/>Remembered always.</p>
           </li>
         </ol>
       </div>
     </section>
 
-    <!-- Values / promises -->
-    <section class="values">
+    <!-- Final CTA panel -->
+    <section class="os-cta">
       <div class="container">
-        <header class="section-header center" style="max-width: 640px;">
-          <span class="eyebrow">What we stand for</span>
-          <h2 class="section-title">Three things we promise</h2>
-          <p class="section-sub" style="margin: 0 auto;">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor
-            lectus, sed pretium nisi tincidunt eu.
-          </p>
-        </header>
-
-        <div class="values-grid">
-          <article class="value-card">
-            <div class="value-image">
-              <img src="/images/kala/story/value-hospitality.webp" alt="A blue-and-white ceramic plate of warm pita and country bread with a halved fig and an olive, a small dish of herbed olive oil, and two cups of Greek coffee on blue-and-white striped linen." loading="lazy" decoding="async" width="760" height="505" />
-              <span class="value-icon" aria-hidden="true">
-                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 34h30"/><path d="M13 34a11 11 0 0 1 22 0"/><path d="M24 23v-4"/><path d="M21.5 20.5h5"/></svg>
-              </span>
+        <div class="os-cta-panel">
+          <span class="cta-corner tl" aria-hidden="true"></span>
+          <span class="cta-corner tr" aria-hidden="true"></span>
+          <span class="cta-corner bl" aria-hidden="true"></span>
+          <span class="cta-corner br" aria-hidden="true"></span>
+          <div class="os-cta-body">
+            <h2>We can't wait to welcome you.</h2>
+            <div class="os-cta-rule" aria-hidden="true"><span class="diamond"></span></div>
+            <div class="os-cta-actions">
+              <a href="/menu" class="btn btn-primary btn-lg">View the Menu</a>
+              <a href="/reservations" class="btn btn-outline btn-lg">Make a Reservation</a>
             </div>
-            <h3>Hospitality</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque magna.</p>
-          </article>
-
-          <article class="value-card">
-            <div class="value-image">
-              <img src="/images/kala/story/value-tradition.webp" alt="Hands wearing a gold wedding band kneading dough on a flour-dusted wooden table with a rolling pin, a blue-and-white ceramic dish of olive oil with oregano, and a mortar and pestle with crushed herbs." loading="lazy" decoding="async" width="760" height="505" />
-              <span class="value-icon" aria-hidden="true">
-                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 38C20 30 28 18 36 11"/><path d="M19 25c-3-2-7-1-9 2 3 2 7 1 9-2Z"/><path d="M26 18c-2-3-1-7 2-9 2 3 1 7-2 9Z"/><path d="M28 27c1-3 5-5 8-4-1 3-5 5-8 4Z"/></svg>
-              </span>
-            </div>
-            <h3>Tradition</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut sollicitudin ligula.</p>
-          </article>
-
-          <article class="value-card">
-            <div class="value-image">
-              <img src="/images/kala/story/value-sea.webp" alt="A whitewashed stone dock at golden hour with Greek-blue rope coiled around a bollard, a sprig of olive branch, and a small blue-and-white dish of sea salt, looking out over the calm turquoise Aegean to two distant sailboats." loading="lazy" decoding="async" width="760" height="505" />
-              <span class="value-icon" aria-hidden="true">
-                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21c3-4 7-4 10 0s7 4 10 0 7-4 10 0"/><path d="M8 30c3-4 7-4 10 0s7 4 10 0 7-4 10 0"/></svg>
-              </span>
-            </div>
-            <h3>The Sea</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus.</p>
-          </article>
+          </div>
+          <span class="os-cta-illo" aria-hidden="true" set:html={ctaIllo} />
         </div>
       </div>
     </section>
 
   </div>
-
-  <!-- Invite CTA -->
-  <section class="invite">
-    <div class="container">
-      <div class="invite-card">
-        <span class="invite-meander" aria-hidden="true"></span>
-        <div class="invite-inner">
-          <span class="eyebrow">Come find us</span>
-          <h2>Pull up <em>a chair</em></h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet libero in
-            lacus efficitur tincidunt.
-          </p>
-          <div class="invite-actions">
-            <a href="/menu" class="btn btn-primary btn-lg">
-              View the Menu
-              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-            <a href="/reservations" class="btn btn-outline btn-lg">Make a Reservation</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
 </Base>
