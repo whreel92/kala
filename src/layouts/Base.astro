@@ -19,6 +19,11 @@ const {
 } = Astro.props;
 
 const isActive = (path: string) => current === path ? 'is-active' : '';
+
+const bodyClass = [
+  bare && 'is-bare',
+  current === '/menu' && 'is-menu-page',
+].filter(Boolean).join(' ');
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +60,7 @@ const isActive = (path: string) => current === path ? 'is-active' : '';
   <ClientRouter />
 </head>
 
-<body class={bare ? 'is-bare' : ''}>
+<body class={bodyClass || undefined}>
 
   {!bare && (
   <Fragment>
@@ -69,8 +74,7 @@ const isActive = (path: string) => current === path ? 'is-active' : '';
   <header class="nav" id="nav" transition:persist transition:name="site-nav">
     <div class="nav-inner container">
       <a href="/" class="brand" aria-label="KALA — Greek and More">
-        <img class="brand-mark" src="/public/image%2010.png" alt="" />
-        <span class="brand-word">KALA</span>
+        <img class="brand-logo" src="/logo-kala.png" width="148" height="40" alt="" decoding="async" />
       </a>
 
       <nav class="nav-links" aria-label="Primary">
@@ -115,8 +119,7 @@ const isActive = (path: string) => current === path ? 'is-active' : '';
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="/" class="brand brand-light">
-            <img class="brand-mark" src="/public/image%2010.png" alt="" />
-            <span class="brand-word">KALA</span>
+            <img class="brand-logo" src="/logo-kala.png" width="148" height="40" alt="" decoding="async" />
           </a>
           <p class="footer-tagline">Greek and More</p>
           <p class="footer-blurb">

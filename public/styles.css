@@ -104,22 +104,41 @@ p { margin: 0 0 1em; }
   0%, 100% { opacity: 1; }
   50% { opacity: .45; }
 }
+@media (prefers-reduced-motion: no-preference) {
+  .announce { animation: kala-announce-in .6s var(--ease) .06s backwards; }
+}
+@keyframes kala-announce-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 /* ====================== Nav ======================= */
 .nav {
   position: sticky;
   top: 0;
   z-index: 80;
-  background: rgba(255,255,255,.92);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255,255,255,.86);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
   border-bottom: 1px solid transparent;
-  transition: border-color .35s var(--ease), background .35s var(--ease);
+  /* faint inner top-highlight — gives the frosted glass a lit edge */
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
+  transition: border-color .4s var(--ease), background .4s var(--ease), box-shadow .4s var(--ease);
 }
 .nav.is-scrolled {
   border-bottom-color: rgba(25,75,158,.12);
-  background: rgba(255,255,255,.96);
-  box-shadow: 0 10px 30px -22px rgba(20,40,90,.5);
+  background: rgba(255,255,255,.94);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 14px 34px -24px rgba(20,40,90,.55);
+}
+/* Gentle settle-in on first paint. nav lives in a transition:persist region, so
+   this runs once on initial load (not on client navs); skipped for reduced-motion.
+   `backwards` (not `forwards`) so no transform lingers — keeps backdrop-filter crisp. */
+@media (prefers-reduced-motion: no-preference) {
+  .nav { animation: kala-nav-in .65s var(--ease) backwards; }
+}
+@keyframes kala-nav-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .nav-inner {
   display: flex;
@@ -134,16 +153,18 @@ p { margin: 0 0 1em; }
   color: var(--blue-primary);
   margin-right: auto;
 }
-.brand-mark { width: 38px; height: 38px; flex-shrink: 0; object-fit: contain; transition: transform .4s var(--ease); }
-.brand:hover .brand-mark { transform: rotate(-7deg) scale(1.06); }
-.brand-word {
-  font-family: var(--font-wordmark);
-  font-weight: 600;
-  font-size: 22px;
-  letter-spacing: .22em;
-  line-height: 1;
-  color: var(--charcoal);
+.brand-logo {
+  display: block;
+  height: 40px;
+  width: auto;
+  max-width: min(148px, 42vw);
+  flex-shrink: 0;
+  object-fit: contain;
+  object-position: left center;
+  background: transparent;
+  transition: transform .4s var(--ease);
 }
+.brand:hover .brand-logo { transform: scale(1.04); }
 .nav-links {
   display: flex;
   gap: 30px;
@@ -156,7 +177,7 @@ p { margin: 0 0 1em; }
   color: var(--slate);
   position: relative;
   padding: 6px 2px;
-  transition: color .25s var(--ease);
+  transition: color .3s var(--ease), transform .3s var(--ease);
 }
 .nav-links a::after {
   content: '';
@@ -166,7 +187,10 @@ p { margin: 0 0 1em; }
   background: var(--blue-primary);
   transition: width .3s var(--ease);
 }
-.nav-links a:hover { color: var(--blue-primary); }
+.nav-links a:hover {
+  color: var(--blue-primary);
+  transform: translateY(-1px);
+}
 .nav-links a:hover::after { width: 100%; }
 
 .nav-actions {
@@ -180,9 +204,26 @@ p { margin: 0 0 1em; }
   color: var(--slate);
   letter-spacing: .15em;
   text-transform: uppercase;
-  transition: color .25s var(--ease);
+  position: relative;
+  padding: 4px 0;
+  transition: color .3s var(--ease);
+}
+.link-quiet::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: currentColor;
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: opacity .25s var(--ease), transform .35s var(--ease);
 }
 .link-quiet:hover { color: var(--blue-primary); }
+.link-quiet:hover::after {
+  opacity: .4;
+  transform: scaleX(1);
+}
 
 /* Hairline divider between the primary links and the actions (desktop only) */
 @media (min-width: 881px) {
@@ -203,6 +244,13 @@ p { margin: 0 0 1em; }
   gap: 5px;
   border: 1px solid var(--cream);
   border-radius: var(--radius-sm);
+  background: transparent;
+  transition: border-color .3s var(--ease), background .3s var(--ease), box-shadow .3s var(--ease);
+}
+.nav-toggle:hover {
+  border-color: rgba(25,75,158,.22);
+  background: rgba(25,75,158,.04);
+  box-shadow: 0 4px 14px -8px rgba(25,75,158,.35);
 }
 .nav-toggle span {
   display: block; width: 18px; height: 1.5px;
@@ -498,7 +546,7 @@ p { margin: 0 0 1em; }
 }
 .hero.is-revealed .hero-text .eyebrow { animation-delay: .05s; }
 .hero.is-revealed .hero-title         { animation-delay: .15s; }
-.hero.is-revealed .hero-sub           { animation-delay: .3s; }
+.hero.is-revealed .hero-address       { animation-delay: .3s; }
 .hero.is-revealed .hero-buttons       { animation-delay: .45s; }
 .hero.is-revealed .hero-meta          { animation-delay: .6s; }
 
@@ -1780,8 +1828,9 @@ p { margin: 0 0 1em; }
 .footer .brand-light {
   color: var(--blue-soft);
 }
-.footer .brand-light .brand-word {
-  color: var(--white);
+.footer .brand-logo {
+  height: 42px;
+  max-width: 156px;
 }
 .footer-tagline {
   font-family: var(--font-display);
@@ -1998,7 +2047,7 @@ p { margin: 0 0 1em; }
 }
 
 @media (max-width: 380px) {
-  .brand-word { font-size: 20px; letter-spacing: .2em; }
+  .brand-logo { height: 34px; max-width: 118px; }
   .nav-actions .btn-sm { padding: 8px 14px; font-size: 11.5px; letter-spacing: .06em; }
   .nav-inner { gap: 10px; }
   .announce span:not(.announce-dot) { font-size: 11px; }
@@ -3318,10 +3367,11 @@ select.form-control {
 
 /* ----- Compact header on scroll ----- */
 .nav.is-scrolled .nav-inner { height: 62px; }
-.nav.is-scrolled .brand-mark { width: 32px; height: 32px; }
-.nav.is-scrolled .brand-word { font-size: 20px; }
-.brand-mark, .brand-word, .nav-inner {
-  transition: height .3s var(--ease), width .3s var(--ease), font-size .3s var(--ease);
+.nav.is-scrolled .brand-logo { height: 34px; max-width: 126px; }
+.brand-logo, .nav-inner {
+  transition:
+    height .4s cubic-bezier(.22, 1, .36, 1),
+    transform .4s cubic-bezier(.22, 1, .36, 1);
 }
 @media (max-width: 880px) {
   .nav.is-scrolled .nav-inner { height: 56px; }
@@ -3334,18 +3384,48 @@ select.form-control {
   position: absolute;
   bottom: 0;
   left: 0;
-  height: 2px;
+  height: 2.5px;
   width: 0;
   background: linear-gradient(90deg, var(--blue-primary), var(--blue-soft));
   opacity: 0;
   transform: translateX(0);
+  box-shadow: 0 0 14px rgba(25, 75, 158, .32);
   transition:
-    transform .35s var(--ease),
-    width .35s var(--ease),
-    opacity .25s var(--ease);
+    transform .42s cubic-bezier(.22, 1, .36, 1),
+    width .42s cubic-bezier(.22, 1, .36, 1),
+    opacity .28s var(--ease);
   pointer-events: none;
   will-change: transform, width;
   border-radius: 2px;
+}
+
+/* ----- Navbar refined glass & motion (nav-scoped polish) ----- */
+.nav-actions .btn-primary {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.nav-actions .btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 36%,
+    rgba(255, 255, 255, .24) 50%,
+    transparent 64%
+  );
+  transform: translateX(-125%);
+  transition: transform .6s var(--ease);
+  pointer-events: none;
+}
+.nav-actions .btn-primary:hover::after {
+  transform: translateX(125%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-actions .btn-primary::after { display: none; }
+  .nav-links a:hover { transform: none; }
 }
 
 /* ----- Full-screen mobile menu ----- */
@@ -5063,6 +5143,10 @@ body:has(.pos-cart-col.is-open) .pos-mobile-bar { opacity: 0; pointer-events: no
 /* =====================================================================
    ============   POS pages: suppress redundant chrome    ============
    ===================================================================== */
+
+/* On /menu the bottom-right sticky order pill is always available once
+   the visitor scrolls past the header — hide the duplicate navbar CTA. */
+body.is-menu-page .nav-actions > a.btn-primary { display: none !important; }
 
 /* The site's persistent "Order Online" pill is redundant on
    /order-pickup and /order-delivery — the user is already ordering. */

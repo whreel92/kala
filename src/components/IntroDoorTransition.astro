@@ -139,9 +139,9 @@ const KEY = 'kala_intro_played_v1';
   }
 
   /* ── Barn-door slide (~2s): brief hold, then halves slide off-screen. ── */
-  .kala-intro.is-playing .kala-intro__leaf--l { animation: kala-barn-l 2s cubic-bezier(0.66, 0, 0.2, 1) forwards; }
-  .kala-intro.is-playing .kala-intro__leaf--r { animation: kala-barn-r 2s cubic-bezier(0.66, 0, 0.2, 1) forwards; }
-  .kala-intro.is-playing .kala-intro__leaf::after { animation: kala-seam-fade 2s ease-out forwards; }
+  .kala-intro.is-playing .kala-intro__leaf--l { animation: kala-barn-l 2s cubic-bezier(0.66, 0, 0.2, 1) 0.25s forwards; }
+  .kala-intro.is-playing .kala-intro__leaf--r { animation: kala-barn-r 2s cubic-bezier(0.66, 0, 0.2, 1) 0.25s forwards; }
+  .kala-intro.is-playing .kala-intro__leaf::after { animation: kala-seam-fade 2s ease-out 0.25s forwards; }
 
   /* Fast, clean exit on skip. */
   .kala-intro.is-leaving {
@@ -169,7 +169,7 @@ const KEY = 'kala_intro_played_v1';
     var root = document.getElementById('kala-intro');
     if (!root) return;
     var html = document.documentElement;
-    var DUR = 2000;
+    var DUR = 2250; // 2s slide + 0.25s pre-slide pause (CSS animation-delay)
 
     // The intro is for the INITIAL page load only. On client-side (View
     // Transitions) navigation — e.g. clicking the KALA logo to return home —
