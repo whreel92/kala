@@ -55,28 +55,32 @@
   onScroll();
 
   /* ─────────────────── Mobile menu (full-screen overlay) ─────────────────── */
-  // navToggle and mobileMenu are inside transition:persist regions, so
-  // listeners only need to be attached once.
-  if (isFirstRun) {
+  // The nav sits in a transition:persist region, but navigating THROUGH a
+  // `bare` page (e.g. /printed-menu renders no nav) tears the nav down and
+  // rebuilds it fresh on return. So node-level listeners must be bound PER
+  // NODE (guarded by a dataset flag) rather than once-globally — otherwise the
+  // rebuilt toggle would have no click handler and the menu couldn't open.
+  // closeMobileMenu re-queries the live nodes so it never holds a stale ref.
+  const closeMobileMenu = () => {
+    const toggle = document.getElementById('navToggle');
+    const menu = document.getElementById('mobileMenu');
+    if (!menu) return;
+    // Move focus out of the menu first so the browser doesn't trap it on an
+    // element that's about to be marked inert.
+    if (menu.contains(document.activeElement)) document.activeElement.blur();
+    menu.classList.remove('open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    menu.setAttribute('aria-hidden', 'true');
+    menu.setAttribute('inert', '');
+    document.body.style.overflow = '';
+  };
+  {
     const navToggle = $('#navToggle');
     const mobileMenu = $('#mobileMenu');
-    if (navToggle && mobileMenu) {
-      // Use inert + aria-hidden together. inert blocks focus and pointer
-      // events for the closed menu, avoiding the "aria-hidden on an element
-      // with a focused descendant" accessibility warning that fires when a
-      // link inside the menu still holds focus at the moment we hide it.
-      const closeMenu = () => {
-        // Move focus out of the menu first so the browser doesn't trap it
-        // on an element that's about to be marked inert.
-        if (mobileMenu.contains(document.activeElement)) {
-          document.activeElement.blur();
-        }
-        mobileMenu.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-        mobileMenu.setAttribute('aria-hidden', 'true');
-        mobileMenu.setAttribute('inert', '');
-        document.body.style.overflow = '';
-      };
+    // inert + aria-hidden together keep the closed menu out of focus/pointer
+    // order and avoid the "aria-hidden with a focused descendant" warning.
+    if (navToggle && mobileMenu && !navToggle.dataset.kalaNavBound) {
+      navToggle.dataset.kalaNavBound = 'true';
       navToggle.addEventListener('click', () => {
         const open = mobileMenu.classList.toggle('open');
         navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -86,12 +90,16 @@
         document.body.style.overflow = open ? 'hidden' : '';
       });
       mobileMenu.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', closeMenu);
-      });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenu();
+        a.addEventListener('click', closeMobileMenu);
       });
     }
+  }
+  // Document-level Escape handler: bound once (document survives swaps).
+  if (isFirstRun) {
+    document.addEventListener('keydown', (e) => {
+      const menu = document.getElementById('mobileMenu');
+      if (e.key === 'Escape' && menu && menu.classList.contains('open')) closeMobileMenu();
+    });
   }
 
   /* ─────────────────── Reveal-on-scroll (staggered) ─────────────────── */
@@ -166,13 +174,18 @@
       else magic.style.opacity = '0';
     });
 
-    if (isFirstRun) {
+    // Hover listeners bound per-node (same rationale as the mobile menu): the
+    // nav can be rebuilt fresh after navigating through a `bare` page.
+    if (!navLinks.dataset.kalaMagicBound) {
+      navLinks.dataset.kalaMagicBound = 'true';
       links.forEach(a => a.addEventListener('mouseenter', () => positionMagic(a)));
       navLinks.addEventListener('mouseleave', () => {
         const a = getActive();
         if (a) positionMagic(a);
         else magic.style.opacity = '0';
       });
+    }
+    if (isFirstRun) {
       window.addEventListener('resize', () => {
         const a = navLinks.querySelector('a:hover') || getActive();
         if (a) positionMagic(a);
