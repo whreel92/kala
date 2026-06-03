@@ -102,7 +102,10 @@
       '.value-card, .pull-quote, .page-header, .menu-item-card, .order-card, .step, ' +
       '.callout-frame, .invite-inner, .menu-cta > .container, .walk-in-inner, ' +
       '.reserve-card, .dish-marquee-eyebrow, .sharedtable-media, .sharedtable-text, ' +
-      '.favorites-head, .fav-card, .menu-feature-card, .timeline-step'
+      '.favorites-head, .fav-card, .menu-feature-card, .timeline-step, ' +
+      '.contact-atmos, .action-card, .events-card, ' +
+      '.os-hero-media, .os-hero-text, .os-quote-band, .os-ed-media, .os-ed-text, ' +
+      '.promise-col, .journey-point, .os-cta-panel'
     );
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
