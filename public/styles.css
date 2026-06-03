@@ -552,6 +552,26 @@ p { margin: 0 0 1em; }
   text-align: center;
 }
 
+/* Emblem wordmark — the KALA crest replaces the text wordmark, centered over
+   the middle of the hero. It's an <h1> for semantics; the brand name lives in
+   the alt text. Transparent PNG/WebP so the engraving video shows through. */
+.hero-emblem {
+  margin: clamp(6px, 1.5vw, 16px) 0 clamp(10px, 1.8vw, 20px);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  line-height: 1;
+}
+.hero-emblem img {
+  display: block;
+  width: clamp(248px, 40vw, 500px);
+  height: auto;
+  /* Soft lift so the navy line-art separates from the engraving backdrop. */
+  filter: drop-shadow(0 4px 14px rgba(25, 75, 158, .28))
+          drop-shadow(0 1px 2px rgba(255, 255, 255, .5));
+}
+.hero.is-revealed .hero-emblem { animation-delay: .15s; }
+
 /* (Title circle removed — KALA wordmark now floats freely on the hero) */
 
 @keyframes titleFloat {
