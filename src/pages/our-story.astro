@@ -1,5 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
+import osHeroTable from '../assets/kala/story/os-hero-table.webp';
+import osCoastal from '../assets/kala/story/os-coastal.webp';
+import handsPreparing from '../assets/kala/story/hands-preparing-greek-food.webp';
 
 // ---- Blue line-art illustrations (monochrome, inherit currentColor) ----
 const oliveBranch = `<svg viewBox="0 0 90 60" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 54C26 48 52 36 84 8"/><path d="M30 40c-6-5-6-12-2-17 6 3 8 11 2 17Z"/><path d="M44 31c-7-3-11-9-10-15 6 2 11 9 10 15Z"/><path d="M40 44c2-7 8-11 14-11-1 6-7 11-14 11Z"/><path d="M55 33c-5-5-6-12-3-17 6 4 7 11 3 17Z"/><path d="M67 22c2-7 8-11 14-10-1 6-7 11-14 10Z"/><ellipse cx="24" cy="48" rx="3.4" ry="4.6" transform="rotate(-28 24 48)"/></svg>`;
@@ -39,13 +43,12 @@ const kalaStamp = `<svg viewBox="0 0 100 100" class="stamp-svg" aria-hidden="tru
         <div class="os-hero-media">
           <span class="os-coastal-bg" aria-hidden="true"></span>
           <figure class="os-photo-card">
-            <img
-              src="/images/kala/story/os-hero-table.webp"
+            <Image
+              src={osHeroTable}
               alt="A Greek family-style table seen from above — hands sharing horiatiki salad, dips, warm pita, grilled food, and white wine on blue-and-white ceramics in warm coastal light."
               loading="eager"
               fetchpriority="high"
-              decoding="async"
-              width="1100" height="734" />
+              decoding="async" />
           </figure>
           <span class="os-stamp" aria-hidden="true" set:html={kalaStamp} />
         </div>
@@ -75,10 +78,10 @@ const kalaStamp = `<svg viewBox="0 0 100 100" class="stamp-svg" aria-hidden="tru
     <section class="os-editorial">
       <div class="container os-ed-grid">
         <figure class="os-ed-media">
-          <img
-            src="/images/kala/story/os-coastal.webp"
+          <Image
+            src={osCoastal}
             alt="A whitewashed Greek wall with bright blue shutters and a gnarled olive tree above the deep-blue Aegean, with white sailboats in the distance."
-            loading="lazy" decoding="async" width="1000" height="667" />
+            loading="lazy" decoding="async" />
         </figure>
         <div class="os-ed-text">
           <span class="os-eyebrow">Mediterranean, by way of the coast</span>
@@ -114,10 +117,10 @@ const kalaStamp = `<svg viewBox="0 0 100 100" class="stamp-svg" aria-hidden="tru
           <span class="os-ed-illo lemon" aria-hidden="true" set:html={lemonIllo} />
         </div>
         <figure class="os-ed-media bordered">
-          <img
-            src="/images/kala/story/hands-preparing-greek-food.webp"
+          <Image
+            src={handsPreparing}
             alt="Hands preparing Greek food on a rustic table — scattering herbs over feta drizzled with olive oil, beside blue-and-white ceramic bowls, a lemon, and a Greek-blue linen towel."
-            loading="lazy" decoding="async" width="1100" height="734" />
+            loading="lazy" decoding="async" />
         </figure>
       </div>
     </section>

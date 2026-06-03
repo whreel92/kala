@@ -245,10 +245,14 @@
 
     categories.forEach(c => spy.observe(c));
 
-    // also reset to "All" + hide pill when scrolled near top
-    window.addEventListener('scroll', () => {
+    // also reset to "All" + hide pill when scrolled near top. script.js reruns
+    // on every view transition and window survives swaps, so replace any prior
+    // handler (which referenced a now-discarded pill) rather than stacking.
+    if (window.__kalaMenuTopScroll) window.removeEventListener('scroll', window.__kalaMenuTopScroll);
+    window.__kalaMenuTopScroll = () => {
       if (window.scrollY < 260) { pill.classList.remove('show'); setActive(allLink); }
-    }, { passive: true });
+    };
+    window.addEventListener('scroll', window.__kalaMenuTopScroll, { passive: true });
   }
 
   /* ─────────────────── Tap-to-zoom lightbox for menu photos ─────────────────── */
@@ -299,9 +303,11 @@
     });
     lbClose.addEventListener('click', close);
     lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && lb.classList.contains('open')) close();
-    });
+    // document survives view-transition swaps — replace any prior Esc handler
+    // (bound to a now-discarded lightbox) instead of stacking a new one.
+    if (window.__kalaLbKey) document.removeEventListener('keydown', window.__kalaLbKey);
+    window.__kalaLbKey = (e) => { if (e.key === 'Escape' && lb.classList.contains('open')) close(); };
+    document.addEventListener('keydown', window.__kalaLbKey);
   }
 
   /* ─────────────────── Reservation: date-aware slots + live summary ─────────────────── */
@@ -521,14 +527,20 @@
   // Astro's ClientRouter handles cross-document transitions via the View
   // Transitions API. We just clear any lingering fade class on pageshow so a
   // back-button navigation never leaves the body invisible.
-  window.addEventListener('pageshow', () => {
-    document.body.classList.remove('page-fading');
-  });
+  if (isFirstRun) {
+    window.addEventListener('pageshow', () => {
+      document.body.classList.remove('page-fading');
+    });
+  }
 
   /* ─────────────────── Coming-soon modal (social links) ─────────────────── */
   const socialModal = $('[data-social-modal]');
   const socialLinks = $$('[data-social-link]');
-  if (socialModal && socialLinks.length) {
+  // Modal + links live in the transition:persist footer, so bind once per node
+  // lifetime (matches the mobile-nav kalaNavBound pattern) — otherwise the
+  // data-astro-rerun re-execution stacks duplicate handlers every navigation.
+  if (socialModal && socialLinks.length && !socialModal.dataset.kalaSocialBound) {
+    socialModal.dataset.kalaSocialBound = 'true';
     const platformEls = socialModal.querySelectorAll('[data-social-platform]');
     const closeEls = socialModal.querySelectorAll('[data-social-modal-close]');
 

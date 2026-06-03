@@ -1,0 +1,258 @@
+---
+/*
+  IntroDoorTransition — a one-time "barn-door" intro for the KALA landing page.
+
+  The Greek door still sits flat over the hero (split into two seamless
+  halves), holds for a beat, then the halves slide straight apart like barn
+  doors — left half off-screen left, right half off-screen right — revealing
+  the real hero directly behind. No 3D swing, no camera push, no video: the
+  hero is simply uncovered, so it flows in with zero colour mismatch.
+
+  Robustness:
+    • Plays once per session (sessionStorage).
+    • Skips instantly on prefers-reduced-motion, on click/tap/Esc/Enter/Space,
+      or if the door image fails / is slow to load (→ hero shows immediately).
+    • Overlay is position:fixed and isolated — no scroll height, no layout
+      shift, no horizontal overflow. Removes itself + detaches listeners when
+      done. Animation is transform/opacity only (compositor-friendly).
+
+  The two halves each clip a full-viewport `cover` copy of the same image, so
+  the centre seam is pixel-perfect on every aspect ratio.
+*/
+interface Props {
+  /** Door image (a public asset; used as a CSS background, so no <Image>). */
+  src?: string;
+}
+const { src = '/images/kala/home/intro-doors.webp' } = Astro.props;
+const KEY = 'kala_intro_played_v1';
+---
+
+<div id="kala-intro" class="kala-intro" style={`--door:url('${src}')`}>
+  <div class="kala-intro__leaf kala-intro__leaf--l" aria-hidden="true"></div>
+  <div class="kala-intro__leaf kala-intro__leaf--r" aria-hidden="true"></div>
+
+  <button type="button" class="kala-intro__skip" data-intro-skip aria-label="Skip intro and enter the site">
+    Skip <span aria-hidden="true">&crarr;</span>
+  </button>
+
+  {/* Drives load/failure detection; shares cache with the leaves' background. */}
+  <img class="kala-intro__probe" src={src} alt="" aria-hidden="true" decoding="async" />
+</div>
+
+<style is:global>
+  .kala-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    overflow: hidden;
+    background: transparent; /* leaves cover the hero; transparent so the slide reveals it */
+    touch-action: none;
+    overscroll-behavior: contain;
+    cursor: pointer;
+  }
+
+  /* Each leaf clips a full-overlay `cover` copy of the door image. The
+     ::before is 200% of the 50% leaf = exactly overlay width, so `cover`
+     resolves identically for both halves → pixel-perfect centre seam.
+     A cream base under the image means no hero flash before it decodes. */
+  .kala-intro__leaf {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    overflow: hidden;
+    background-color: #f4f0e5;
+    will-change: transform;
+  }
+  .kala-intro__leaf::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 200%;
+    background-image: var(--door);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  /* Soft inner-edge shade + a hairline at the centre join; fades as they part. */
+  .kala-intro__leaf::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 28%;
+    will-change: opacity;
+  }
+  .kala-intro__leaf--l { left: 0; }
+  .kala-intro__leaf--l::before { left: 0; }
+  .kala-intro__leaf--l::after {
+    right: 0;
+    background: linear-gradient(90deg, rgba(8, 24, 56, 0) 0%, rgba(8, 24, 56, 0.16) 88%, rgba(8, 24, 56, 0.28) 100%);
+  }
+  .kala-intro__leaf--r { right: 0; }
+  .kala-intro__leaf--r::before { right: 0; }
+  .kala-intro__leaf--r::after {
+    left: 0;
+    background: linear-gradient(270deg, rgba(8, 24, 56, 0) 0%, rgba(8, 24, 56, 0.16) 88%, rgba(8, 24, 56, 0.28) 100%);
+  }
+
+  .kala-intro__skip {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(20px, 5vh, 46px);
+    transform: translateX(-50%) translateY(8px);
+    z-index: 5;
+    opacity: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    padding: 0.62em 1.25em;
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #f8f4e8;
+    background: rgba(13, 30, 64, 0.42);
+    border: 1px solid rgba(248, 244, 232, 0.55);
+    border-radius: 999px;
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    transition: background 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
+  }
+  .kala-intro.is-playing .kala-intro__skip { animation: kala-skip-in 0.45s ease 0.35s both; }
+  .kala-intro__skip:hover,
+  .kala-intro__skip:focus-visible {
+    background: rgba(13, 30, 64, 0.62);
+    border-color: rgba(248, 244, 232, 0.9);
+    outline: none;
+  }
+  .kala-intro__skip span { font-size: 0.9em; }
+
+  .kala-intro__probe {
+    position: absolute;
+    width: 1px; height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ── Barn-door slide (~2s): brief hold, then halves slide off-screen. ── */
+  .kala-intro.is-playing .kala-intro__leaf--l { animation: kala-barn-l 2s cubic-bezier(0.66, 0, 0.2, 1) forwards; }
+  .kala-intro.is-playing .kala-intro__leaf--r { animation: kala-barn-r 2s cubic-bezier(0.66, 0, 0.2, 1) forwards; }
+  .kala-intro.is-playing .kala-intro__leaf::after { animation: kala-seam-fade 2s ease-out forwards; }
+
+  /* Fast, clean exit on skip. */
+  .kala-intro.is-leaving {
+    opacity: 0 !important;
+    transition: opacity 0.32s ease;
+    pointer-events: none;
+  }
+
+  @keyframes kala-barn-l { 0%, 22% { transform: translateX(0); } 100% { transform: translateX(-101%); } }
+  @keyframes kala-barn-r { 0%, 22% { transform: translateX(0); } 100% { transform: translateX(101%); } }
+  @keyframes kala-seam-fade { 0%, 22% { opacity: 1; } 100% { opacity: 0; } }
+  @keyframes kala-skip-in {
+    from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+    to   { opacity: 0.85; transform: translateX(-50%) translateY(0); }
+  }
+
+  /* JS-disabled reduced-motion users never see a frozen overlay. */
+  @media (prefers-reduced-motion: reduce) {
+    .kala-intro { display: none !important; }
+  }
+</style>
+
+<script is:inline define:vars={{ KEY }}>
+  (function () {
+    var root = document.getElementById('kala-intro');
+    if (!root) return;
+    var html = document.documentElement;
+    var DUR = 2000;
+
+    // The intro is for the INITIAL page load only. On client-side (View
+    // Transitions) navigation — e.g. clicking the KALA logo to return home —
+    // strip the overlay from the incoming page before it swaps in, so the
+    // user lands directly on the hero and the doors never reappear.
+    // (Registered once; document-level listeners survive swaps.)
+    if (!window.__kalaIntroNav) {
+      window.__kalaIntroNav = true;
+      document.addEventListener('astro:before-swap', function (ev) {
+        try {
+          var incoming = ev.newDocument && ev.newDocument.getElementById('kala-intro');
+          if (incoming && incoming.parentNode) incoming.parentNode.removeChild(incoming);
+        } catch (e) {}
+      });
+    }
+
+    var played = false;
+    try { played = !!sessionStorage.getItem(KEY); } catch (e) {}
+    var reduce = false;
+    try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+    var probe = root.querySelector('.kala-intro__probe');
+    var started = false;
+    var finished = false;
+    var timers = [];
+    function later(fn, ms) { var t = setTimeout(fn, ms); timers.push(t); return t; }
+
+    function prevent(e) { e.preventDefault(); }
+    function detach() {
+      timers.forEach(clearTimeout); timers = [];
+      document.removeEventListener('keydown', onKey, true);
+      root.removeEventListener('click', onClick);
+      root.removeEventListener('wheel', prevent);
+      root.removeEventListener('touchmove', prevent);
+      if (probe) { probe.onload = null; probe.onerror = null; }
+    }
+    function remove() {
+      detach();
+      html.classList.remove('kala-intro-running');
+      if (root && root.parentNode) root.parentNode.removeChild(root);
+    }
+    function mark() { try { sessionStorage.setItem(KEY, '1'); } catch (e) {} }
+
+    if (played || reduce) { remove(); return; }
+
+    function finishNatural() { if (finished) return; finished = true; mark(); remove(); }
+    function leave() {
+      if (finished) return;
+      finished = true;
+      mark();
+      detach();
+      root.classList.add('is-leaving');
+      setTimeout(function () { if (root && root.parentNode) root.parentNode.removeChild(root); html.classList.remove('kala-intro-running'); }, 340);
+    }
+    function onClick() { leave(); }
+    function onKey(e) {
+      if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); leave(); }
+    }
+
+    function start() {
+      if (started || finished) return;
+      started = true;
+      html.classList.add('kala-intro-running');
+      root.classList.add('is-playing');
+      document.addEventListener('keydown', onKey, true);
+      root.addEventListener('click', onClick);
+      root.addEventListener('wheel', prevent, { passive: false });
+      root.addEventListener('touchmove', prevent, { passive: false });
+      later(finishNatural, DUR + 80);
+    }
+    function bail() { mark(); remove(); } // image failed/too slow → hero shows immediately
+
+    // Never block the user: bail if the door image isn't ready within 1.2s.
+    later(function () { if (!started) bail(); }, 1200);
+
+    if (probe && probe.complete) {
+      if (probe.naturalWidth > 0) start();
+      else bail();
+    } else if (probe) {
+      probe.onload = start;
+      probe.onerror = bail;
+    } else {
+      start();
+    }
+  })();
+</script>

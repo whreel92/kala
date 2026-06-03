@@ -1,11 +1,28 @@
 ---
 import Base from '../layouts/Base.astro';
+import IntroDoorTransition from '../components/IntroDoorTransition.astro';
+import { Image } from 'astro:assets';
+import kalaEmblem from '../assets/kala/home/kala-emblem.webp';
+import menuGyros from '../assets/kala/home/menu-gyros.webp';
+import menuSouvlaki from '../assets/kala/home/menu-souvlaki.webp';
+import menuSalad from '../assets/kala/home/menu-salad.webp';
+import menuDips from '../assets/kala/home/menu-dips.webp';
+import menuSeafood from '../assets/kala/home/menu-seafood.webp';
+import menuWine from '../assets/kala/home/menu-wine.webp';
+import menuDesserts from '../assets/kala/home/menu-desserts.webp';
+import bannerMadeWithLove from '../assets/kala/home/banner-made-with-love.webp';
+import sharedTable from '../assets/kala/home/shared-table.webp';
+import storyTable from '../assets/kala/home/story-table.webp';
+import handOlive from '../assets/kala/hand_olive.png';
 ---
 <Base
   title="KALA — Greek and More"
   description="KALA — Greek and More. A coastal Mediterranean restaurant serving gyros, souvlaki, fresh salads, and Greek classics."
   current="/"
 >
+
+<!-- One-time cinematic "enter through the Greek doors" intro (first visit / per session) -->
+<IntroDoorTransition />
 
 <!-- Hero — looping hand-engraving animation behind the brand wordmark -->
 <section class="hero is-revealed">
@@ -29,11 +46,11 @@ import Base from '../layouts/Base.astro';
       <span class="hero-address">1500 Queen Anne Ave N</span>
       <span class="eyebrow eyebrow-light">Coastal · Mediterranean · Destination</span>
       <h1 class="hero-emblem">
-        <img
-          src="/images/kala/home/kala-emblem.webp"
+        <Image
+          src={kalaEmblem}
           alt="KALA — Greek and More"
-          width="1500"
-          height="1249"
+          loading="eager"
+          fetchpriority="high"
           decoding="async"
         />
       </h1>
@@ -182,7 +199,7 @@ import Base from '../layouts/Base.astro';
 
     <div class="menu-grid">
       <a href="/menu#gyros" class="menu-card menu-card--feature">
-        <div class="card-image"><img src="/images/kala/home/menu-gyros.webp" alt="Greek gyro with seasoned meat, tzatziki, tomato and red onion in warm pita on a blue-and-white plate." loading="lazy" decoding="async" /></div>
+        <div class="card-image"><Image src={menuGyros} alt="Greek gyro with seasoned meat, tzatziki, tomato and red onion in warm pita on a blue-and-white plate." loading="lazy" decoding="async" /></div>
         <div class="card-body">
           <h3>Gyros</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
@@ -191,7 +208,7 @@ import Base from '../layouts/Base.astro';
       </a>
 
       <a href="/menu#souvlaki" class="menu-card menu-card--feature">
-        <div class="card-image"><img src="/images/kala/home/menu-souvlaki.webp" alt="Grilled chicken souvlaki skewers with lemon and oregano on a blue-and-white plate." loading="lazy" decoding="async" /></div>
+        <div class="card-image"><Image src={menuSouvlaki} alt="Grilled chicken souvlaki skewers with lemon and oregano on a blue-and-white plate." loading="lazy" decoding="async" /></div>
         <div class="card-body">
           <h3>Souvlaki</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
@@ -200,7 +217,7 @@ import Base from '../layouts/Base.astro';
       </a>
 
       <a href="/menu#salads" class="menu-card">
-        <div class="card-image"><img src="/images/kala/home/menu-salad.webp" alt="Horiatiki Greek salad with tomato, cucumber, feta and olives in a blue-and-white bowl." loading="lazy" decoding="async" /></div>
+        <div class="card-image"><Image src={menuSalad} alt="Horiatiki Greek salad with tomato, cucumber, feta and olives in a blue-and-white bowl." loading="lazy" decoding="async" /></div>
         <div class="card-body">
           <h3>Greek Salads</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
@@ -209,7 +226,7 @@ import Base from '../layouts/Base.astro';
       </a>
 
       <a href="/menu#dips" class="menu-card">
-        <div class="card-image"><img src="/images/kala/home/menu-dips.webp" alt="Trio of Greek dips — tzatziki, hummus and fava — with warm pita." loading="lazy" decoding="async" /></div>
+        <div class="card-image"><Image src={menuDips} alt="Trio of Greek dips — tzatziki, hummus and fava — with warm pita." loading="lazy" decoding="async" /></div>
         <div class="card-body">
           <h3>Dips &amp; Spreads</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
@@ -218,7 +235,7 @@ import Base from '../layouts/Base.astro';
       </a>
 
       <a href="/menu#seafood" class="menu-card">
-        <div class="card-image"><img src="/images/kala/home/menu-seafood.webp" alt="Whole grilled branzino with lemon, olive oil and herbs on a blue-and-white platter." loading="lazy" decoding="async" /></div>
+        <div class="card-image"><Image src={menuSeafood} alt="Whole grilled branzino with lemon, olive oil and herbs on a blue-and-white platter." loading="lazy" decoding="async" /></div>
         <div class="card-body">
           <h3>Seafood</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
@@ -227,7 +244,7 @@ import Base from '../layouts/Base.astro';
       </a>
 
       <a href="/menu#wine" class="menu-card">
-        <div class="card-image"><img src="/images/kala/home/menu-wine.webp" alt="Two glasses of crisp white wine with a bottle on a white linen table." loading="lazy" decoding="async" /></div>
+        <div class="card-image"><Image src={menuWine} alt="Two glasses of crisp white wine with a bottle on a white linen table." loading="lazy" decoding="async" /></div>
         <div class="card-body">
           <h3>Wine</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
@@ -236,7 +253,7 @@ import Base from '../layouts/Base.astro';
       </a>
 
       <a href="/menu#desserts" class="menu-card">
-        <div class="card-image"><img src="/images/kala/home/menu-desserts.webp" alt="Greek baklava and galaktoboureko with honey and pistachio on a blue-and-white plate." loading="lazy" decoding="async" /></div>
+        <div class="card-image"><Image src={menuDesserts} alt="Greek baklava and galaktoboureko with honey and pistachio on a blue-and-white plate." loading="lazy" decoding="async" /></div>
         <div class="card-body">
           <h3>Desserts</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut.</p>
@@ -259,11 +276,9 @@ import Base from '../layouts/Base.astro';
 <!-- Tagline ribbon — heartfelt punctuation between the menu and the table -->
 <section class="banner-ribbon" aria-label="Greek food made with love">
   <div class="container">
-    <img
-      src="/images/kala/home/banner-made-with-love.webp"
+    <Image
+      src={bannerMadeWithLove}
       alt="Ribbon banner reading &ldquo;Greek food made with love.&rdquo;"
-      width="957"
-      height="256"
       loading="lazy"
       decoding="async"
     />
@@ -274,13 +289,11 @@ import Base from '../layouts/Base.astro';
 <section class="sharedtable" id="table">
   <div class="container sharedtable-grid">
     <figure class="sharedtable-media">
-      <img
-        src="/images/kala/home/shared-table.webp"
+      <Image
+        src={sharedTable}
         alt="A Greek mezze spread on blue-and-white ceramics — souvlaki, tzatziki, hummus, horiatiki salad, lemon potatoes, pita, olives, and white wine on a white linen table."
         loading="lazy"
         decoding="async"
-        width="1500"
-        height="996"
       />
       <span class="sharedtable-frame" aria-hidden="true"></span>
     </figure>
@@ -335,8 +348,8 @@ import Base from '../layouts/Base.astro';
       <div class="vis-glow" aria-hidden="true"></div>
 
       <figure class="story-photo">
-        <img
-          src="/images/kala/home/story-table.webp"
+        <Image
+          src={storyTable}
           alt="Hands sharing Greek mezze across a white linen table set with blue-and-white ceramics."
           loading="lazy"
           decoding="async"
@@ -344,7 +357,7 @@ import Base from '../layouts/Base.astro';
       </figure>
 
       <figure class="story-accent" aria-hidden="true">
-        <img src="/public/hand_olive.png" alt="" loading="lazy" />
+        <Image src={handOlive} alt="" loading="lazy" />
       </figure>
 
       <svg class="key-ribbon" aria-hidden="true" viewBox="0 0 600 40" preserveAspectRatio="none">

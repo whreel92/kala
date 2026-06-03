@@ -211,9 +211,13 @@
 
   // Close on backdrop, close button, Esc
   $$('[data-pos-detail-close]').forEach(el => el.addEventListener('click', closeDetail));
-  document.addEventListener('keydown', (e) => {
+  // pos.js reruns on every view transition (data-astro-rerun); document
+  // survives swaps, so replace the prior Esc handler instead of stacking.
+  if (window.__kalaPosDetailKey) document.removeEventListener('keydown', window.__kalaPosDetailKey);
+  window.__kalaPosDetailKey = (e) => {
     if (e.key === 'Escape' && !detail.hidden) closeDetail();
-  });
+  };
+  document.addEventListener('keydown', window.__kalaPosDetailKey);
 
   // Quantity stepper
   detailQtyMinus.addEventListener('click', () => {
@@ -357,13 +361,9 @@
     }
   });
 
-  // Re-render after add-to-cart in the detail panel (extend the existing handler)
-  // We can't easily reach inside the handler above, so we monkey-wrap detailAdd's click:
-  // Instead, observe cart mutations indirectly: wrap the existing handler.
-  const _origDetailAdd = detailAdd.onclick;
+  // Re-render + persist after the add-to-cart handler above runs (it's bound
+  // earlier, so it executes first on the same click).
   detailAdd.addEventListener('click', () => {
-    // The add-to-cart logic from Task 5 ran first because it's bound earlier.
-    // Just re-render and persist now.
     saveCart();
     renderCart();
   });
@@ -571,10 +571,12 @@
   mobileBar.addEventListener('click', openMobileCart);
   cartCloseBtns.forEach(el => el.addEventListener('click', closeMobileCart));
 
-  // Esc closes the cart overlay
-  document.addEventListener('keydown', (e) => {
+  // Esc closes the cart overlay (replace prior handler — see detail-key note).
+  if (window.__kalaPosCartKey) document.removeEventListener('keydown', window.__kalaPosCartKey);
+  window.__kalaPosCartKey = (e) => {
     if (e.key === 'Escape' && cartCol.classList.contains('is-open')) closeMobileCart();
-  });
+  };
+  document.addEventListener('keydown', window.__kalaPosCartKey);
 
   /* ─── Add-to-cart toast ─── */
 

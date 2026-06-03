@@ -82,10 +82,10 @@ p { margin: 0 0 1em; }
 
 /* ===================== Announce =================== */
 .announce {
-  background: var(--charcoal);
-  color: var(--cream);
-  font-size: 12.5px;
-  letter-spacing: .14em;
+  background: linear-gradient(90deg, #0c2f63 0%, var(--blue-primary) 50%, #0c2f63 100%);
+  color: #EAF1FB;
+  font-size: 12px;
+  letter-spacing: .18em;
   text-transform: uppercase;
   padding: 10px 20px;
   display: flex;
@@ -96,8 +96,8 @@ p { margin: 0 0 1em; }
 }
 .announce-dot {
   width: 7px; height: 7px; border-radius: 50%;
-  background: var(--blue-soft);
-  box-shadow: 0 0 0 4px rgba(96,141,197,.18);
+  background: #CFE0F7;
+  box-shadow: 0 0 0 4px rgba(207,224,247,.20);
   animation: pulse 2.6s ease-in-out infinite;
 }
 @keyframes pulse {
@@ -117,8 +117,9 @@ p { margin: 0 0 1em; }
   transition: border-color .35s var(--ease), background .35s var(--ease);
 }
 .nav.is-scrolled {
-  border-bottom-color: var(--cream);
+  border-bottom-color: rgba(25,75,158,.12);
   background: rgba(255,255,255,.96);
+  box-shadow: 0 10px 30px -22px rgba(20,40,90,.5);
 }
 .nav-inner {
   display: flex;
@@ -133,7 +134,8 @@ p { margin: 0 0 1em; }
   color: var(--blue-primary);
   margin-right: auto;
 }
-.brand-mark { width: 38px; height: 38px; flex-shrink: 0; object-fit: contain; }
+.brand-mark { width: 38px; height: 38px; flex-shrink: 0; object-fit: contain; transition: transform .4s var(--ease); }
+.brand:hover .brand-mark { transform: rotate(-7deg) scale(1.06); }
 .brand-word {
   font-family: var(--font-wordmark);
   font-weight: 600;
@@ -147,12 +149,13 @@ p { margin: 0 0 1em; }
   gap: 30px;
 }
 .nav-links a {
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: .04em;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: .15em;
+  text-transform: uppercase;
   color: var(--slate);
   position: relative;
-  padding: 6px 0;
+  padding: 6px 2px;
   transition: color .25s var(--ease);
 }
 .nav-links a::after {
@@ -172,13 +175,25 @@ p { margin: 0 0 1em; }
   gap: 18px;
 }
 .link-quiet {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 12.5px;
+  font-weight: 600;
   color: var(--slate);
-  letter-spacing: .04em;
+  letter-spacing: .15em;
+  text-transform: uppercase;
   transition: color .25s var(--ease);
 }
 .link-quiet:hover { color: var(--blue-primary); }
+
+/* Hairline divider between the primary links and the actions (desktop only) */
+@media (min-width: 881px) {
+  .nav-actions::before {
+    content: '';
+    width: 1px;
+    height: 20px;
+    background: linear-gradient(180deg, transparent, rgba(25,75,158,.22), transparent);
+  }
+}
+.btn-sm svg { width: 16px; height: 16px; }
 
 .nav-toggle {
   display: none;
@@ -2200,7 +2215,7 @@ p { margin: 0 0 1em; }
 /* Menu item card grid — photo-led, denser refined rhythm */
 .menu-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(224px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(198px, 1fr));
   gap: 16px;
 }
 .menu-item-card {
@@ -2246,10 +2261,10 @@ p { margin: 0 0 1em; }
 }
 
 .menu-item-card .card-body {
-  padding: 15px 17px 18px;
+  padding: 13px 15px 15px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 7px;
   flex: 1;
 }
 .menu-item-card .item-head {
@@ -2260,7 +2275,7 @@ p { margin: 0 0 1em; }
 }
 .menu-item-card h3 {
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: -.005em;
   color: var(--charcoal);
@@ -2305,9 +2320,9 @@ p { margin: 0 0 1em; }
 .menu-tag.spicy { background: rgba(165,42,42,.1); color: #a52a2a; }
 
 /* compact grid (Sides) — more columns, tighter */
-.menu-card-grid.is-compact { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
+.menu-card-grid.is-compact { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
 /* drinks grid (Wine) — minimal, more per row */
-.menu-card-grid.is-drinks { grid-template-columns: repeat(auto-fill, minmax(204px, 1fr)); }
+.menu-card-grid.is-drinks { grid-template-columns: repeat(auto-fill, minmax(182px, 1fr)); }
 
 /* ============== House Favorites strip ============== */
 .favorites {
@@ -3321,7 +3336,7 @@ select.form-control {
   left: 0;
   height: 2px;
   width: 0;
-  background: var(--blue-primary);
+  background: linear-gradient(90deg, var(--blue-primary), var(--blue-soft));
   opacity: 0;
   transform: translateX(0);
   transition:
