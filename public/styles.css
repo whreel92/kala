@@ -2016,10 +2016,11 @@ p { margin: 0 0 1em; }
 .page-header.is-contact,
 .page-header.is-reservations,
 .page-header.is-order { --page-bg-image: none; }
-/* Menu + Story + Contact heroes — subtle warm paper tone with a soft blue halo */
+/* Menu + Story + Contact + Order heroes — subtle warm paper tone with a soft blue halo */
 .page-header.is-menu,
 .page-header.is-story,
-.page-header.is-contact {
+.page-header.is-contact,
+.page-header.is-order {
   background:
     radial-gradient(ellipse 72% 84% at 50% 0%, rgba(232, 238, 247, .55) 0%, transparent 62%),
     linear-gradient(180deg, #FCFBF8 0%, #F6F5F1 100%);
@@ -5736,4 +5737,291 @@ body.is-pos .sticky-order { display: none !important; }
   .journey-track { grid-template-columns: 1fr; gap: 22px; }
   .os-cta-actions { flex-direction: column; align-items: stretch; }
   .os-cta-actions .btn { width: 100%; justify-content: center; }
+}
+
+/* ============================================================
+   ============   RESERVATIONS REDESIGN (editorial)   =========
+   ============================================================ */
+.res-page {
+  background-color: #FAF8F3;
+  background-image: var(--paper-grain);
+  background-size: 160px;
+}
+
+/* ---------- Hero ---------- */
+.res-hero {
+  position: relative;
+  text-align: center;
+  padding: clamp(40px, 6vw, 82px) 0 clamp(26px, 4vw, 50px);
+  overflow: hidden;
+}
+.res-hero-inner { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+.res-hero-olive-top { display: block; width: 62px; margin: 0 auto 6px; color: var(--blue-soft); }
+.res-hero-olive-top svg { width: 100%; height: auto; }
+.res-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(46px, 8vw, 104px);
+  font-weight: 500;
+  letter-spacing: .055em;
+  line-height: 1;
+  color: var(--blue-primary);
+  margin: 0;
+}
+.res-script {
+  display: block;
+  font-family: var(--font-script);
+  font-weight: 600;
+  font-size: clamp(26px, 3.4vw, 40px);
+  color: var(--blue-primary);
+  margin: 8px 0 18px;
+  line-height: 1.1;
+}
+.res-hero p {
+  color: var(--slate);
+  font-size: 16px;
+  line-height: 1.72;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.res-hero-coast {
+  position: absolute;
+  left: -3%; top: 4%;
+  width: clamp(180px, 24vw, 300px);
+  height: 80%;
+  background: url('/images/kala/story/coastal-village-greek.webp') center/cover no-repeat;
+  opacity: .15;
+  z-index: 0;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 74%);
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 74%);
+}
+.res-hero-olive-side {
+  position: absolute;
+  right: -1%; top: 10%;
+  width: clamp(120px, 18vw, 210px);
+  color: var(--blue-soft);
+  opacity: .5;
+  z-index: 0;
+  transform: rotate(18deg);
+}
+.res-hero-olive-side svg { width: 100%; height: auto; }
+
+/* ---------- Image cards (shared) ---------- */
+.res-image-card {
+  position: relative;
+  margin: 0;
+  padding: 7px;
+  background: #fff;
+  border: 1.5px solid var(--blue-primary);
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 32px 66px -34px rgba(25,75,158,.34);
+}
+.res-image-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 2px;
+  transform: scale(1.04);
+  transition: transform 1.5s var(--ease);
+}
+.res-image-card.in-view img { transform: scale(1); }
+.rc-corner {
+  position: absolute;
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--blue-primary);
+  pointer-events: none;
+}
+.rc-corner.tl { top: -6px; left: -6px; border-right: none; border-bottom: none; }
+.rc-corner.tr { top: -6px; right: -6px; border-left: none; border-bottom: none; }
+.rc-corner.bl { bottom: -6px; left: -6px; border-right: none; border-top: none; }
+.rc-corner.br { bottom: -6px; right: -6px; border-left: none; border-top: none; }
+
+/* ---------- Feature: image + overlapping form ---------- */
+.res-feature {
+  padding: clamp(26px, 4vw, 52px) 0 clamp(48px, 7vw, 100px);
+  overflow: hidden;
+}
+.res-feature-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.82fr 1fr minmax(86px, 148px);
+  align-items: center;
+}
+.res-feature .res-image-card { z-index: 1; max-width: 440px; }
+.res-feature .reserve-card {
+  position: relative;
+  z-index: 2;
+  max-width: none;
+  margin: 0 0 0 -12%;
+  background: #fff;
+  border: 1px solid var(--blue-tint);
+  border-radius: var(--radius-lg);
+  padding: clamp(26px, 3vw, 42px);
+  box-shadow: 0 1px 0 rgba(255,255,255,.7) inset, 0 44px 84px -42px rgba(25,75,158,.34);
+}
+.res-feature-illo {
+  justify-self: center;
+  width: 100%;
+  max-width: 138px;
+  color: var(--blue-soft);
+  opacity: .55;
+  z-index: 0;
+}
+.res-feature-illo svg { width: 100%; height: auto; }
+
+/* refine form summary pill + button on paper */
+.reserve-summary { border-radius: 999px; }
+
+/* ---------- Walk-ins band ---------- */
+.res-walkin {
+  background-color: #F3EEE3;
+  background-image: var(--paper-grain);
+  background-size: 150px;
+  padding: clamp(40px, 5vw, 66px) 0;
+}
+.res-walkin-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 3vw, 40px);
+  flex-wrap: wrap;
+  text-align: left;
+}
+.res-walkin-olive { width: 54px; flex: 0 0 auto; color: var(--blue-soft); opacity: .6; }
+.res-walkin-olive svg { width: 100%; height: auto; }
+.res-walkin-head { text-align: center; }
+.res-walkin-head h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.6vw, 42px);
+  font-weight: 500;
+  color: var(--blue-primary);
+  margin: 8px 0 0;
+  line-height: 1.05;
+}
+.res-walkin-head h2 em { font-style: italic; font-weight: 400; color: var(--blue-primary); }
+.res-walkin-divider { width: 1px; height: 52px; background: var(--blue-tint); flex: 0 0 auto; }
+.res-walkin p { max-width: 300px; font-size: 15px; color: var(--slate); line-height: 1.6; margin: 0; }
+.res-walkin-table { width: 74px; flex: 0 0 auto; color: var(--blue-soft); opacity: .6; }
+.res-walkin-table svg { width: 100%; height: auto; }
+
+/* ---------- Larger parties ---------- */
+.res-parties {
+  background-color: #EEF2F8;
+  background-image: var(--paper-grain);
+  background-size: 150px;
+  padding: clamp(52px, 8vw, 104px) 0;
+}
+.res-parties-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(36px, 5vw, 76px);
+  align-items: center;
+}
+.res-parties .res-image-card img { aspect-ratio: 3 / 2; }
+.res-parties-text { position: relative; }
+.res-parties-title { font-family: var(--font-display); margin: 14px 0 16px; line-height: 1.04; }
+.res-parties-title .line-roman,
+.res-parties-title .line-italic { display: block; font-size: clamp(30px, 4vw, 50px); color: var(--blue-primary); }
+.res-parties-title .line-roman { font-weight: 500; }
+.res-parties-title .line-italic { font-style: italic; font-weight: 400; }
+.res-parties-text > p { color: var(--slate); font-size: 16px; line-height: 1.75; max-width: 420px; margin: 0; }
+.res-parties-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 24px; }
+.res-parties-illo {
+  position: absolute;
+  right: -3%; top: 50%;
+  transform: translateY(-50%) rotate(12deg);
+  width: 130px;
+  color: var(--blue-soft);
+  opacity: .42;
+  z-index: 0;
+  pointer-events: none;
+}
+.res-parties-illo svg { width: 100%; height: auto; }
+.res-parties-text > * { position: relative; z-index: 1; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 920px) {
+  .res-feature-grid { grid-template-columns: 1fr; justify-items: center; }
+  .res-feature .res-image-card { max-width: 460px; width: 100%; }
+  .res-feature .reserve-card { margin: -36px 0 0; width: 100%; max-width: 560px; }
+  .res-feature-illo { display: none; }
+  .res-hero-coast { width: 150px; opacity: .12; }
+  .res-hero-olive-side { width: 120px; opacity: .4; }
+
+  .res-parties-grid { grid-template-columns: 1fr; gap: 32px; }
+  .res-parties .res-image-card { max-width: 600px; margin: 0 auto; width: 100%; }
+  .res-parties-illo { display: none; }
+}
+@media (max-width: 720px) {
+  .res-walkin-divider { display: none; }
+  .res-walkin-inner { flex-direction: column; gap: 14px; }
+  .res-walkin p { text-align: center; }
+  .res-walkin-table { display: none; }
+}
+@media (max-width: 560px) {
+  .res-parties-actions { flex-direction: column; align-items: stretch; }
+  .res-parties-actions .btn { width: 100%; justify-content: center; }
+  .res-hero-coast, .res-hero-olive-side { display: none; }
+}
+
+/* ============================================================
+   ============   ORDER PAGE — new style   ====================
+   ============================================================ */
+.order-page {
+  background-color: #FAF8F3;
+  background-image: var(--paper-grain);
+  background-size: 160px;
+}
+.order-hero-olive {
+  display: block;
+  width: 60px;
+  margin: 0 auto 4px;
+  color: var(--blue-soft);
+}
+.order-hero-olive svg { width: 100%; height: auto; }
+.is-order .order-script-sub {
+  font-family: var(--font-script);
+  font-style: normal;
+  font-weight: 600;
+  font-size: clamp(24px, 3vw, 38px);
+  color: var(--blue-primary);
+  letter-spacing: .005em;
+  line-height: 1.1;
+}
+
+/* options section on paper */
+.order-options { background: transparent; }
+.order-options-head {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto clamp(28px, 4vw, 46px);
+}
+.order-options-head .os-eyebrow { justify-content: center; }
+.order-options-head h2 {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4vw, 50px);
+  font-weight: 500;
+  line-height: 1.05;
+  color: var(--blue-primary);
+  margin: 12px 0 0;
+}
+.order-options-head h2 em { font-style: italic; font-weight: 400; color: var(--blue-primary); }
+
+/* refined cards on paper */
+.order-page .order-card {
+  background: var(--white);
+  border-color: var(--blue-tint);
+}
+.order-page .order-card:hover { border-color: var(--blue-soft); }
+.order-page .order-card .meta { color: var(--blue-soft); }
+
+/* ---------- POS pages — warm paper for consistency ---------- */
+.pos-ui {
+  background-color: #FAF8F3;
+  background-image: var(--paper-grain);
+  background-size: 160px;
+}
+
+@media (max-width: 560px) {
+  .order-options-head h2 { font-size: clamp(26px, 7vw, 34px); }
 }

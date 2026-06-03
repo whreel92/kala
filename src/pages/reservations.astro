@@ -1,5 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
+
+// ---- Blue line-art illustrations (inherit currentColor) ----
+const oliveBranch = `<svg viewBox="0 0 90 60" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 54C26 48 52 36 84 8"/><path d="M30 40c-6-5-6-12-2-17 6 3 8 11 2 17Z"/><path d="M44 31c-7-3-11-9-10-15 6 2 11 9 10 15Z"/><path d="M40 44c2-7 8-11 14-11-1 6-7 11-14 11Z"/><path d="M55 33c-5-5-6-12-3-17 6 4 7 11 3 17Z"/><path d="M67 22c2-7 8-11 14-10-1 6-7 11-14 10Z"/><ellipse cx="24" cy="48" rx="3.4" ry="4.6" transform="rotate(-28 24 48)"/></svg>`;
+const wineIllo = `<svg viewBox="0 0 210 130" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M52 26c0 17-8 27-15 27s-15-10-15-27Z"/><path d="M37 53v46"/><path d="M24 99h26"/><path d="M84 30h16v16l5 13v50a4 4 0 0 1-4 4H83a4 4 0 0 1-4-4V59l5-13Z"/><path d="M84 30v-9h16v9"/><path d="M120 96c0 7 10 12 22 12s22-5 22-12Z"/><ellipse cx="132" cy="92" rx="4" ry="5"/><ellipse cx="143" cy="90" rx="4" ry="5"/><ellipse cx="153" cy="93" rx="4" ry="5"/><path d="M176 36c11 11 17 28 15 54"/><path d="M178 50c8-3 15-1 19 4-6 5-15 3-19-4Z"/><path d="M183 68c8-3 15-1 19 4-6 5-15 3-19-4Z"/></svg>`;
+const iconTable = `<svg viewBox="0 0 64 56" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 30h20"/><path d="M26 30l-3 16M38 30l3 16"/><path d="M9 18v16"/><path d="M9 28h11"/><path d="M9 34v10M20 28v16"/><path d="M55 18v16"/><path d="M44 28h11"/><path d="M55 34v10M44 28v16"/></svg>`;
 ---
 <Base
   title="Reservations — KALA Greek and More"
@@ -7,119 +12,160 @@ import Base from '../layouts/Base.astro';
   current="/reservations"
 >
 
-  <!-- Page header -->
-  <section class="page-header has-bg is-reservations">
-    <div class="container">
-      <h1>RESERVATIONS</h1>
-      <span class="page-sub">Save your seat by the harbor</span>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium nisi
-        tincidunt eu. Donec euismod tempor lectus.
-      </p>
-    </div>
-  </section>
+  <div class="res-page">
 
-  <!-- Greek Key Divider -->
-  <div class="meander-divider" aria-hidden="true"></div>
+    <!-- Hero -->
+    <section class="res-hero">
+      <span class="res-hero-coast" aria-hidden="true"></span>
+      <span class="res-hero-olive-side" aria-hidden="true" set:html={oliveBranch} />
+      <div class="container res-hero-inner">
+        <span class="res-hero-olive-top" aria-hidden="true" set:html={oliveBranch} />
+        <h1>RESERVATIONS</h1>
+        <span class="res-script">Save your seat by the harbor.</span>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium nisi
+          tincidunt eu. Donec euismod tempor lectus.
+        </p>
+      </div>
+    </section>
 
-  <!-- Reservation form -->
-  <section class="reserve-section">
-    <div class="container">
-      <div class="reserve-card">
-        <form class="reserve-form" onsubmit="event.preventDefault();">
+    <!-- Greek key divider -->
+    <div class="meander-divider" aria-hidden="true"></div>
 
-          <div class="form-grid">
+    <!-- Reservation feature: image card + form card -->
+    <section class="res-feature">
+      <div class="container res-feature-grid">
+        <figure class="res-image-card">
+          <span class="rc-corner tl" aria-hidden="true"></span>
+          <span class="rc-corner tr" aria-hidden="true"></span>
+          <span class="rc-corner bl" aria-hidden="true"></span>
+          <span class="rc-corner br" aria-hidden="true"></span>
+          <img
+            src="/images/kala/reservations/coastal-table-water.webp"
+            alt="A Greek coastal table set with white linen, a blue-and-white ceramic plate, wine glasses, and an olive branch in a glass vase, with fishing boats on calm blue water beyond."
+            loading="lazy" decoding="async" width="900" height="1125" />
+        </figure>
+
+        <div class="reserve-card">
+          <form class="reserve-form" onsubmit="event.preventDefault();">
+
+            <div class="form-grid">
+              <div class="form-row">
+                <label for="party">Party Size</label>
+                <select id="party" class="form-control" name="party">
+                  <option>1 guest</option>
+                  <option selected>2 guests</option>
+                  <option>3 guests</option>
+                  <option>4 guests</option>
+                  <option>5 guests</option>
+                  <option>6 guests</option>
+                  <option>7+ guests · contact us</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label for="date">Date</label>
+                <input id="date" class="form-control" type="date" />
+              </div>
+            </div>
+
             <div class="form-row">
-              <label for="party">Party Size</label>
-              <select id="party" class="form-control" name="party">
-                <option>1 guest</option>
-                <option selected>2 guests</option>
-                <option>3 guests</option>
-                <option>4 guests</option>
-                <option>5 guests</option>
-                <option>6 guests</option>
-                <option>7+ guests · contact us</option>
-              </select>
+              <label>Time</label>
+              <div class="time-slots">
+                <button type="button" class="time-chip">5:30p</button>
+                <button type="button" class="time-chip">5:45p</button>
+                <button type="button" class="time-chip">6:00p</button>
+                <button type="button" class="time-chip">6:30p</button>
+                <button type="button" class="time-chip active">7:00p</button>
+                <button type="button" class="time-chip">7:30p</button>
+                <button type="button" class="time-chip">8:00p</button>
+                <button type="button" class="time-chip">8:30p</button>
+                <button type="button" class="time-chip">9:00p</button>
+              </div>
             </div>
+
+            <div class="form-grid">
+              <div class="form-row">
+                <label for="name">Name</label>
+                <input id="name" class="form-control" type="text" placeholder="Your name" />
+              </div>
+              <div class="form-row">
+                <label for="phone">Phone</label>
+                <input id="phone" class="form-control" type="tel" placeholder="(555) 123-4567" />
+              </div>
+            </div>
+
             <div class="form-row">
-              <label for="date">Date</label>
-              <input id="date" class="form-control" type="date" />
+              <label for="email">Email</label>
+              <input id="email" class="form-control" type="email" placeholder="you@example.com" />
             </div>
-          </div>
 
-          <div class="form-row">
-            <label>Time</label>
-            <div class="time-slots">
-              <button type="button" class="time-chip">5:30p</button>
-              <button type="button" class="time-chip">5:45p</button>
-              <button type="button" class="time-chip">6:00p</button>
-              <button type="button" class="time-chip">6:30p</button>
-              <button type="button" class="time-chip active">7:00p</button>
-              <button type="button" class="time-chip">7:30p</button>
-              <button type="button" class="time-chip">8:00p</button>
-              <button type="button" class="time-chip">8:30p</button>
-              <button type="button" class="time-chip">9:00p</button>
-            </div>
-          </div>
+            <button type="submit" class="btn btn-primary btn-lg">
+              Reserve a Table
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
 
-          <div class="form-grid">
-            <div class="form-row">
-              <label for="name">Name</label>
-              <input id="name" class="form-control" type="text" placeholder="Your name" />
-            </div>
-            <div class="form-row">
-              <label for="phone">Phone</label>
-              <input id="phone" class="form-control" type="tel" placeholder="(555) 123-4567" />
-            </div>
-          </div>
+            <p class="reserve-note">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Confirmation sent to your email.
+            </p>
+          </form>
+        </div>
 
-          <div class="form-row">
-            <label for="email">Email</label>
-            <input id="email" class="form-control" type="email" placeholder="you@example.com" />
-          </div>
+        <span class="res-feature-illo" aria-hidden="true" set:html={wineIllo} />
+      </div>
+    </section>
 
-          <button type="submit" class="btn btn-primary btn-lg">
-            Reserve a Table
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
+    <!-- Walk-ins band -->
+    <section class="res-walkin">
+      <div class="container res-walkin-inner">
+        <span class="res-walkin-olive" aria-hidden="true" set:html={oliveBranch} />
+        <div class="res-walkin-head">
+          <span class="os-eyebrow">Walk-ins welcome</span>
+          <h2>Or just <em>stop by.</em></h2>
+        </div>
+        <span class="res-walkin-divider" aria-hidden="true"></span>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque
+          magna — we always save room at the bar.
+        </p>
+        <span class="res-walkin-table" aria-hidden="true" set:html={iconTable} />
+      </div>
+    </section>
 
-          <p class="reserve-note">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Confirmation sent to your email.
+    <!-- Larger parties / private events -->
+    <section class="res-parties">
+      <div class="container res-parties-grid">
+        <figure class="res-image-card">
+          <span class="rc-corner tl" aria-hidden="true"></span>
+          <span class="rc-corner tr" aria-hidden="true"></span>
+          <span class="rc-corner bl" aria-hidden="true"></span>
+          <span class="rc-corner br" aria-hidden="true"></span>
+          <img
+            src="/images/kala/reservations/private-dining.webp"
+            alt="A long Greek private-dining table set for a celebration with white linen, blue-and-white plates, wine glasses, and an olive-branch centerpiece in warm coastal light."
+            loading="lazy" decoding="async" width="1100" height="730" />
+        </figure>
+        <div class="res-parties-text">
+          <span class="os-eyebrow">Larger parties</span>
+          <h2 class="res-parties-title">
+            <span class="line-roman">Hosting a</span>
+            <span class="line-italic">celebration?</span>
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet libero
+            in lacus efficitur tincidunt.
           </p>
-        </form>
+          <div class="res-parties-actions">
+            <a href="/contact" class="btn btn-primary btn-lg">
+              Plan a Private Event
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="tel:5551234567" class="btn btn-outline btn-lg">Call the Restaurant</a>
+          </div>
+          <span class="res-parties-illo" aria-hidden="true" set:html={oliveBranch} />
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Walk-ins -->
-  <section class="walk-in">
-    <div class="container walk-in-inner">
-      <span class="eyebrow">Walk-ins welcome</span>
-      <h2>Or just <em>stop by</em></h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque
-        magna — we always save room at the bar.
-      </p>
-    </div>
-  </section>
-
-  <!-- Private events -->
-  <section class="invite">
-    <div class="container invite-inner">
-      <span class="eyebrow">Larger parties</span>
-      <h2>Hosting <em>a celebration?</em></h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet libero
-        in lacus efficitur tincidunt.
-      </p>
-      <div class="invite-actions">
-        <a href="/contact" class="btn btn-primary btn-lg">
-          Plan a Private Event
-          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="tel:5551234567" class="btn btn-outline btn-lg">Call the Restaurant</a>
-      </div>
-    </div>
-  </section>
+  </div>
 
 </Base>
