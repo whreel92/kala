@@ -101,14 +101,6 @@ import Base from '../layouts/Base.astro';
 
         <div class="visit-map" aria-label="Map of KALA at 1500 Queen Anne Ave N, Seattle">
           <span class="map-label">Find us in Queen Anne</span>
-          <div class="map-toolbar" role="group" aria-label="Map type">
-            <button type="button" class="map-type-btn is-active" data-map-type="default">
-              Default
-            </button>
-            <button type="button" class="map-type-btn" data-map-type="satellite">
-              Satellite
-            </button>
-          </div>
           <div id="kala-map" class="map-canvas" data-kala-map></div>
           <a
             class="map-open"
@@ -202,30 +194,19 @@ import Base from '../layouts/Base.astro';
               attributionControl: true,
             }).setView(KALA_LATLNG, 16);
 
-            // Move zoom control out of the top-left so the "Find us" label
-            // and toolbar overlays have clear corners.
+            // Move zoom control out of the top-left so the "Find us"
+            // label overlay has a clear corner.
             map.zoomControl.setPosition('bottomright');
 
-            const layers = {
-              default: L.tileLayer(
-                'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                {
-                  maxZoom: 19,
-                  attribution:
-                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                }
-              ),
-              satellite: L.tileLayer(
-                'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-                {
-                  maxZoom: 19,
-                  attribution:
-                    'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics',
-                }
-              ),
-            };
-
-            layers.default.addTo(map);
+            // Single standard street map — clean, default basemap.
+            L.tileLayer(
+              'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+              {
+                maxZoom: 19,
+                attribution:
+                  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+              }
+            ).addTo(map);
 
             // Branded pin
             const icon = L.divIcon({
@@ -239,25 +220,6 @@ import Base from '../layouts/Base.astro';
               .bindPopup(
                 '<strong>KALA &middot; Greek and More</strong><br/>1500 Queen Anne Ave N<br/>Seattle, WA 98109'
               );
-
-            // Type toggle — scoped to the same .visit-map so multiple maps
-            // on a page (future-proof) wouldn't clobber each other.
-            const wrap = mount.closest('.visit-map') || document;
-            const buttons = wrap.querySelectorAll('.map-type-btn');
-            buttons.forEach((btn) => {
-              btn.addEventListener('click', () => {
-                const want = btn.dataset.mapType;
-                Object.entries(layers).forEach(([key, layer]) => {
-                  if (key === want) layer.addTo(map);
-                  else map.removeLayer(layer);
-                });
-                buttons.forEach((b) =>
-                  b.classList.toggle('is-active', b === btn)
-                );
-                // Tile sizes can stale after layer swap on some UAs.
-                map.invalidateSize();
-              });
-            });
 
             // Tile rendering can break if Leaflet measures the container
             // before fonts / images / layout settle. Nudge it twice:

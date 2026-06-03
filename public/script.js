@@ -107,7 +107,7 @@
       '.os-hero-media, .os-hero-text, .os-quote-band, .os-ed-media, .os-ed-text, ' +
       '.promise-col, .journey-point, .os-cta-panel, ' +
       '.res-hero-inner, .res-image-card, .res-walkin-inner, .res-parties-text, ' +
-      '.order-options-head'
+      '.order-options-head, .banner-ribbon'
     );
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
