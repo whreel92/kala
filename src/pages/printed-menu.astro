@@ -1,0 +1,178 @@
+---
+import Base from '../layouts/Base.astro';
+
+// Blue line-art illustrations (monochrome, inherit currentColor) — reused
+// from the menu preview panel so the document matches the reference exactly.
+const oliveSprig = `<svg viewBox="0 0 64 134" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M42 6c-7 10-11 23-13 38-3 22-2 50 1 84"/><path d="M28 36c-7-5-16-5-22-1 5 7 14 9 22 1Z"/><path d="M31 55c8-6 16-7 23-3-5 7-15 9-23 3Z"/><path d="M27 74c-7-5-16-5-22-1 5 7 14 9 22 1Z"/><path d="M30 93c8-6 16-7 23-3-5 7-15 9-23 3Z"/><ellipse cx="20" cy="46" rx="4.6" ry="6.4" transform="rotate(-24 20 46)"/><ellipse cx="42" cy="65" rx="4.6" ry="6.4" transform="rotate(22 42 65)"/></svg>`;
+
+const lemon = `<svg viewBox="0 0 220 176" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M64 60C44 46 22 50 12 68c20 14 44 10 52-8Z"/><path d="M22 66c12-2 28 0 38 6" stroke-width="1.1"/><path d="M96 42C92 18 104 2 126 4c2 24-12 40-30 38Z"/><path d="M104 38c4-12 12-22 20-28" stroke-width="1.1"/><ellipse cx="86" cy="108" rx="46" ry="38"/><path d="M131 100c8-3 15 0 17 6-7 4-15 2-17-6Z"/><circle cx="160" cy="112" r="40"/><circle cx="160" cy="112" r="31"/><path d="M160 112 160 72M160 112 188 84M160 112 200 112M160 112 188 140M160 112 160 152M160 112 132 140M160 112 120 112M160 112 132 84" stroke-width="1.1"/><path d="M150 96c6 4 14 4 20 0" stroke-width="1.1"/></svg>`;
+
+// The full menu, grouped exactly as on /menu. `d` = dietary marks.
+const menu = [
+  {
+    title: 'Dips & Spreads',
+    items: [
+      { n: 'Tzatziki', p: '7', d: ['gf'] },
+      { n: 'Hummus', p: '7', d: ['v', 'gf'] },
+      { n: 'Melitzanosalata', p: '8', d: ['v'] },
+      { n: 'Taramasalata', p: '8' },
+      { n: 'Tirokafteri', p: '8', d: ['spicy'] },
+      { n: 'Skordalia', p: '7', d: ['v', 'gf'] },
+      { n: 'Fava', p: '7', d: ['v', 'gf'] },
+      { n: 'Trio Sampler', p: '15' },
+    ],
+  },
+  {
+    title: 'Salads',
+    items: [
+      { n: 'Horiatiki', p: '14', d: ['gf'] },
+      { n: 'Mixed Greens', p: '11', d: ['v'] },
+      { n: 'Beet & Walnut', p: '13', d: ['gf'] },
+      { n: 'Watermelon & Feta', p: '14', d: ['gf'] },
+    ],
+  },
+  {
+    title: 'Gyros',
+    items: [
+      { n: 'The Classic Pork', p: '13' },
+      { n: 'Chicken Gyro', p: '13' },
+      { n: 'Lamb Gyro', p: '15' },
+      { n: 'Garden Gyro', p: '14', d: ['v'] },
+    ],
+  },
+  {
+    title: 'Souvlaki',
+    items: [
+      { n: 'Chicken Souvlaki', p: '24', d: ['gf'] },
+      { n: 'Lamb Souvlaki', p: '26', d: ['gf'] },
+      { n: 'Pork Souvlaki', p: '23', d: ['gf'] },
+      { n: 'Shrimp Souvlaki', p: '20', d: ['gf'] },
+    ],
+  },
+  {
+    title: 'From the Sea',
+    items: [
+      { n: 'Whole Branzino', p: '32', d: ['gf'] },
+      { n: 'Grilled Octopus', p: '24', d: ['gf'] },
+      { n: 'Saganaki Shrimp', p: '18', d: ['spicy'] },
+      { n: 'Calamari', p: '16' },
+    ],
+  },
+  {
+    title: 'House Plates',
+    items: [
+      { n: 'Moussaka', p: '19' },
+      { n: 'Pastitsio', p: '18' },
+      { n: 'Lamb Kleftiko', p: '26', d: ['gf'] },
+      { n: 'Roast Chicken', p: '20', d: ['gf'] },
+    ],
+  },
+  {
+    title: 'Sides',
+    items: [
+      { n: 'Lemon Potatoes', p: '6', d: ['v', 'gf'] },
+      { n: 'Greek Rice', p: '5', d: ['v'] },
+      { n: 'Spanakopita', p: '8' },
+      { n: 'Dolmades', p: '9', d: ['v'] },
+    ],
+  },
+  {
+    title: 'Desserts',
+    items: [
+      { n: 'Baklava', p: '8' },
+      { n: 'Galaktoboureko', p: '8' },
+      { n: 'Loukoumades', p: '7' },
+      { n: 'Yogurt & Honey', p: '7', d: ['gf'] },
+    ],
+  },
+  {
+    title: 'Wine & Drinks',
+    items: [
+      { n: 'House Red', p: '9 / 36' },
+      { n: 'House White', p: '9 / 36' },
+      { n: 'Assyrtiko', p: '14 / 54' },
+      { n: 'Agiorgitiko', p: '14 / 54' },
+      { n: 'Ouzo', p: '8' },
+      { n: 'Greek Coffee', p: '4' },
+      { n: 'Frappé', p: '5' },
+      { n: 'Sparkling Water', p: '4' },
+    ],
+  },
+];
+
+const dietLabel = { v: 'V', gf: 'GF', spicy: '✦' };
+---
+<Base
+  title="The Menu — KALA Greek and More"
+  description="The full KALA menu — dips, salads, gyros, souvlaki, seafood, house plates, sides, desserts, wine and drinks."
+  bare
+>
+  <!-- Floating controls — never printed -->
+  <div class="pm-toolbar" role="toolbar" aria-label="Menu controls">
+    <a class="pm-btn pm-back" href="/menu">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12 4 6 10l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Back</span>
+    </a>
+    <a class="pm-btn pm-download" href="/menu/kala-menu.pdf" download="KALA-Menu.pdf">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m0 0 3.4-3.4M10 12 6.6 8.6M4 15h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Download PDF</span>
+    </a>
+  </div>
+
+  <div class="pm-page">
+    <article class="pm-sheet">
+      <span class="pm-corner tl" aria-hidden="true"></span>
+      <span class="pm-corner tr" aria-hidden="true"></span>
+      <span class="pm-corner bl" aria-hidden="true"></span>
+      <span class="pm-corner br" aria-hidden="true"></span>
+
+      <span class="pm-citrus" aria-hidden="true" set:html={lemon} />
+
+      <header class="pm-masthead">
+        <p class="pm-eyebrow">KALA · Greek and More</p>
+        <h1 class="pm-title">
+          <span class="pm-script">Mediterranean</span>
+          <span class="pm-word">MENU</span>
+        </h1>
+        <div class="pm-rule" aria-hidden="true"><span class="diamond"></span></div>
+        <p class="pm-intro">Made by hand, shared by the table.</p>
+      </header>
+
+      <div class="pm-columns">
+        {menu.map((cat) => (
+          <section class="pm-cat">
+            <h2 class="pm-cat-title">{cat.title}</h2>
+            <ul class="pm-items">
+              {cat.items.map((it) => (
+                <li class="pm-item">
+                  <span class="pm-name">
+                    {it.n}
+                    {it.d && it.d.map((mark) => (
+                      <span class={`pm-diet pm-diet-${mark}`}>{dietLabel[mark]}</span>
+                    ))}
+                  </span>
+                  <span class="pm-leader" aria-hidden="true"></span>
+                  <span class="pm-price">${it.p}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+
+      <footer class="pm-foot">
+        <div class="pm-rule" aria-hidden="true"><span class="diamond"></span></div>
+        <p class="pm-legend">
+          <span><b>V</b> Vegetarian</span>
+          <span><b>GF</b> Gluten-free</span>
+          <span><b>✦</b> Spicy</span>
+        </p>
+        <p class="pm-tagline">
+          <span class="pm-sprig" aria-hidden="true" set:html={oliveSprig} />
+          Good food. Good wine. Good company.
+        </p>
+        <p class="pm-addr">1500 Queen Anne Ave N · Seattle · (555) 123 — 4567</p>
+      </footer>
+    </article>
+  </div>
+</Base>

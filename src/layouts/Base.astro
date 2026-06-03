@@ -6,12 +6,16 @@ interface Props {
   description: string;
   /** Path of the current page used to highlight the active nav link. e.g. '/menu' */
   current?: string;
+  /** Chrome-free focused view: hides the announce bar, nav, footer, sticky order
+      button and shared modals. Used by the standalone printed-menu document. */
+  bare?: boolean;
 }
 
 const {
   title,
   description,
   current = '',
+  bare = false,
 } = Astro.props;
 
 const isActive = (path: string) => current === path ? 'is-active' : '';
@@ -51,8 +55,10 @@ const isActive = (path: string) => current === path ? 'is-active' : '';
   <ClientRouter />
 </head>
 
-<body>
+<body class={bare ? 'is-bare' : ''}>
 
+  {!bare && (
+  <Fragment>
   <!-- Announce -->
   <div class="announce" transition:persist>
     <span class="announce-dot"></span>
@@ -91,11 +97,15 @@ const isActive = (path: string) => current === path ? 'is-active' : '';
     <a href="/reservations">Reservations</a>
     <a href="/order" class="btn btn-primary">Order Online</a>
   </div>
+  </Fragment>
+  )}
 
   <main id="top">
     <slot />
   </main>
 
+  {!bare && (
+  <Fragment>
   <!-- Footer -->
   <footer class="footer" id="contact" transition:persist transition:name="site-footer">
     <div class="container">
@@ -209,5 +219,7 @@ const isActive = (path: string) => current === path ? 'is-active' : '';
   <script src="/menu-data.js" is:inline></script>
   <script src="/pos.js" is:inline data-astro-rerun></script>
   <script src="/script.js" is:inline data-astro-rerun></script>
+  </Fragment>
+  )}
 </body>
 </html>
