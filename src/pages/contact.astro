@@ -185,6 +185,10 @@ import Base from '../layouts/Base.astro';
             if (mount.dataset.kalaMapInit === 'true') return;
             mount.dataset.kalaMapInit = 'true';
 
+            // Tear down a map from a previous Contact visit (the script
+            // re-runs on view transitions) so its Leaflet listeners go away.
+            if (window.__kalaMap) { try { window.__kalaMap.remove(); } catch (e) {} }
+
             // 1500 Queen Anne Ave N, Seattle, WA 98109
             const KALA_LATLNG = [47.63613, -122.35713];
 
@@ -227,12 +231,18 @@ import Base from '../layouts/Base.astro';
             requestAnimationFrame(() => map.invalidateSize());
             setTimeout(() => map.invalidateSize(), 300);
 
-            // Also revalidate when the viewport resizes or when the page
-            // becomes visible again (back/forward cache).
-            window.addEventListener('resize', () => map.invalidateSize());
-            document.addEventListener('visibilitychange', () => {
-              if (!document.hidden) map.invalidateSize();
-            });
+            // Expose the active map and register the revalidation listeners
+            // ONCE per session — re-adding them on every Contact visit would
+            // leak handlers (the script re-runs across view transitions).
+            window.__kalaMap = map;
+            if (!window.__kalaMapWindowListeners) {
+              window.__kalaMapWindowListeners = true;
+              const revalidate = () => window.__kalaMap && window.__kalaMap.invalidateSize();
+              window.addEventListener('resize', revalidate);
+              document.addEventListener('visibilitychange', () => {
+                if (!document.hidden) revalidate();
+              });
+            }
           };
 
           waitForLeaflet(0);

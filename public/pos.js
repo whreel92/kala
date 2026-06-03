@@ -18,6 +18,11 @@
 
   const fulfillment = root.dataset.fulfillment;   // 'pickup' or 'delivery'
 
+  /* Money helpers — cents-safe rounding + display (drops a trailing .00).
+     Defined before the menu render below, which calls fmtMoney. */
+  const round2 = (n) => Math.round((Number(n) + Number.EPSILON) * 100) / 100;
+  const fmtMoney = (n) => '$' + round2(n).toFixed(2).replace(/\.00$/, '');
+
   /* ─── Menu render ─── */
 
   const catsContainer  = $('[data-pos-cats]');
@@ -44,7 +49,7 @@
             <div class="pos-item-body">
               <div class="pos-item-head">
                 <h3>${escapeHtml(item.name)}</h3>
-                <span class="pos-item-price">$${item.price}</span>
+                <span class="pos-item-price">${fmtMoney(item.price)}</span>
               </div>
               <p class="pos-item-desc">${escapeHtml(item.description)}</p>
             </div>
@@ -92,6 +97,26 @@
       .replace(/'/g, '&#39;');
   }
 
+  /* Validate a persisted cart against the CURRENT menu — drop removed items,
+     coerce bad shapes, and re-sync prices so totals can never render $NaN. */
+  const sanitizeCart = (arr) => arr
+    .filter((line) => line && typeof line === 'object')
+    .map((line) => {
+      const item = findItem(line.catId, line.itemId);
+      if (!item) return null;
+      const modifiers = Array.isArray(line.modifiers)
+        ? line.modifiers.filter((m) => m && typeof m.delta === 'number')
+        : [];
+      const qty = Number.isFinite(line.qty) && line.qty > 0 ? Math.floor(line.qty) : 1;
+      const unit = item.price + modifiers.reduce((acc, m) => acc + (m.delta || 0), 0);
+      return {
+        lineId: typeof line.lineId === 'string' ? line.lineId : newLineId(),
+        itemId: item.id, catId: line.catId, name: item.name, image: item.image,
+        basePrice: item.price, modifiers, qty, lineTotal: round2(unit * qty),
+      };
+    })
+    .filter(Boolean);
+
   /* ─── Cart state (in-memory only for now; localStorage in Task 6) ─── */
 
   let cart = [];    // [{ lineId, itemId, catId, name, image, basePrice, modifiers: [{groupId, optionId, label, delta}], qty, lineTotal }]
@@ -113,6 +138,7 @@
   const detailTotalEl = $('[data-pos-detail-total]');
 
   let detailState = null;
+  let detailOpener = null;
   // { item, selections: { [groupId]: optionId }, qty }
 
   const findItem = (catId, itemId) => {
@@ -131,7 +157,7 @@
       const opt = group.options.find(o => o.id === selOptId);
       if (opt) unit += opt.delta;
     });
-    return unit * qty;
+    return round2(unit * qty);
   };
 
   const renderDetail = () => {
@@ -141,10 +167,10 @@
     detailImg.src = item.image;
     detailImg.alt = item.name;
     detailName.textContent = item.name;
-    detailBase.textContent = '$' + item.price;
+    detailBase.textContent = fmtMoney(item.price);
     detailDesc.textContent = item.description;
     detailQtyEl.textContent = String(qty);
-    detailTotalEl.textContent = '$' + computeDetailTotal();
+    detailTotalEl.textContent = fmtMoney(computeDetailTotal());
 
     // Modifier groups
     detailMods.innerHTML = item.modifiers.map(group => `
@@ -156,7 +182,7 @@
         <div class="pos-mod-options">
           ${group.options.map(opt => {
             const isSel = selections[group.id] === opt.id;
-            const deltaStr = opt.delta > 0 ? `<span class="pos-mod-delta">+$${opt.delta}</span>` : '';
+            const deltaStr = opt.delta > 0 ? `<span class="pos-mod-delta">+${fmtMoney(opt.delta)}</span>` : '';
             return `<button type="button" class="pos-mod-pill ${isSel ? 'is-selected' : ''}" data-opt-id="${opt.id}">${escapeHtml(opt.label)}${deltaStr}</button>`;
           }).join('')}
         </div>
@@ -200,12 +226,16 @@
       detail.hidden = true;
       detailState = null;
     }, 300);
+    // Return keyboard focus to the menu card that opened the panel.
+    if (detailOpener && typeof detailOpener.focus === 'function') detailOpener.focus();
+    detailOpener = null;
   };
 
   // Open on item card click
   menuContainer.addEventListener('click', (e) => {
     const card = e.target.closest('.pos-item-card');
     if (!card) return;
+    detailOpener = card;
     openDetail(card.dataset.catId, card.dataset.itemId);
   });
 
@@ -275,7 +305,7 @@
     const raw = localStorage.getItem(CART_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) cart = parsed;
+      if (Array.isArray(parsed)) cart = sanitizeCart(parsed);
     }
   } catch (e) {
     console.warn('[KALA POS] Failed to load cart from localStorage', e);
@@ -289,7 +319,7 @@
     }
   };
 
-  const computeSubtotal = () => cart.reduce((sum, line) => sum + line.lineTotal, 0);
+  const computeSubtotal = () => round2(cart.reduce((sum, line) => sum + line.lineTotal, 0));
 
   const formatModSummary = (modifiers) => {
     if (!modifiers || !modifiers.length) return '';
@@ -317,20 +347,20 @@
                 <span class="pos-qty-value">${line.qty}</span>
                 <button type="button" class="pos-qty-btn" data-cart-qty-plus aria-label="Increase quantity">+</button>
               </div>
-              <span class="pos-cart-line-price">$${line.lineTotal}</span>
+              <span class="pos-cart-line-price">${fmtMoney(line.lineTotal)}</span>
             </div>
           </div>
           <button type="button" class="pos-cart-line-remove" data-cart-remove aria-label="Remove ${escapeHtml(line.name)}">×</button>
         </li>
       `).join('');
 
-      cartSubtotalEl.textContent = '$' + computeSubtotal();
+      cartSubtotalEl.textContent = fmtMoney(computeSubtotal());
     }
   };
 
   const recomputeLineTotal = (line) => {
     let unit = line.basePrice + line.modifiers.reduce((s, m) => s + (m.delta || 0), 0);
-    line.lineTotal = unit * line.qty;
+    line.lineTotal = round2(unit * line.qty);
   };
 
   const findLine = (lineId) => cart.find(l => l.lineId === lineId);
@@ -425,7 +455,7 @@
     timeLegend.textContent = fulfillment === 'pickup' ? 'Pickup time' : 'Delivery time';
     // The address field only exists in the delivery template — no toggle needed.
     renderSlots();
-    ckoTotalEl.textContent = '$' + computeSubtotal();
+    ckoTotalEl.textContent = fmtMoney(computeSubtotal());
     // Scroll the form into view so the user can see what just opened
     setTimeout(() => {
       checkoutEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -503,10 +533,10 @@
           ${formatModSummary(line.modifiers) ? `<span class="pos-confirm-line-meta">${escapeHtml(formatModSummary(line.modifiers))}</span>` : ''}
           ${line.qty > 1 ? `<span class="pos-confirm-line-meta">Qty ${line.qty}</span>` : ''}
         </div>
-        <span>$${line.lineTotal}</span>
+        <span>${fmtMoney(line.lineTotal)}</span>
       </li>
     `).join('');
-    confirmSubtotal.textContent = '$' + order.subtotal;
+    confirmSubtotal.textContent = fmtMoney(order.subtotal);
 
     root.classList.add('is-confirming');
     confirmEl.hidden = false;
@@ -531,6 +561,7 @@
   const mobileBarCount = $('[data-pos-mobile-bar-count]') || $('.pos-mobile-bar-count', mobileBar);
   const mobileBarBadge = $('[data-pos-mobile-bar-badge]');
   const cartCol        = $('.pos-cart-col');
+  let cartOpener = null;
   const cartCloseBtns  = $$('[data-pos-cart-close]');
 
   const updateMobileBar = () => {
@@ -540,7 +571,7 @@
       mobileBarCount.textContent = 'Your order';
       if (mobileBarBadge) mobileBarBadge.hidden = true;
     } else {
-      mobileBarCount.textContent = `Your order · $${subtotal}`;
+      mobileBarCount.textContent = `Your order · ${fmtMoney(subtotal)}`;
       if (mobileBarBadge) {
         mobileBarBadge.hidden = false;
         mobileBarBadge.textContent = String(count);
@@ -566,9 +597,11 @@
     cartCol.setAttribute('aria-hidden', 'true');
     cartCol.setAttribute('inert', '');
     document.body.style.overflow = '';
+    if (cartOpener && typeof cartOpener.focus === 'function') cartOpener.focus();
+    cartOpener = null;
   };
 
-  mobileBar.addEventListener('click', openMobileCart);
+  mobileBar.addEventListener('click', () => { cartOpener = mobileBar; openMobileCart(); });
   cartCloseBtns.forEach(el => el.addEventListener('click', closeMobileCart));
 
   // Esc closes the cart overlay (replace prior handler — see detail-key note).
@@ -591,7 +624,7 @@
     toastName.textContent = line.name + ' added';
     const sub = [];
     if (formatModSummary(line.modifiers)) sub.push(formatModSummary(line.modifiers));
-    sub.push('$' + line.lineTotal);
+    sub.push(fmtMoney(line.lineTotal));
     toastSub.textContent = sub.join(' · ');
     toastEl.hidden = false;
     // Force reflow then add class for transition
@@ -616,6 +649,7 @@
   toastViewBtn.addEventListener('click', () => {
     toastEl.classList.remove('is-shown');
     setTimeout(() => { toastEl.hidden = true; }, 200);
+    cartOpener = toastViewBtn;
     openMobileCart();
   });
 

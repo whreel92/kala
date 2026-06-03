@@ -59,7 +59,7 @@ window.KALA_MENU = {
           id: 'tzatziki',
           name: 'Tzatziki',
           price: 7,
-          image: '/public/c243bbfd-cba9-4c8b-b273-3abc24c8f935.png',
+          image: '/public/c243bbfd-cba9-4c8b-b273-3abc24c8f935.webp',
           description: 'Creamy yogurt and cucumber with garlic, dill, and olive oil.',
           modifiers: []
         },
@@ -67,7 +67,7 @@ window.KALA_MENU = {
           id: 'hummus',
           name: 'Hummus',
           price: 7,
-          image: '/public/f60f61a9-fe03-4def-a469-10daef938655.png',
+          image: '/public/f60f61a9-fe03-4def-a469-10daef938655.webp',
           description: 'Chickpea purée with tahini, lemon, and warm pita.',
           modifiers: []
         },
@@ -75,7 +75,7 @@ window.KALA_MENU = {
           id: 'melitzanosalata',
           name: 'Melitzanosalata',
           price: 7,
-          image: '/public/43cec23b-962d-4e58-87f7-85393dc37613.png',
+          image: '/public/43cec23b-962d-4e58-87f7-85393dc37613.webp',
           description: 'Smoky fire-roasted eggplant blended with garlic, olive oil, and lemon.',
           modifiers: []
         },
@@ -83,7 +83,7 @@ window.KALA_MENU = {
           id: 'taramosalata',
           name: 'Taramosalata',
           price: 8,
-          image: '/public/8f24fc61-225b-4c7f-b5a3-9a7329009e81.png',
+          image: '/public/8f24fc61-225b-4c7f-b5a3-9a7329009e81.webp',
           description: 'Silky fish roe spread whipped with olive oil, lemon, and bread.',
           modifiers: []
         },
@@ -91,7 +91,7 @@ window.KALA_MENU = {
           id: 'tirokafteri',
           name: 'Tirokafteri',
           price: 8,
-          image: '/public/tirokafteri.png',
+          image: '/public/tirokafteri.webp',
           description: 'Spicy whipped feta with roasted peppers, olive oil, and a touch of heat.',
           modifiers: []
         },
@@ -99,7 +99,7 @@ window.KALA_MENU = {
           id: 'skordalia',
           name: 'Skordalia',
           price: 7,
-          image: '/public/skordalia.png',
+          image: '/public/skordalia.webp',
           description: 'Thick garlic-and-potato dip drizzled with golden olive oil.',
           modifiers: []
         },
@@ -107,7 +107,7 @@ window.KALA_MENU = {
           id: 'fava',
           name: 'Fava',
           price: 7,
-          image: '/public/fava.png',
+          image: '/public/fava.webp',
           description: 'Yellow split-pea purée topped with capers, red onion, and olive oil.',
           modifiers: []
         },
@@ -115,7 +115,7 @@ window.KALA_MENU = {
           id: 'trio-sampler',
           name: 'Trio Sampler',
           price: 15,
-          image: '/public/a32760a3-2ece-4947-92bc-303f6cfce5a4.png',
+          image: '/public/a32760a3-2ece-4947-92bc-303f6cfce5a4.webp',
           description: 'Your choice of three dips served with warm pita and fresh vegetables.',
           modifiers: []
         }
@@ -131,7 +131,7 @@ window.KALA_MENU = {
           id: 'horiatiki',
           name: 'Horiatiki',
           price: 14,
-          image: '/public/b428f5ae-26b3-47b3-944d-cc950b096d0f.png',
+          image: '/public/b428f5ae-26b3-47b3-944d-cc950b096d0f.webp',
           description: 'Tomato, cucumber, red onion, feta, Kalamata olives, oregano.',
           modifiers: [SALAD_PROTEIN_MODIFIER]
         },
@@ -139,7 +139,7 @@ window.KALA_MENU = {
           id: 'mixed-greens',
           name: 'Mixed Greens',
           price: 11,
-          image: '/public/1edd312e-7622-4c96-80d2-7f9b72e4b99e.png',
+          image: '/public/1edd312e-7622-4c96-80d2-7f9b72e4b99e.webp',
           description: 'Seasonal greens with lemon-herb vinaigrette and toasted pine nuts.',
           modifiers: [SALAD_PROTEIN_MODIFIER]
         },
@@ -147,7 +147,7 @@ window.KALA_MENU = {
           id: 'beet-walnut',
           name: 'Beet & Walnut',
           price: 13,
-          image: '/public/8bc4ad07-a989-4b76-85da-af9eae80fa73.png',
+          image: '/public/8bc4ad07-a989-4b76-85da-af9eae80fa73.webp',
           description: 'Roasted beets, toasted walnuts, arugula, and crumbled goat cheese.',
           modifiers: [SALAD_PROTEIN_MODIFIER]
         },
@@ -155,7 +155,7 @@ window.KALA_MENU = {
           id: 'watermelon-feta',
           name: 'Watermelon & Feta',
           price: 14,
-          image: '/public/6b99cc72-6194-477d-81ca-f8102c1d044d.png',
+          image: '/public/6b99cc72-6194-477d-81ca-f8102c1d044d.webp',
           description: 'Fresh watermelon with creamy feta, mint, and a drizzle of honey.',
           modifiers: [SALAD_PROTEIN_MODIFIER]
         }
@@ -171,7 +171,7 @@ window.KALA_MENU = {
           id: 'classic-pork',
           name: 'The Classic Pork',
           price: 13,
-          image: '/public/e04b7c58-8d54-487c-9f41-5f660e52bc91.png',
+          image: '/public/e04b7c58-8d54-487c-9f41-5f660e52bc91.webp',
           description: 'Pita, tzatziki, tomato, onion, fries.',
           modifiers: [GYRO_MEAT_MODIFIER]
         },
@@ -179,7 +179,7 @@ window.KALA_MENU = {
           id: 'chicken-gyro',
           name: 'Chicken Gyro',
           price: 13,
-          image: '/public/8e01e74a-1220-406b-a82a-796f1a525d84.png',
+          image: '/public/8e01e74a-1220-406b-a82a-796f1a525d84.webp',
           description: 'Grilled chicken wrapped in pita with tzatziki, tomato, and onion.',
           modifiers: [GYRO_MEAT_MODIFIER]
         },
@@ -187,7 +187,7 @@ window.KALA_MENU = {
           id: 'lamb-gyro',
           name: 'Lamb Gyro',
           price: 15,
-          image: '/public/796a6d3d-2ec0-4831-ab7b-ab194896a7e7.png',
+          image: '/public/796a6d3d-2ec0-4831-ab7b-ab194896a7e7.webp',
           description: 'Slow-roasted lamb sliced onto pita with tzatziki and crisp onion.',
           modifiers: [GYRO_MEAT_MODIFIER]
         },
@@ -195,7 +195,7 @@ window.KALA_MENU = {
           id: 'garden-gyro',
           name: 'Garden Gyro',
           price: 14,
-          image: '/public/1ea85671-d0fd-4362-a7a9-a7479a31635d.png',
+          image: '/public/1ea85671-d0fd-4362-a7a9-a7479a31635d.webp',
           description: 'Grilled vegetables, hummus, feta, and fresh herbs in warm pita.',
           modifiers: [GYRO_MEAT_MODIFIER]
         }
@@ -211,7 +211,7 @@ window.KALA_MENU = {
           id: 'chicken-skewers',
           name: 'Chicken Skewers',
           price: 16,
-          image: '/public/e35b56c1-78a3-4f00-bc59-fef11d51ab97.png',
+          image: '/public/e35b56c1-78a3-4f00-bc59-fef11d51ab97.webp',
           description: 'Marinated chicken thighs charcoal-grilled on skewers with lemon.',
           modifiers: [SOUVLAKI_MEAT_MODIFIER]
         },
@@ -219,7 +219,7 @@ window.KALA_MENU = {
           id: 'pork-skewers',
           name: 'Pork Skewers',
           price: 16,
-          image: '/public/4a6a4add-18f2-429c-b120-36be86135d79.png',
+          image: '/public/4a6a4add-18f2-429c-b120-36be86135d79.webp',
           description: 'Seasoned pork cubes grilled over charcoal, served with pita and tzatziki.',
           modifiers: [SOUVLAKI_MEAT_MODIFIER]
         },
@@ -227,7 +227,7 @@ window.KALA_MENU = {
           id: 'lamb-skewers',
           name: 'Lamb Skewers',
           price: 19,
-          image: '/public/f654d18d-85e3-4c10-ae90-00769deaa21e.png',
+          image: '/public/f654d18d-85e3-4c10-ae90-00769deaa21e.webp',
           description: 'Tender lamb shoulder skewers grilled with oregano and sea salt.',
           modifiers: [SOUVLAKI_MEAT_MODIFIER]
         },
@@ -235,7 +235,7 @@ window.KALA_MENU = {
           id: 'shrimp-skewers',
           name: 'Shrimp Skewers',
           price: 20,
-          image: '/public/421c842a-e4b0-4b83-aae5-75b9c964570f.png',
+          image: '/public/421c842a-e4b0-4b83-aae5-75b9c964570f.webp',
           description: 'Jumbo shrimp marinated in garlic, lemon, and olive oil, charcoal-grilled.',
           modifiers: [SOUVLAKI_MEAT_MODIFIER]
         }
@@ -251,7 +251,7 @@ window.KALA_MENU = {
           id: 'grilled-octopus',
           name: 'Grilled Octopus',
           price: 24,
-          image: '/public/grilled-octopus.png',
+          image: '/public/grilled-octopus.webp',
           description: 'Slow-braised octopus finished on the grill with capers and vinegar.',
           modifiers: []
         },
@@ -259,7 +259,7 @@ window.KALA_MENU = {
           id: 'whole-branzino',
           name: 'Whole Branzino',
           price: 32,
-          image: '/public/branzino.png',
+          image: '/public/branzino.webp',
           description: 'Whole grilled sea bass with lemon and oregano, served with greens.',
           modifiers: []
         },
@@ -267,7 +267,7 @@ window.KALA_MENU = {
           id: 'saganaki-shrimp',
           name: 'Saganaki Shrimp',
           price: 18,
-          image: '/public/saganaki-shrimp.png',
+          image: '/public/saganaki-shrimp.webp',
           description: 'Shrimp sautéed in spicy tomato sauce with feta, baked in a clay skillet.',
           modifiers: []
         },
@@ -275,7 +275,7 @@ window.KALA_MENU = {
           id: 'calamari',
           name: 'Calamari',
           price: 16,
-          image: '/public/calamari.png',
+          image: '/public/calamari.webp',
           description: 'Lightly floured and fried rings served with lemon and garlic aioli.',
           modifiers: []
         }
@@ -291,7 +291,7 @@ window.KALA_MENU = {
           id: 'moussaka',
           name: 'Moussaka',
           price: 19,
-          image: '/public/moussaka.png',
+          image: '/public/moussaka.webp',
           description: 'Layered eggplant and spiced ground lamb topped with béchamel and baked golden.',
           modifiers: []
         },
@@ -299,7 +299,7 @@ window.KALA_MENU = {
           id: 'pastitsio',
           name: 'Pastitsio',
           price: 18,
-          image: '/public/pastitsio.png',
+          image: '/public/pastitsio.webp',
           description: 'Greek pasta bake with seasoned beef, tomato, and creamy béchamel.',
           modifiers: []
         },
@@ -307,7 +307,7 @@ window.KALA_MENU = {
           id: 'lamb-kleftiko',
           name: 'Lamb Kleftiko',
           price: 26,
-          image: '/public/lamb-kleftiko.png',
+          image: '/public/lamb-kleftiko.webp',
           description: 'Slow-braised lamb shoulder sealed in parchment with lemon, garlic, and herbs.',
           modifiers: []
         },
@@ -315,7 +315,7 @@ window.KALA_MENU = {
           id: 'roast-chicken',
           name: 'Roast Chicken',
           price: 20,
-          image: '/public/014a33bc-3a11-4396-82a5-8c7e7f5726cf.png',
+          image: '/public/014a33bc-3a11-4396-82a5-8c7e7f5726cf.webp',
           description: 'Half chicken roasted with lemon, oregano, and garlic, served with potatoes.',
           modifiers: []
         }
@@ -331,7 +331,7 @@ window.KALA_MENU = {
           id: 'lemon-potatoes',
           name: 'Lemon Potatoes',
           price: 6,
-          image: '/public/1debfddb-5fce-44a5-bd4c-9957be88836c.png',
+          image: '/public/1debfddb-5fce-44a5-bd4c-9957be88836c.webp',
           description: 'Oven-roasted potatoes with lemon, olive oil, and dried oregano.',
           modifiers: []
         },
@@ -339,7 +339,7 @@ window.KALA_MENU = {
           id: 'greek-rice',
           name: 'Greek Rice',
           price: 5,
-          image: '/public/c09f71a2-079a-4e68-9360-362d961cb6ac.png',
+          image: '/public/c09f71a2-079a-4e68-9360-362d961cb6ac.webp',
           description: 'Pilaf-style rice simmered in tomato broth with herbs and olive oil.',
           modifiers: []
         },
@@ -347,7 +347,7 @@ window.KALA_MENU = {
           id: 'spanakopita',
           name: 'Spanakopita',
           price: 8,
-          image: '/public/94d38a32-02ea-4584-ba7e-9f4187fd90f1.png',
+          image: '/public/94d38a32-02ea-4584-ba7e-9f4187fd90f1.webp',
           description: 'Flaky phyllo triangles filled with spinach, feta, and fresh dill.',
           modifiers: []
         },
@@ -355,7 +355,7 @@ window.KALA_MENU = {
           id: 'dolmades',
           name: 'Dolmades',
           price: 9,
-          image: '/public/01c5098e-cec5-45ac-b622-86405690a6da.png',
+          image: '/public/01c5098e-cec5-45ac-b622-86405690a6da.webp',
           description: 'Vine leaves stuffed with herbed rice, served with a wedge of lemon.',
           modifiers: []
         }
@@ -371,7 +371,7 @@ window.KALA_MENU = {
           id: 'baklava',
           name: 'Baklava',
           price: 8,
-          image: '/public/cc9862c0-9623-4361-8113-00f23b857df7.png',
+          image: '/public/cc9862c0-9623-4361-8113-00f23b857df7.webp',
           description: 'Layers of crisp phyllo, chopped walnuts, and fragrant honey syrup.',
           modifiers: []
         },
@@ -379,7 +379,7 @@ window.KALA_MENU = {
           id: 'galaktoboureko',
           name: 'Galaktoboureko',
           price: 8,
-          image: '/public/f7ff28eb-f2a7-4078-9852-d247d2505b8f.png',
+          image: '/public/f7ff28eb-f2a7-4078-9852-d247d2505b8f.webp',
           description: 'Semolina custard baked in phyllo and soaked with citrus syrup.',
           modifiers: []
         },
@@ -387,7 +387,7 @@ window.KALA_MENU = {
           id: 'loukoumades',
           name: 'Loukoumades',
           price: 7,
-          image: '/public/5f295419-264c-47da-b6b4-47921e4e288f.png',
+          image: '/public/5f295419-264c-47da-b6b4-47921e4e288f.webp',
           description: 'Greek honey doughnuts fried golden, drizzled with thyme honey and cinnamon.',
           modifiers: []
         },
@@ -395,7 +395,7 @@ window.KALA_MENU = {
           id: 'yogurt-honey',
           name: 'Yogurt & Honey',
           price: 7,
-          image: '/public/02dad55d-cdeb-4a3b-8a08-974bca6bd92d.png',
+          image: '/public/02dad55d-cdeb-4a3b-8a08-974bca6bd92d.webp',
           description: 'Thick strained Greek yogurt topped with wild honey and crushed walnuts.',
           modifiers: []
         }
@@ -411,7 +411,7 @@ window.KALA_MENU = {
           id: 'house-red',
           name: 'House Red',
           price: 9,
-          image: '/public/f3dff88e-f5e1-40a7-b77a-d8dcef65f46d.png',
+          image: '/public/f3dff88e-f5e1-40a7-b77a-d8dcef65f46d.webp',
           description: 'Greek table red — smooth and food-friendly. Glass $9 / Bottle $36.',
           modifiers: []
         },
@@ -419,7 +419,7 @@ window.KALA_MENU = {
           id: 'house-white',
           name: 'House White',
           price: 9,
-          image: '/public/29749a29-2a06-47b7-a671-eaacf3db3cab.png',
+          image: '/public/29749a29-2a06-47b7-a671-eaacf3db3cab.webp',
           description: 'Crisp and dry Greek table white. Glass $9 / Bottle $36.',
           modifiers: []
         },
@@ -427,7 +427,7 @@ window.KALA_MENU = {
           id: 'assyrtiko',
           name: 'Assyrtiko',
           price: 14,
-          image: '/public/99fbf158-70ee-46cc-bbe1-0449c5976a5a.png',
+          image: '/public/99fbf158-70ee-46cc-bbe1-0449c5976a5a.webp',
           description: 'Mineral-driven Santorini white with bright citrus and saline finish. Glass $14 / Bottle $54.',
           modifiers: []
         },
@@ -435,7 +435,7 @@ window.KALA_MENU = {
           id: 'agiorgitiko',
           name: 'Agiorgitiko',
           price: 14,
-          image: '/public/c40549f9-037d-4fdf-8380-b7fd49956858.png',
+          image: '/public/c40549f9-037d-4fdf-8380-b7fd49956858.webp',
           description: 'Velvety Nemean red with dark fruit, soft tannins, and a long finish. Glass $14 / Bottle $54.',
           modifiers: []
         },
@@ -443,7 +443,7 @@ window.KALA_MENU = {
           id: 'ouzo',
           name: 'Ouzo',
           price: 8,
-          image: '/public/ouzo.png',
+          image: '/public/ouzo.webp',
           description: 'Traditional Greek anise spirit served over ice with a small water splash.',
           modifiers: []
         },
@@ -451,7 +451,7 @@ window.KALA_MENU = {
           id: 'greek-coffee',
           name: 'Greek Coffee',
           price: 4,
-          image: '/public/8b7afa69-13d8-484b-8974-e82c0fab6bf7.png',
+          image: '/public/8b7afa69-13d8-484b-8974-e82c0fab6bf7.webp',
           description: 'Finely ground coffee brewed slowly in a copper briki, served in a demitasse.',
           modifiers: []
         },
@@ -459,7 +459,7 @@ window.KALA_MENU = {
           id: 'frappe',
           name: 'Frappé',
           price: 5,
-          image: '/public/frappe.png',
+          image: '/public/frappe.webp',
           description: 'Iced instant coffee shaken into a thick foam — the classic Greek café drink.',
           modifiers: []
         },
@@ -467,7 +467,7 @@ window.KALA_MENU = {
           id: 'sparkling-water',
           name: 'Sparkling Water',
           price: 4,
-          image: '/public/2fec95ff-4488-44f5-89fb-9e42ed63a107.png',
+          image: '/public/2fec95ff-4488-44f5-89fb-9e42ed63a107.webp',
           description: 'Chilled sparkling mineral water.',
           modifiers: []
         }

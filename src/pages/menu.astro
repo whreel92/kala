@@ -55,15 +55,15 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
 
             <div class="printed-teaser">
               <div class="teaser-group">
-                <h3>Starters</h3>
+                <span class="teaser-heading">Starters</span>
                 <p>Tzatziki · Hummus · Trio Sampler</p>
               </div>
               <div class="teaser-group">
-                <h3>From the Grill</h3>
+                <span class="teaser-heading">From the Grill</span>
                 <p>Chicken Souvlaki · Lamb Gyro · Grilled Octopus</p>
               </div>
               <div class="teaser-group">
-                <h3>Sweet</h3>
+                <span class="teaser-heading">Sweet</span>
                 <p>Baklava · Loukoumades · Greek Coffee</p>
               </div>
             </div>
@@ -129,7 +129,7 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
           <a class="fav-card" href="#dips">
             <div class="card-image"><Image src={trioSampler} alt="A trio sampler of Greek dips with warm pita." loading="lazy" decoding="async" /><span class="menu-badge">House Favorite</span></div>
             <div class="fav-body">
-              <div class="item-head"><h3>Trio Sampler</h3><span class="price">$16</span></div>
+              <div class="item-head"><h3>Trio Sampler</h3><span class="price">$15</span></div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
               <div class="menu-tags"><span class="menu-tag v">V</span><span class="menu-tag gf">GF</span></div>
             </div>
@@ -137,7 +137,7 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
           <a class="fav-card" href="#souvlaki">
             <div class="card-image"><Image src={chickenSouvlaki} alt="Grilled chicken souvlaki skewers with lemon and herbs." loading="lazy" decoding="async" /></div>
             <div class="fav-body">
-              <div class="item-head"><h3>Chicken Souvlaki</h3><span class="price">$24</span></div>
+              <div class="item-head"><h3>Chicken Souvlaki</h3><span class="price">$16</span></div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
               <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
             </div>
@@ -153,7 +153,7 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
           <a class="fav-card" href="#seafood">
             <div class="card-image"><Image src={wholeBranzino} alt="Whole grilled branzino with lemon and herbs." loading="lazy" decoding="async" /></div>
             <div class="fav-body">
-              <div class="item-head"><h3>Whole Branzino</h3><span class="price">$34</span></div>
+              <div class="item-head"><h3>Whole Branzino</h3><span class="price">$32</span></div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
               <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
             </div>
@@ -161,7 +161,7 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
           <a class="fav-card" href="#desserts">
             <div class="card-image"><Image src={baklava} alt="Greek baklava with walnuts and honey." loading="lazy" decoding="async" /></div>
             <div class="fav-body">
-              <div class="item-head"><h3>Baklava</h3><span class="price">$9</span></div>
+              <div class="item-head"><h3>Baklava</h3><span class="price">$8</span></div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
               <div class="menu-tags"><span class="menu-tag v">V</span></div>
             </div>
@@ -200,7 +200,7 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
               <article class="menu-item-card">
                 <div class="card-image"><Image src={melitzanosalata} alt="Smoky melitzanosalata eggplant dip with olive oil." loading="lazy" decoding="async" /></div>
                 <div class="card-body">
-                  <div class="item-head"><h3>Melitzanosalata</h3><span class="price">$8</span></div>
+                  <div class="item-head"><h3>Melitzanosalata</h3><span class="price">$7</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                   <div class="menu-tags"><span class="menu-tag v">V</span></div>
                 </div>
@@ -213,7 +213,7 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/tirokafteri.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/tirokafteri.webp" width="1024" height="1024" alt="Tirokafteri — spicy whipped feta with roasted red peppers." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Tirokafteri</h3><span class="price">$8</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -221,7 +221,7 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/skordalia.png" alt="Skordalia — Greek garlic and potato dip with olive oil." loading="lazy" /></div>
+                <div class="card-image"><img src="/public/skordalia.webp" width="1100" height="821" alt="Skordalia — Greek garlic and potato dip with olive oil." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Skordalia</h3><span class="price">$7</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -229,7 +229,7 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/fava.png" alt="Fava — Greek yellow split-pea purée with red onion and capers." loading="lazy" /></div>
+                <div class="card-image"><img src="/public/fava.webp" width="1100" height="821" alt="Fava — Greek yellow split-pea purée with red onion and capers." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Fava</h3><span class="price">$7</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -270,7 +270,7 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/1edd312e-7622-4c96-80d2-7f9b72e4b99e.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/1edd312e-7622-4c96-80d2-7f9b72e4b99e.webp" width="1100" height="1100" alt="Mixed greens salad with lemon-herb vinaigrette and toasted pine nuts." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Mixed Greens</h3><span class="price">$11</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -278,7 +278,7 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/8bc4ad07-a989-4b76-85da-af9eae80fa73.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/8bc4ad07-a989-4b76-85da-af9eae80fa73.webp" width="1100" height="1100" alt="Beet and walnut salad with arugula and crumbled goat cheese." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Beet &amp; Walnut</h3><span class="price">$13</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -286,7 +286,7 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/6b99cc72-6194-477d-81ca-f8102c1d044d.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/6b99cc72-6194-477d-81ca-f8102c1d044d.webp" width="1100" height="1100" alt="Watermelon and feta salad with mint and a drizzle of honey." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Watermelon &amp; Feta</h3><span class="price">$14</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -311,28 +311,28 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
           <div class="zone-content">
             <div class="menu-card-grid">
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/e04b7c58-8d54-487c-9f41-5f660e52bc91.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/e04b7c58-8d54-487c-9f41-5f660e52bc91.webp" width="1100" height="880" alt="The Classic Pork gyro wrapped in warm pita with tzatziki, tomato, and fries." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>The Classic Pork</h3><span class="price">$13</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/8e01e74a-1220-406b-a82a-796f1a525d84.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/8e01e74a-1220-406b-a82a-796f1a525d84.webp" width="1100" height="880" alt="Chicken gyro in warm pita with tzatziki, tomato, and onion." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Chicken Gyro</h3><span class="price">$13</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/796a6d3d-2ec0-4831-ab7b-ab194896a7e7.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/796a6d3d-2ec0-4831-ab7b-ab194896a7e7.webp" width="1100" height="880" alt="Lamb gyro, slow-roasted and sliced onto pita with tzatziki and crisp onion." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Lamb Gyro</h3><span class="price">$15</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/1ea85671-d0fd-4362-a7a9-a7479a31635d.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/1ea85671-d0fd-4362-a7a9-a7479a31635d.webp" width="1100" height="880" alt="Garden gyro with grilled vegetables, hummus, feta, and fresh herbs." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Garden Gyro</h3><span class="price">$14</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -360,19 +360,19 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
                 <Image src={chickenSouvlaki} alt="Grilled chicken souvlaki skewers with lemon, oregano, and olive oil." loading="lazy" decoding="async" />
               </div>
               <div class="feature-body">
-                <div class="item-head"><h3>Chicken Souvlaki</h3><span class="price">$24</span></div>
+                <div class="item-head"><h3>Chicken Souvlaki</h3><span class="price">$16</span></div>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
                 <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
               </div>
             </a>
             <ul class="text-list">
               <li>
-                <div class="text-item-head"><h4>Lamb Souvlaki</h4><span class="price">$26</span></div>
+                <div class="text-item-head"><h4>Lamb Souvlaki</h4><span class="price">$19</span></div>
                 <p>Lorem ipsum dolor sit amet.</p>
                 <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
               </li>
               <li>
-                <div class="text-item-head"><h4>Pork Souvlaki</h4><span class="price">$23</span></div>
+                <div class="text-item-head"><h4>Pork Souvlaki</h4><span class="price">$16</span></div>
                 <p>Lorem ipsum dolor sit amet.</p>
                 <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
               </li>
@@ -418,7 +418,7 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/saganaki-shrimp.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/saganaki-shrimp.webp" width="1024" height="1024" alt="Saganaki shrimp baked with feta in a spicy tomato sauce." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Saganaki Shrimp</h3><span class="price">$18</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -426,7 +426,7 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/calamari.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/calamari.webp" width="1024" height="1024" alt="Lightly fried calamari rings served with lemon and garlic aioli." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Calamari</h3><span class="price">$16</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -450,21 +450,21 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
           <div class="zone-content">
             <div class="menu-card-grid">
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/moussaka.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/moussaka.webp" width="1024" height="1024" alt="Moussaka — layered eggplant and spiced lamb topped with golden béchamel." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Moussaka</h3><span class="price">$19</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/pastitsio.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/pastitsio.webp" width="1024" height="1024" alt="Pastitsio — Greek pasta bake with seasoned beef and creamy béchamel." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Pastitsio</h3><span class="price">$18</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/lamb-kleftiko.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/lamb-kleftiko.webp" width="1024" height="1024" alt="Lamb kleftiko, slow-braised in parchment with lemon, garlic, and herbs." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Lamb Kleftiko</h3><span class="price">$26</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -472,7 +472,7 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/014a33bc-3a11-4396-82a5-8c7e7f5726cf.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/014a33bc-3a11-4396-82a5-8c7e7f5726cf.webp" width="1100" height="880" alt="Roast half chicken with lemon, oregano, and garlic, served with potatoes." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Roast Chicken</h3><span class="price">$20</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -497,7 +497,7 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
           <div class="zone-content">
             <div class="menu-card-grid is-compact">
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/1debfddb-5fce-44a5-bd4c-9957be88836c.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/1debfddb-5fce-44a5-bd4c-9957be88836c.webp" width="1100" height="880" alt="Oven-roasted Greek lemon potatoes with olive oil and oregano." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Lemon Potatoes</h3><span class="price">$6</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -505,7 +505,7 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/c09f71a2-079a-4e68-9360-362d961cb6ac.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/c09f71a2-079a-4e68-9360-362d961cb6ac.webp" width="1100" height="880" alt="Greek tomato rice pilaf simmered with herbs and olive oil." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Greek Rice</h3><span class="price">$5</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -513,14 +513,14 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/94d38a32-02ea-4584-ba7e-9f4187fd90f1.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/94d38a32-02ea-4584-ba7e-9f4187fd90f1.webp" width="1100" height="880" alt="Spanakopita — flaky phyllo triangles filled with spinach and feta." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Spanakopita</h3><span class="price">$8</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/01c5098e-cec5-45ac-b622-86405690a6da.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/01c5098e-cec5-45ac-b622-86405690a6da.webp" width="1100" height="880" alt="Dolmades — vine leaves stuffed with herbed rice and served with lemon." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Dolmades</h3><span class="price">$9</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -552,21 +552,21 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/f7ff28eb-f2a7-4078-9852-d247d2505b8f.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/f7ff28eb-f2a7-4078-9852-d247d2505b8f.webp" width="1100" height="880" alt="Galaktoboureko — semolina custard baked in phyllo with citrus syrup." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Galaktoboureko</h3><span class="price">$8</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/5f295419-264c-47da-b6b4-47921e4e288f.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/5f295419-264c-47da-b6b4-47921e4e288f.webp" width="1100" height="880" alt="Loukoumades — Greek honey doughnuts drizzled with thyme honey and cinnamon." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Loukoumades</h3><span class="price">$7</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/02dad55d-cdeb-4a3b-8a08-974bca6bd92d.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/02dad55d-cdeb-4a3b-8a08-974bca6bd92d.webp" width="1100" height="880" alt="Thick Greek yogurt topped with wild honey and crushed walnuts." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Yogurt &amp; Honey</h3><span class="price">$7</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -593,7 +593,7 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
           <div class="zone-content">
             <div class="menu-card-grid is-drinks">
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/f3dff88e-f5e1-40a7-b77a-d8dcef65f46d.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/f3dff88e-f5e1-40a7-b77a-d8dcef65f46d.webp" width="1100" height="880" alt="A glass of smooth Greek house red wine." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>House Red</h3><span class="price">$9 / $36</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur. Glass / Bottle.</p>
@@ -607,42 +607,42 @@ const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/99fbf158-70ee-46cc-bbe1-0449c5976a5a.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/99fbf158-70ee-46cc-bbe1-0449c5976a5a.webp" width="880" height="1100" alt="A glass of Assyrtiko, a crisp mineral-driven Santorini white." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Assyrtiko</h3><span class="price">$14 / $54</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur. Glass / Bottle.</p>
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/c40549f9-037d-4fdf-8380-b7fd49956858.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/c40549f9-037d-4fdf-8380-b7fd49956858.webp" width="880" height="1100" alt="A glass of Agiorgitiko, a velvety Nemean red." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Agiorgitiko</h3><span class="price">$14 / $54</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur. Glass / Bottle.</p>
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/ouzo.png" alt="A glass of Greek ouzo over ice with a twist of lemon." loading="lazy" /></div>
+                <div class="card-image"><img src="/public/ouzo.webp" width="1100" height="821" alt="A glass of Greek ouzo over ice with a twist of lemon." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Ouzo</h3><span class="price">$8</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/8b7afa69-13d8-484b-8974-e82c0fab6bf7.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/8b7afa69-13d8-484b-8974-e82c0fab6bf7.webp" width="948" height="1100" alt="Greek coffee brewed in a copper briki and served in a demitasse." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Greek Coffee</h3><span class="price">$4</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/frappe.png" alt="A tall glass of Greek frappé with creamy foam." loading="lazy" /></div>
+                <div class="card-image"><img src="/public/frappe.webp" width="1100" height="821" alt="A tall glass of Greek frappé with creamy foam." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Frappé</h3><span class="price">$5</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </div>
               </article>
               <article class="menu-item-card">
-                <div class="card-image"><img src="/public/2fec95ff-4488-44f5-89fb-9e42ed63a107.png" alt="" loading="lazy" /></div>
+                <div class="card-image"><img src="/public/2fec95ff-4488-44f5-89fb-9e42ed63a107.webp" width="899" height="1100" alt="A chilled glass of sparkling mineral water." loading="lazy" /></div>
                 <div class="card-body">
                   <div class="item-head"><h3>Sparkling Water</h3><span class="price">$4</span></div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>

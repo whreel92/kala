@@ -21,6 +21,15 @@
   // UI. pos.js adds the class; we clear it here when the user navigates away.
   document.body.classList.toggle('is-pos', !!document.querySelector('[data-pos-ui]'));
 
+  // Reduced-motion: drop the autoplaying hero loop back to its still poster.
+  if (prefersReducedMotion) {
+    const heroVid = document.querySelector('.hero-bg-video');
+    if (heroVid) {
+      heroVid.removeAttribute('autoplay');
+      try { heroVid.pause(); } catch (e) {}
+    }
+  }
+
   /* ─────────────────── Scroll progress hairline ─────────────────── */
   let progressBar = $('.scroll-progress');
   if (!progressBar) {
@@ -51,7 +60,15 @@
 
     if (scrollCue) scrollCue.classList.toggle('is-hidden', y > 80);
   };
-  if (isFirstRun) window.addEventListener('scroll', onScroll, { passive: true });
+  // rAF-throttle so the layout reads above happen at most once per frame
+  // instead of on every scroll event (avoids thrash on the long menu page).
+  let scrollTicking = false;
+  const onScrollThrottled = () => {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(() => { scrollTicking = false; onScroll(); });
+  };
+  if (isFirstRun) window.addEventListener('scroll', onScrollThrottled, { passive: true });
   onScroll();
 
   /* ─────────────────── Mobile menu (full-screen overlay) ─────────────────── */
@@ -103,7 +120,9 @@
   }
 
   /* ─────────────────── Reveal-on-scroll (staggered) ─────────────────── */
-  if ('IntersectionObserver' in window) {
+  // Skip entirely under reduced-motion: elements keep their natural (visible)
+  // state rather than animating in.
+  if ('IntersectionObserver' in window && !prefersReducedMotion) {
     const revealEls = $$(
       '.menu-card, .section-header, .visit-info, .visit-map, .story-text, ' +
       '.story-visual, .menu-category-head, .story-block-text, .story-block-image, ' +
@@ -277,28 +296,43 @@
     const lbCap   = $('.lightbox-caption', lb);
     const lbClose = $('.lightbox-close', lb);
 
-    const open = (src, caption) => {
+    let lbLastFocus = null;
+    const open = (src, caption, trigger) => {
+      lbLastFocus = trigger || document.activeElement;
       lbImg.src   = src;
       lbImg.alt   = caption || '';
       lbCap.textContent = caption || '';
       lb.classList.add('open');
       lb.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      setTimeout(() => lbClose.focus(), 50);
     };
     const close = () => {
       lb.classList.remove('open');
       lb.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+      // Return focus to whatever opened the lightbox.
+      if (lbLastFocus && typeof lbLastFocus.focus === 'function') lbLastFocus.focus();
+      lbLastFocus = null;
     };
 
     zoomImages.forEach(img => {
       const frame = img.closest('.card-image');
       if (!frame) return;
-      frame.addEventListener('click', (e) => {
+      // Make the image frame a real button so it's keyboard-operable.
+      const card = img.closest('.menu-item-card');
+      const heading = card && card.querySelector('h3');
+      const name = heading ? heading.textContent.trim() : '';
+      frame.setAttribute('role', 'button');
+      frame.setAttribute('tabindex', '0');
+      frame.setAttribute('aria-label', name ? `View larger photo of ${name}` : 'View larger photo');
+      const trigger = (e) => {
         e.preventDefault();
-        const card = img.closest('.menu-item-card');
-        const heading = card && card.querySelector('h3');
-        open(img.currentSrc || img.src, heading ? heading.textContent.trim() : '');
+        open(img.currentSrc || img.src, name, frame);
+      };
+      frame.addEventListener('click', trigger);
+      frame.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') trigger(e);
       });
     });
     lbClose.addEventListener('click', close);

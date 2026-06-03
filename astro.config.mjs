@@ -1,6 +1,8 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
+  // Canonical production origin — powers Astro.site for canonical/OG URLs.
+  site: 'https://kala-6d802.web.app',
   // Keep static (HTML files), perfect for Firebase Hosting
   output: 'static',
   // Build to dist/ — Firebase will deploy from here

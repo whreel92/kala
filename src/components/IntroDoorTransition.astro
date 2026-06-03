@@ -138,10 +138,12 @@ const KEY = 'kala_intro_played_v1';
     pointer-events: none;
   }
 
-  /* ── Barn-door slide (~2s): brief hold, then halves slide off-screen. ── */
-  .kala-intro.is-playing .kala-intro__leaf--l { animation: kala-barn-l 2s cubic-bezier(0.66, 0, 0.2, 1) 0.25s forwards; }
-  .kala-intro.is-playing .kala-intro__leaf--r { animation: kala-barn-r 2s cubic-bezier(0.66, 0, 0.2, 1) 0.25s forwards; }
-  .kala-intro.is-playing .kala-intro__leaf::after { animation: kala-seam-fade 2s ease-out 0.25s forwards; }
+  /* ── Barn-door intro: doors stay shut for 3s, then slide off-screen (0.75s).
+     The 3s hold is the animation-delay; the leaf's default (untransformed)
+     state keeps the doors closed for the full delay before the slide. ── */
+  .kala-intro.is-playing .kala-intro__leaf--l { animation: kala-barn-l 0.75s cubic-bezier(0.66, 0, 0.2, 1) 3s forwards; }
+  .kala-intro.is-playing .kala-intro__leaf--r { animation: kala-barn-r 0.75s cubic-bezier(0.66, 0, 0.2, 1) 3s forwards; }
+  .kala-intro.is-playing .kala-intro__leaf::after { animation: kala-seam-fade 0.75s ease-out 3s forwards; }
 
   /* Fast, clean exit on skip. */
   .kala-intro.is-leaving {
@@ -150,9 +152,9 @@ const KEY = 'kala_intro_played_v1';
     pointer-events: none;
   }
 
-  @keyframes kala-barn-l { 0%, 22% { transform: translateX(0); } 100% { transform: translateX(-101%); } }
-  @keyframes kala-barn-r { 0%, 22% { transform: translateX(0); } 100% { transform: translateX(101%); } }
-  @keyframes kala-seam-fade { 0%, 22% { opacity: 1; } 100% { opacity: 0; } }
+  @keyframes kala-barn-l { from { transform: translateX(0); } to { transform: translateX(-101%); } }
+  @keyframes kala-barn-r { from { transform: translateX(0); } to { transform: translateX(101%); } }
+  @keyframes kala-seam-fade { from { opacity: 1; } to { opacity: 0; } }
   @keyframes kala-skip-in {
     from { opacity: 0; transform: translateX(-50%) translateY(8px); }
     to   { opacity: 0.85; transform: translateX(-50%) translateY(0); }
@@ -169,7 +171,7 @@ const KEY = 'kala_intro_played_v1';
     var root = document.getElementById('kala-intro');
     if (!root) return;
     var html = document.documentElement;
-    var DUR = 2250; // 2s slide + 0.25s pre-slide pause (CSS animation-delay)
+    var DUR = 3750; // 3s closed hold + 0.75s slide (matches CSS animation-delay + duration)
 
     // The intro is for the INITIAL page load only. On client-side (View
     // Transitions) navigation — e.g. clicking the KALA logo to return home —

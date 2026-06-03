@@ -30,6 +30,18 @@
   --olive-mid:    #40646C;
   --lemon:        #F4D86A;
 
+  /* Warm paper surfaces (Mediterranean menu / story / order pages) */
+  --paper:        #FAF8F3;
+  --paper-warm:   #FCFBF6;
+  --paper-2:      #F3EEE3;
+  --paper-3:      #F1ECE1;
+  --paper-4:      #F4F0E5;
+
+  /* Semantic accents */
+  --success:      #3AA564;
+  --chili:        #A52A2A;
+  --chili-deep:   #C0532B;
+
   /* Type */
   --font-display: 'Cormorant Garamond', 'Cormorant', Georgia, serif;
   --font-body:    'Manrope', system-ui, -apple-system, sans-serif;
@@ -43,6 +55,13 @@
   --gutter:       clamp(20px, 4vw, 48px);
   --shadow-soft:  0 1px 2px rgba(34,37,46,.04), 0 8px 30px rgba(34,37,46,.06);
   --shadow-pop:   0 2px 6px rgba(25,75,158,.08), 0 24px 60px rgba(25,75,158,.18);
+
+  /* Elevation scale — calm, airy depth. Prefer these over bespoke shadows so
+     the brand whispers elevation rather than stacking heavy drop shadows. */
+  --elev-1: 0 1px 2px rgba(34,37,46,.05), 0 2px 8px rgba(34,37,46,.05);
+  --elev-2: 0 2px 6px rgba(34,37,46,.06), 0 10px 24px rgba(34,37,46,.08);
+  --elev-3: 0 6px 16px rgba(34,37,46,.07), 0 18px 40px rgba(34,37,46,.10);
+  --elev-4: 0 10px 24px rgba(25,75,158,.10), 0 30px 60px rgba(25,75,158,.14);
 
   /* Motion */
   --ease: cubic-bezier(.2,.7,.2,1);
@@ -71,6 +90,27 @@ a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
 h1, h2, h3, h4 { margin: 0; font-weight: 500; letter-spacing: -.01em; }
 p { margin: 0 0 1em; }
+
+/* Accessibility: skip link — off-screen until keyboard-focused, then it
+   drops in above all chrome (including the z:99999 intro overlay). */
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%, -160%);
+  z-index: 100000;
+  padding: 10px 20px;
+  background: var(--blue-primary);
+  color: var(--white);
+  font: 600 13px/1 var(--font-body);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  box-shadow: var(--shadow-pop);
+  transition: transform .25s var(--ease);
+}
+.skip-link:focus { transform: translate(-50%, 0); outline: none; }
+main:focus { outline: none; }
 
 /* Layout */
 .container {
@@ -116,7 +156,8 @@ p { margin: 0 0 1em; }
 .nav {
   position: sticky;
   top: 0;
-  z-index: 80;
+  /* z-index ladder: base content 0–60 · sticky chrome 70 · nav 90 · overlays 100 · modals 200 */
+  z-index: 90;
   background: rgba(255,255,255,.86);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
@@ -395,7 +436,7 @@ p { margin: 0 0 1em; }
   z-index: -1;
   /* Warm cream fallback so the page never paints on a blue while the
      looping engraving video is downloading. */
-  background: #F4F0E5;
+  background: var(--paper-4);
 }
 /* Layered cream wash over the looping engraving video so every text
    element — eyebrow, title, sub, buttons, meta pill — reads cleanly. The
@@ -561,7 +602,7 @@ p { margin: 0 0 1em; }
   width: 100%;
   max-width: 620px;
   justify-self: center;
-  border-radius: 14px;
+  border-radius: var(--radius);
   overflow: hidden;
   background: rgba(0,0,0,.35);
   border: 1px solid rgba(255,255,255,.22);
@@ -1311,7 +1352,7 @@ p { margin: 0 0 1em; }
 /* Hand illustrations — framed engraving prints */
 .hand {
   position: absolute;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   box-shadow:
     0 1px 0 rgba(255,255,255,.6) inset,
     0 0 0 6px var(--white),
@@ -1400,7 +1441,7 @@ p { margin: 0 0 1em; }
   margin: 0;
   padding: 7px;
   background: var(--white);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   box-shadow:
     0 0 0 1px var(--cream),
     0 22px 40px -16px rgba(34, 37, 46, .30);
@@ -1632,7 +1673,7 @@ p { margin: 0 0 1em; }
 .now-serving .dot {
   width: 7px; height: 7px;
   border-radius: 50%;
-  background: #3aa564;
+  background: var(--success);
   box-shadow: 0 0 0 3px rgba(58,165,100,.18);
 }
 .contact-card .info-list { margin: 28px 0 28px; }
@@ -1866,7 +1907,7 @@ p { margin: 0 0 1em; }
   border-color: var(--blue-primary);
   color: var(--white);
   transform: translateY(-3px);
-  box-shadow: 0 10px 22px -8px rgba(25, 75, 158, .65);
+  box-shadow: 0 8px 20px -10px rgba(25, 75, 158, .42);
 }
 
 .footer-col h4 {
@@ -1920,7 +1961,7 @@ p { margin: 0 0 1em; }
 .sticky-order {
   position: fixed;
   right: 24px;
-  bottom: 30px;
+  bottom: max(30px, env(safe-area-inset-bottom, 0px));
   z-index: 70;
   display: inline-flex;
   align-items: center;
@@ -1951,6 +1992,13 @@ p { margin: 0 0 1em; }
   width: 18px; height: 18px;
 }
 
+/* On mobile the navbar pill is the single persistent order CTA — the
+   floating button would duplicate it, so hide it at the nav's mobile
+   breakpoint (where the navbar collapses to the hamburger). */
+@media (max-width: 880px) {
+  .sticky-order { display: none !important; }
+}
+
 /* (Mobile Call/Location/Takeout/Reserve bottom bar removed.) */
 
 /* ====================== Responsive — global ====================== */
@@ -1969,6 +2017,16 @@ p { margin: 0 0 1em; }
   .nav-links, .nav-actions .link-quiet { display: none; }
   .nav-toggle { display: flex; }
   .nav-actions .btn { display: inline-flex; }
+  /* Refined, compact navbar order pill on mobile: shorter, lighter
+     shadow, tighter label ("Order" instead of "Order Online"). */
+  .nav-order .nav-order-rest { display: none; }
+  .nav-actions .btn-sm {
+    padding: 8px 16px;
+    font-size: 12px;
+    letter-spacing: .1em;
+    box-shadow: 0 1px 3px rgba(25, 75, 158, .16);
+  }
+  .nav-actions .btn-sm svg { width: 14px; height: 14px; }
   .menu-jump { top: 68px; }
   .announce { font-size: 11.5px; letter-spacing: .12em; padding: 8px 16px; }
   .story-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -2029,9 +2087,34 @@ p { margin: 0 0 1em; }
   .menu-card-cta { padding: 22px 18px 26px; min-height: 220px; }
   .menu-card-cta h3 { font-size: 22px; }
   .callout-frame { padding: 36px 22px; }
+  /* Lunch-service CTA stays prominent but breathes: full-width inside
+     its frame, slightly calmer size so it doesn't feel oversized. */
+  .callout-frame .btn-lg {
+    width: 100%;
+    justify-content: center;
+    margin-top: 6px;
+    padding: 15px 24px;
+    font-size: 13.5px;
+  }
   .hero-buttons { flex-direction: column; align-items: stretch; gap: 12px; width: 100%; }
   .hero-buttons .btn { width: 100%; flex: none; }
-  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  /* Compact footer on phones — keep the link columns paired two-up instead
+     of one tall stack, trim padding/gaps and drop the placeholder blurb so
+     the footer takes far less vertical space. */
+  .footer { padding: 44px 0 24px; }
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 26px 24px;
+    padding-bottom: 28px;
+  }
+  .footer-brand { grid-column: 1 / -1; max-width: none; }
+  .footer-blurb { display: none; }
+  .footer .brand-logo { height: 38px; }
+  .footer-tagline { font-size: 18px; margin: 10px 0; }
+  .socials { margin-top: 16px; }
+  .footer-col h4 { margin-bottom: 12px; }
+  .footer-col ul { gap: 8px; }
+  .footer-bottom { padding-top: 20px; }
   .title-line { letter-spacing: .03em; }
   .menu-cta .hero-buttons,
   .invite-actions,
@@ -2365,7 +2448,7 @@ p { margin: 0 0 1em; }
   text-transform: uppercase;
 }
 .menu-tag.gf, .menu-tag.v { background: rgba(20,87,36,.1); color: var(--olive-dark); }
-.menu-tag.spicy { background: rgba(165,42,42,.1); color: #a52a2a; }
+.menu-tag.spicy { background: rgba(165,42,42,.1); color: var(--chili); }
 
 /* compact grid (Sides) — more columns, tighter */
 .menu-card-grid.is-compact { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
@@ -2667,10 +2750,7 @@ p { margin: 0 0 1em; }
   color: var(--blue-primary);
 }
 
-/* Faint paper grain reused across warm story surfaces (~5% opacity) */
-.story-page {
-  --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
-}
+/* --paper-grain is inherited from :root — no per-page redefinition needed. */
 .story-section { background: var(--white); }
 .story-section.is-warm {
   background-color: var(--off-white);
@@ -3123,7 +3203,7 @@ p { margin: 0 0 1em; }
   display: flex; align-items: center; justify-content: center;
   background: var(--blue-tint);
   color: var(--blue-primary);
-  border-radius: 14px;
+  border-radius: var(--radius);
   margin-bottom: 4px;
 }
 .order-card-icon svg { width: 30px; height: 30px; }
@@ -3484,7 +3564,7 @@ select.form-control {
 @media (min-width: 881px) {
   .mobile-menu { display: none !important; }
 }
-.nav { z-index: 90; }
+/* (nav z-index is set once in the .nav base rule — see the ladder note there) */
 
 /* ----- Page-fade transition ----- */
 body {
@@ -3614,7 +3694,7 @@ body.page-fading { opacity: 0; }
   width: auto;
   height: auto;
   border-radius: var(--radius);
-  box-shadow: 0 30px 80px rgba(0,0,0,.45);
+  box-shadow: 0 22px 56px rgba(0,0,0,.30);
   transform: scale(.96);
   transition: transform .35s var(--ease);
   background: var(--white);
@@ -4188,7 +4268,7 @@ img, video, svg { max-width: 100%; height: auto; }
 .pos-item-card {
   background: var(--white);
   border: 1px solid rgba(34,37,46,.08);
-  border-radius: 14px;
+  border-radius: var(--radius);
   overflow: hidden;
   cursor: pointer;
   transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .2s var(--ease);
@@ -4680,7 +4760,7 @@ img, video, svg { max-width: 100%; height: auto; }
 .pos-cko-demo-banner {
   background: var(--blue-tint);
   color: var(--blue-primary);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   padding: 7px 12px;
   font-size: 12px;
   margin: 0;
@@ -4906,7 +4986,7 @@ body:has(.pos-cart-col.is-open) .pos-mobile-bar { opacity: 0; pointer-events: no
   display: flex;
   align-items: center;
   gap: 12px;
-  box-shadow: 0 12px 30px -10px rgba(20,22,30,.45);
+  box-shadow: 0 10px 26px -12px rgba(20,22,30,.32);
 }
 .pos-toast-icon {
   width: 24px;
@@ -5175,7 +5255,7 @@ body.is-pos .sticky-order { display: none !important; }
 
 /* Warm paper background across the whole menu body */
 .menu-page {
-  background-color: #FAF8F3;
+  background-color: var(--paper);
   background-image: var(--paper-grain);
   background-size: 160px;
 }
@@ -5193,7 +5273,7 @@ body.is-pos .sticky-order { display: none !important; }
 
 /* ---------- Printed Mediterranean panel ---------- */
 .printed-menu {
-  background-color: #FAF8F3;
+  background-color: var(--paper);
   background-image: var(--paper-grain);
   background-size: 160px;
   padding: clamp(28px, 4vw, 56px) 0 clamp(8px, 2vw, 24px);
@@ -5203,7 +5283,7 @@ body.is-pos .sticky-order { display: none !important; }
   max-width: 980px;
   margin: 0 auto;
   padding: clamp(30px, 4vw, 56px) clamp(28px, 4vw, 60px);
-  background: linear-gradient(180deg, #FCFBF6 0%, #F6F2E9 100%);
+  background: linear-gradient(180deg, var(--paper-warm) 0%, #F6F2E9 100%);
   border: 1.5px solid var(--blue-primary);
   border-radius: 4px;
   box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 36px 70px -44px rgba(25,75,158,.34);
@@ -5254,7 +5334,8 @@ body.is-pos .sticky-order { display: none !important; }
   margin-top: 2px;
 }
 .printed-teaser { display: flex; flex-direction: column; gap: 14px; }
-.teaser-group h3 {
+.teaser-group .teaser-heading {
+  display: block;
   font-family: var(--font-body);
   font-size: 13px;
   font-weight: 700;
@@ -5311,7 +5392,7 @@ body.is-pos .sticky-order { display: none !important; }
   color: var(--white);
   background: var(--blue-primary);
   border-radius: 999px;
-  box-shadow: 0 2px 6px rgba(25,75,158,.22), 0 14px 28px -12px rgba(25,75,158,.55);
+  box-shadow: 0 2px 6px rgba(25,75,158,.16), 0 12px 26px -12px rgba(25,75,158,.40);
   transition: background .25s var(--ease), transform .25s var(--ease);
 }
 .printed-view-link svg { width: 17px; height: 17px; }
@@ -5451,7 +5532,7 @@ body.is-pos .sticky-order { display: none !important; }
 .menu-cta {
   background:
     radial-gradient(ellipse 80% 70% at 50% 0%, var(--blue-wash), transparent 70%),
-    #FAF8F3;
+    var(--paper);
 }
 
 /* ---------- Responsive ---------- */
@@ -5486,7 +5567,7 @@ body.is-pos .sticky-order { display: none !important; }
    ============   OUR STORY REDESIGN (editorial)   ============
    ============================================================ */
 .os-page {
-  background-color: #FAF8F3;
+  background-color: var(--paper);
   background-image: var(--paper-grain);
   background-size: 160px;
 }
@@ -5612,7 +5693,7 @@ body.is-pos .sticky-order { display: none !important; }
 .os-quote-band {
   position: relative;
   text-align: center;
-  background-color: #F3EEE3;
+  background-color: var(--paper-2);
   background-image: var(--paper-grain);
   background-size: 150px;
   border-radius: 3px;
@@ -5708,7 +5789,7 @@ body.is-pos .sticky-order { display: none !important; }
 
 /* ---------- Promise strip ---------- */
 .os-promise {
-  background-color: #F3EEE3;
+  background-color: var(--paper-2);
   background-image: var(--paper-grain);
   background-size: 150px;
   padding: clamp(40px, 5vw, 64px) 0;
@@ -5776,7 +5857,7 @@ body.is-pos .sticky-order { display: none !important; }
   transform: translateX(-50%);
   width: 40px; height: 40px;
   display: flex; align-items: center; justify-content: center;
-  background: #FAF8F3;
+  background: var(--paper);
   color: var(--blue-primary);
 }
 .journey-mark svg { width: 30px; height: 30px; }
@@ -5785,7 +5866,7 @@ body.is-pos .sticky-order { display: none !important; }
   top: 12px;
   border-radius: 50%;
   background: var(--blue-primary);
-  box-shadow: 0 0 0 5px #FAF8F3;
+  box-shadow: 0 0 0 5px var(--paper);
 }
 .journey-point h3 {
   font-family: var(--font-body);
@@ -5805,7 +5886,7 @@ body.is-pos .sticky-order { display: none !important; }
   max-width: 1000px;
   margin: 0 auto;
   padding: clamp(34px, 4.6vw, 60px) clamp(30px, 5vw, 72px);
-  background: linear-gradient(180deg, #FCFBF6 0%, #F4EFE4 100%);
+  background: linear-gradient(180deg, var(--paper-warm) 0%, #F4EFE4 100%);
   border: 1.5px solid var(--blue-primary);
   border-radius: 4px;
   overflow: hidden;
@@ -5888,7 +5969,7 @@ body.is-pos .sticky-order { display: none !important; }
    ============   RESERVATIONS REDESIGN (editorial)   =========
    ============================================================ */
 .res-page {
-  background-color: #FAF8F3;
+  background-color: var(--paper);
   background-image: var(--paper-grain);
   background-size: 160px;
 }
@@ -6019,7 +6100,7 @@ body.is-pos .sticky-order { display: none !important; }
 
 /* ---------- Walk-ins band ---------- */
 .res-walkin {
-  background-color: #F3EEE3;
+  background-color: var(--paper-2);
   background-image: var(--paper-grain);
   background-size: 150px;
   padding: clamp(40px, 5vw, 66px) 0;
@@ -6113,7 +6194,7 @@ body.is-pos .sticky-order { display: none !important; }
    ============   ORDER PAGE — new style   ====================
    ============================================================ */
 .order-page {
-  background-color: #FAF8F3;
+  background-color: var(--paper);
   background-image: var(--paper-grain);
   background-size: 160px;
 }
@@ -6162,7 +6243,7 @@ body.is-pos .sticky-order { display: none !important; }
 
 /* ---------- POS pages — warm paper for consistency ---------- */
 .pos-ui {
-  background-color: #FAF8F3;
+  background-color: var(--paper);
   background-image: var(--paper-grain);
   background-size: 160px;
 }
@@ -6178,7 +6259,7 @@ body.is-pos .sticky-order { display: none !important; }
    desktop and is print/PDF-ready. (Classes: .pm-*)
 ============================================================ */
 body.is-bare {
-  background: #F1ECE1;
+  background: var(--paper-3);
   overflow-x: hidden;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
@@ -6229,7 +6310,7 @@ body.is-bare {
 
 /* Paper field + framed sheet */
 .pm-page {
-  background-color: #F1ECE1;
+  background-color: var(--paper-3);
   background-image: var(--paper-grain);
   background-size: 160px;
   padding: clamp(18px, 4vw, 56px) clamp(14px, 4vw, 40px) clamp(40px, 6vw, 88px);
@@ -6239,7 +6320,7 @@ body.is-bare {
   max-width: 1080px;
   margin: 0 auto;
   padding: clamp(34px, 5vw, 76px) clamp(26px, 5vw, 80px);
-  background: linear-gradient(180deg, #FCFBF6 0%, #F6F2E9 100%);
+  background: linear-gradient(180deg, var(--paper-warm) 0%, #F6F2E9 100%);
   border: 1.5px solid var(--blue-primary);
   border-radius: 5px;
   box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 44px 90px -50px rgba(25,75,158,.36);
@@ -6384,7 +6465,7 @@ body.is-bare {
   transform: translateY(-1px);
 }
 .pm-diet-v, .pm-diet-gf { color: var(--blue-soft); }
-.pm-diet-spicy { color: #C0532B; }
+.pm-diet-spicy { color: var(--chili-deep); }
 
 /* Footer block */
 .pm-foot { margin-top: clamp(14px, 2vw, 26px); }
@@ -6445,11 +6526,11 @@ body.is-bare {
 /* ---------- Print / PDF ---------- */
 @media print {
   @page { margin: 12mm; }
-  body.is-bare { background: #FCFBF6; }
+  body.is-bare { background: var(--paper-warm); }
   .pm-toolbar { display: none !important; }
   .pm-page {
     padding: 0;
-    background: #FCFBF6;
+    background: var(--paper-warm);
     background-image: none;
   }
   .pm-sheet {

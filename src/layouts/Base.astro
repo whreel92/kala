@@ -24,6 +24,45 @@ const bodyClass = [
   bare && 'is-bare',
   current === '/menu' && 'is-menu-page',
 ].filter(Boolean).join(' ');
+
+// Canonical / social-share URLs. Astro.site is set in astro.config.mjs.
+const SITE = (Astro.site?.href || 'https://kala-6d802.web.app/').replace(/\/$/, '');
+// Firebase serves clean URLs (cleanUrls: true), so canonicals drop the .html
+// the static build emits (format: 'file').
+const cleanPath = Astro.url.pathname.replace(/index\.html$/, '').replace(/\.html$/, '');
+const canonicalURL = new URL(cleanPath, SITE + '/').href;
+const ogImage = `${SITE}/public/og-image.jpg`;
+
+// Restaurant structured data (JSON-LD) — one source of truth for the brand's
+// NAP, hours, geo and menu so search/Maps can build a rich result.
+const restaurantSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: 'KALA — Greek and More',
+  description:
+    'A coastal Mediterranean restaurant in Seattle serving gyros, souvlaki, fresh salads, and Greek classics.',
+  url: SITE,
+  telephone: '+1-555-123-4567',
+  servesCuisine: ['Greek', 'Mediterranean'],
+  priceRange: '$$',
+  image: ogImage,
+  menu: `${SITE}/menu`,
+  acceptsReservations: 'True',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '1500 Queen Anne Ave N',
+    addressLocality: 'Seattle',
+    addressRegion: 'WA',
+    postalCode: '98109',
+    addressCountry: 'US',
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: 47.63613, longitude: -122.35713 },
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday'], opens: '11:00', closes: '21:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Friday', 'Saturday'], opens: '11:00', closes: '22:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Sunday', opens: '12:00', closes: '20:00' },
+  ],
+};
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +71,31 @@ const bodyClass = [
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
   <title>{title}</title>
+  <link rel="canonical" href={canonicalURL} />
+  <meta name="theme-color" content="#194B9E" />
+
+  {/* Icons */}
   <link rel="icon" type="image/png" href="/public/image%2010.png" />
+  <link rel="apple-touch-icon" href="/public/image%2010.png" />
+
+  {/* Open Graph */}
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="KALA — Greek and More" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:alt" content="KALA — Greek and More" />
+
+  {/* Twitter */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+
+  {/* Restaurant structured data */}
+  <script type="application/ld+json" set:html={JSON.stringify(restaurantSchema)} is:inline />
 
   <script type="module" is:inline>
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
@@ -62,6 +125,8 @@ const bodyClass = [
 
 <body class={bodyClass || undefined}>
 
+  <a href="#top" class="skip-link">Skip to content</a>
+
   {!bare && (
   <Fragment>
   <!-- Announce -->
@@ -85,8 +150,8 @@ const bodyClass = [
 
       <div class="nav-actions">
         <a href="/reservations" class="link-quiet">Reservations</a>
-        <a href="/order" class="btn btn-primary btn-sm">
-          Order Online
+        <a href="/order" class="btn btn-primary btn-sm nav-order">
+          <span class="nav-order-label">Order<span class="nav-order-rest"> Online</span></span>
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
@@ -107,7 +172,7 @@ const bodyClass = [
   </Fragment>
   )}
 
-  <main id="top">
+  <main id="top" tabindex="-1">
     <slot />
   </main>
 
@@ -177,8 +242,8 @@ const bodyClass = [
           <ul>
             <li><a href="tel:5551234567">(555) 123 — 4567</a></li>
             <li><a href="mailto:niko@kalaeats.com">niko@kalaeats.com</a></li>
-            <li><a href="#">Private events</a></li>
-            <li><a href="#">Press inquiries</a></li>
+            <li><a href="mailto:niko@kalaeats.com?subject=Private%20events%20at%20KALA">Private events</a></li>
+            <li><a href="mailto:niko@kalaeats.com?subject=Press%20inquiry%20%E2%80%94%20KALA">Press inquiries</a></li>
           </ul>
         </div>
       </div>
