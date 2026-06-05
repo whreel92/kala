@@ -19,8 +19,6 @@ import gyros from '../assets/kala/home/menu-gyros.webp';
 import souvlaki2 from '../assets/kala/home/menu-souvlaki.webp';
 import desserts from '../assets/kala/home/menu-desserts.webp';
 
-const ILLO = '/images/kala/order-pickup/illustrations';
-
 // 20 food photos. Imported assets carry `img`; legacy /public files use `src`.
 const photos = [
   { img: tzatziki,       cap: 'Tzatziki',        alt: 'Creamy tzatziki with olive oil, dill, and olives on a blue-and-white ceramic plate.' },
@@ -50,13 +48,13 @@ const photos = [
   description="A gallery of KALA's Greek kitchen — dips, salads, gyros, souvlaki, seafood, house plates, and desserts, made by hand."
   current="/gallery"
 >
-  <!-- ── Printed hero ── -->
-  <header class="pos-hero">
+  <!-- ── Printed hero — candid food snapshots in the corners ── -->
+  <header class="pos-hero gallery-hero">
     <span class="pos-hero-art pos-hero-city" aria-hidden="true">
-      <img src={`${ILLO}/illo-coast-city.png`} alt="" decoding="async" />
+      <img src="/images/kala/gallery/hero-food-1.webp" alt="" decoding="async" />
     </span>
     <span class="pos-hero-art pos-hero-sprig" aria-hidden="true">
-      <img src={`${ILLO}/illo-olive-branch.png`} alt="" decoding="async" />
+      <img src="/images/kala/gallery/hero-food-2.webp" alt="" decoding="async" />
     </span>
     <div class="container pos-hero-inner">
       <span class="pos-hero-eyebrow">Gallery</span>

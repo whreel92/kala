@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
+import storefront from '../assets/kala/contact/kala-storefront.webp';
 ---
 <Base
   title="Contact — KALA Greek and More"
@@ -35,12 +37,13 @@ import Base from '../layouts/Base.astro';
 
       <!-- Storefront atmosphere banner -->
       <figure class="contact-atmos">
-        <img
-          src="/images/kala/contact/kala-storefront-evening.webp"
-          alt="KALA's storefront at dusk — a white facade with deep-blue Greek-key signage reading KALA Greek &amp; More, navy awnings and umbrellas over a sidewalk patio where guests dine among potted olive trees and string lights."
+        <Image
+          src={storefront}
+          alt="A blue-ink illustration of KALA's storefront — a white facade with an arched parapet, deep-blue Greek-key signage reading KALA Greek &amp; More, navy awnings and umbrellas over a sidewalk patio where guests dine among potted topiaries."
+          widths={[640, 960, 1280]}
+          sizes="(max-width: 1024px) 100vw, 1180px"
           loading="lazy"
-          decoding="async"
-          width="1280" height="543" />
+          decoding="async" />
         <figcaption class="atmos-label">Queen Anne · Seattle</figcaption>
       </figure>
 

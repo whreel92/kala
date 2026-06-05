@@ -6824,6 +6824,32 @@ body.is-bare {
   .menu-open .pm-cat-title::before { width: 35px; }
 }
 
+/* ── Gallery hero — the two corner accents become candid photo snapshots ── */
+.gallery-hero .pos-hero-city,
+.gallery-hero .pos-hero-sprig {
+  width: clamp(140px, 17vw, 230px);
+  opacity: 1;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.gallery-hero .pos-hero-city {
+  top: clamp(8px, 2vw, 20px);
+  left: clamp(8px, 2vw, 30px);
+  transform: rotate(-3deg);
+}
+.gallery-hero .pos-hero-sprig {
+  top: clamp(8px, 2vw, 20px);
+  right: clamp(8px, 2vw, 30px);
+  transform: rotate(3deg);
+}
+.gallery-hero .pos-hero-art img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 5px solid #fff;
+  border-radius: 4px;
+  box-shadow: 0 18px 36px -20px rgba(20, 22, 30, .5);
+}
+
 /* ── Gallery grid ── */
 .gallery {
   background: var(--cream);
@@ -6869,6 +6895,15 @@ body.is-bare {
   text-transform: uppercase;
   color: #fff;
   background: linear-gradient(180deg, transparent, rgba(20, 22, 30, .62));
+}
+/* On phones: two smaller tiles per row (and the <Image> sizes serve ~50vw). */
+@media (max-width: 600px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .gallery-item figcaption {
+    padding: 16px 8px 6px;
+    font-size: 9.5px;
+    letter-spacing: .1em;
+  }
 }
 
 .menu-cta-band {
