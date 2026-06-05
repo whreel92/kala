@@ -144,6 +144,7 @@ const restaurantSchema = {
 
       <nav class="nav-links" aria-label="Primary">
         <a href="/menu" class={isActive('/menu')}>Menu</a>
+        <a href="/gallery" class={isActive('/gallery')}>Gallery</a>
         <a href="/our-story" class={isActive('/our-story')}>Our Story</a>
         <a href="/contact" class={isActive('/contact')}>Contact</a>
       </nav>
@@ -164,6 +165,7 @@ const restaurantSchema = {
 
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true" inert transition:persist>
     <a href="/menu">Menu</a>
+    <a href="/gallery">Gallery</a>
     <a href="/our-story">Our Story</a>
     <a href="/contact">Contact</a>
     <a href="/reservations">Reservations</a>
@@ -207,6 +209,7 @@ const restaurantSchema = {
           <h4>Explore</h4>
           <ul>
             <li><a href="/menu">Menu</a></li>
+            <li><a href="/gallery">Gallery</a></li>
             <li><a href="/our-story">Our Story</a></li>
             <li><a href="/reservations">Reservations</a></li>
             <li><a href="/order">Order Online</a></li>

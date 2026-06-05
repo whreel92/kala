@@ -1,0 +1,107 @@
+---
+import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
+
+// Food photography we've already produced for the menu — imported so Astro
+// emits optimized, hashed images.
+import tzatziki from '../assets/kala/menu/tzatziki-blue-white-plate.webp';
+import hummus from '../assets/kala/menu/menu-hummus.webp';
+import melitzanosalata from '../assets/kala/menu/menu-melitzanosalata.webp';
+import taramasalata from '../assets/kala/menu/menu-taramasalata.webp';
+import trioDips from '../assets/kala/menu/trio-sampler-dips.webp';
+import horiatiki from '../assets/kala/menu/horiatiki-salad-editorial.webp';
+import souvlaki from '../assets/kala/menu/chicken-souvlaki-lemon-herbs.webp';
+import octopus from '../assets/kala/menu/grilled-octopus-coastal.webp';
+import branzino from '../assets/kala/menu/whole-branzino-coastal.webp';
+import baklava from '../assets/kala/menu/baklava-honey-walnut.webp';
+import salad2 from '../assets/kala/home/menu-salad.webp';
+import gyros from '../assets/kala/home/menu-gyros.webp';
+import souvlaki2 from '../assets/kala/home/menu-souvlaki.webp';
+import desserts from '../assets/kala/home/menu-desserts.webp';
+
+const ILLO = '/images/kala/order-pickup/illustrations';
+
+// 20 food photos. Imported assets carry `img`; legacy /public files use `src`.
+const photos = [
+  { img: tzatziki,       cap: 'Tzatziki',        alt: 'Creamy tzatziki with olive oil, dill, and olives on a blue-and-white ceramic plate.' },
+  { img: hummus,         cap: 'Hummus',          alt: 'Smooth hummus drizzled with olive oil in a white bowl with chickpeas.' },
+  { img: melitzanosalata,cap: 'Melitzanosalata', alt: 'Smoky roasted-eggplant dip with herbs and olive oil, served with pita.' },
+  { img: taramasalata,   cap: 'Taramasalata',    alt: 'Whipped pink taramasalata topped with roe and a lemon wedge.' },
+  { img: trioDips,       cap: 'Trio of Dips',    alt: 'A trio of Greek mezze dips with warm pita on a ceramic platter.' },
+  { src: '/public/tirokafteri.webp',  cap: 'Tirokafteri', alt: 'Spicy whipped feta dip with roasted red pepper.' },
+  { img: horiatiki,      cap: 'Horiatiki',       alt: 'Classic Greek village salad with tomato, cucumber, feta, and olives.' },
+  { img: salad2,         cap: 'Greek Salad',     alt: 'A fresh Greek salad with a block of feta and oregano in a ceramic bowl.' },
+  { img: gyros,          cap: 'Gyro',            alt: 'A Greek gyro wrap with meat, tzatziki, tomato, and onion in warm pita.' },
+  { img: souvlaki,       cap: 'Chicken Souvlaki',alt: 'Grilled chicken souvlaki skewers with lemon and herbs on a plate.' },
+  { img: souvlaki2,      cap: 'Souvlaki',        alt: 'Char-grilled souvlaki skewers with lemon wedges.' },
+  { img: octopus,        cap: 'Grilled Octopus', alt: 'Charred grilled octopus with olive oil, lemon, and capers.' },
+  { img: branzino,       cap: 'Whole Branzino',  alt: 'A whole grilled branzino with lemon and herbs on a ceramic platter.' },
+  { src: '/public/saganaki-shrimp.webp', cap: 'Saganaki Shrimp', alt: 'Shrimp saganaki in tomato sauce with feta and peppers.' },
+  { src: '/public/calamari.webp',        cap: 'Calamari',        alt: 'Crispy fried calamari with lemon and marinara.' },
+  { src: '/public/moussaka.webp',        cap: 'Moussaka',        alt: 'Layered moussaka of eggplant, potato, beef, and béchamel.' },
+  { src: '/public/pastitsio.webp',       cap: 'Pastitsio',       alt: 'Greek baked pasta with beef and béchamel, sliced on a plate.' },
+  { src: '/public/lamb-kleftiko.webp',   cap: 'Lamb Kleftiko',   alt: 'Slow-roasted lamb kleftiko with lemon potatoes.' },
+  { img: baklava,        cap: 'Baklava',         alt: 'Honey-and-walnut baklava dusted with crushed pistachio.' },
+  { img: desserts,       cap: 'Sweets',          alt: 'An assortment of Greek desserts with honey and nuts.' },
+];
+---
+<Base
+  title="Gallery — KALA Greek and More"
+  description="A gallery of KALA's Greek kitchen — dips, salads, gyros, souvlaki, seafood, house plates, and desserts, made by hand."
+  current="/gallery"
+>
+  <!-- ── Printed hero ── -->
+  <header class="pos-hero">
+    <span class="pos-hero-art pos-hero-city" aria-hidden="true">
+      <img src={`${ILLO}/illo-coast-city.png`} alt="" decoding="async" />
+    </span>
+    <span class="pos-hero-art pos-hero-sprig" aria-hidden="true">
+      <img src={`${ILLO}/illo-olive-branch.png`} alt="" decoding="async" />
+    </span>
+    <div class="container pos-hero-inner">
+      <span class="pos-hero-eyebrow">Gallery</span>
+      <h1 class="pos-hero-title">From our kitchen</h1>
+      <p class="pos-hero-sub">A taste of the table — made by hand, every day.</p>
+    </div>
+  </header>
+
+  <!-- ── Greek-key divider ── -->
+  <div class="pos-divider" role="presentation" aria-hidden="true">
+    <span class="pos-divider-rule"></span>
+    <span class="pos-divider-diamond"></span>
+    <span class="pos-divider-rule"></span>
+  </div>
+
+  <!-- ── Photo grid ── -->
+  <section class="gallery">
+    <div class="container">
+      <ul class="gallery-grid">
+        {photos.map((ph) => (
+          <li class="gallery-item">
+            <figure>
+              {ph.img
+                ? <Image src={ph.img} alt={ph.alt} widths={[280, 460, 640]} sizes="(max-width: 600px) 50vw, 300px" loading="lazy" decoding="async" />
+                : <img src={ph.src} alt={ph.alt} loading="lazy" decoding="async" />}
+              <figcaption>{ph.cap}</figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Closing order / reserve band -->
+  <section class="menu-cta-band">
+    <div class="container">
+      <span class="eyebrow">Hungry?</span>
+      <h2>Come dine with us</h2>
+      <div class="pm-actions">
+        <a href="/order" class="btn btn-primary btn-lg">
+          Order Online
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="/reservations" class="btn btn-outline btn-lg">Make a Reservation</a>
+      </div>
+    </div>
+  </section>
+</Base>
