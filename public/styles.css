@@ -6824,33 +6824,27 @@ body.is-bare {
   .menu-open .pm-cat-title::before { width: 35px; }
 }
 
-/* ── Gallery hero — the two corner accents become candid photo snapshots ── */
-.gallery-hero .pos-hero-city,
-.gallery-hero .pos-hero-sprig {
-  width: clamp(140px, 17vw, 230px);
-  opacity: 1;
-  -webkit-mask-image: none;
-  mask-image: none;
-}
+/* ── Gallery hero — blue-ink drawings (mezze feast left, amphora right) ── */
 .gallery-hero .pos-hero-city {
-  top: clamp(8px, 2vw, 20px);
-  left: clamp(8px, 2vw, 30px);
-  transform: rotate(-3deg);
+  top: 0;
+  left: 0;
+  width: clamp(190px, 24vw, 360px);
+  opacity: .5;
+  transform: none;
+  -webkit-mask-image: linear-gradient(to bottom right, #000 52%, transparent 92%);
+  mask-image: linear-gradient(to bottom right, #000 52%, transparent 92%);
 }
 .gallery-hero .pos-hero-sprig {
-  top: clamp(8px, 2vw, 20px);
-  right: clamp(8px, 2vw, 30px);
-  transform: rotate(3deg);
-}
-.gallery-hero .pos-hero-art img {
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border: 5px solid #fff;
-  border-radius: 4px;
-  box-shadow: 0 18px 36px -20px rgba(20, 22, 30, .5);
+  top: clamp(2px, 1vw, 10px);
+  right: clamp(6px, 2vw, 26px);
+  width: clamp(78px, 9vw, 132px);
+  opacity: .5;
+  transform: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
 }
 
-/* ── Gallery grid ── */
+/* ── Gallery wall — masonry of natural-aspect photos in thin frames ── */
 .gallery {
   background: var(--cream);
   padding: clamp(8px, 2vw, 24px) 0 clamp(40px, 6vw, 80px);
@@ -6859,11 +6853,14 @@ body.is-bare {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: clamp(14px, 1.8vw, 24px);
+  column-count: 4;
+  column-gap: clamp(12px, 1.5vw, 20px);
 }
-.gallery-item { margin: 0; }
+.gallery-item {
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  margin: 0 0 clamp(12px, 1.5vw, 20px);
+}
 .gallery-item figure {
   position: relative;
   margin: 0;
@@ -6871,39 +6868,50 @@ body.is-bare {
   border: 1px solid var(--blue-tint);
   border-radius: var(--radius-sm);
   overflow: hidden;
-  box-shadow: 0 18px 40px -34px rgba(25, 75, 158, .4);
+  box-shadow: 0 16px 38px -32px rgba(25, 75, 158, .45);
+  transition: box-shadow .35s var(--ease), transform .35s var(--ease);
+}
+.gallery-item figure:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 48px -28px rgba(25, 75, 158, .55);
 }
 .gallery-item img {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  transform: scale(1.02);
-  transition: transform .5s var(--ease);
+  height: auto;
+  transform: scale(1.01);
+  transition: transform .6s var(--ease);
 }
-.gallery-item figure:hover img { transform: scale(1.07); }
+.gallery-item figure:hover img { transform: scale(1.05); }
 .gallery-item figcaption {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 26px 12px 10px;
+  padding: 28px 12px 9px;
   font-family: var(--font-body);
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: #fff;
-  background: linear-gradient(180deg, transparent, rgba(20, 22, 30, .62));
+  background: linear-gradient(180deg, transparent, rgba(20, 22, 30, .66));
 }
-/* On phones: two smaller tiles per row (and the <Image> sizes serve ~50vw). */
-@media (max-width: 600px) {
-  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+/* Reveal captions on hover for pointer devices; keep them visible on touch. */
+@media (hover: hover) {
   .gallery-item figcaption {
-    padding: 16px 8px 6px;
-    font-size: 9.5px;
-    letter-spacing: .1em;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity .3s var(--ease), transform .3s var(--ease);
   }
+  .gallery-item figure:hover figcaption { opacity: 1; transform: none; }
+}
+@media (max-width: 1100px) { .gallery-grid { column-count: 3; } }
+@media (max-width: 760px)  { .gallery-grid { column-count: 2; } }
+@media (max-width: 600px)  {
+  .gallery-grid { column-gap: 10px; }
+  .gallery-item { margin-bottom: 10px; }
+  .gallery-item figcaption { padding: 18px 8px 6px; font-size: 9.5px; letter-spacing: .1em; }
 }
 
 .menu-cta-band {
