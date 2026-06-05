@@ -1,678 +1,219 @@
 ---
 import Base from '../layouts/Base.astro';
-import { Image } from 'astro:assets';
-import trioSampler from '../assets/kala/menu/trio-sampler-dips.webp';
-import chickenSouvlaki from '../assets/kala/menu/chicken-souvlaki-lemon-herbs.webp';
-import horiatiki from '../assets/kala/menu/horiatiki-salad-editorial.webp';
-import wholeBranzino from '../assets/kala/menu/whole-branzino-coastal.webp';
-import baklava from '../assets/kala/menu/baklava-honey-walnut.webp';
-import tzatziki from '../assets/kala/menu/tzatziki-blue-white-plate.webp';
-import hummus from '../assets/kala/menu/menu-hummus.webp';
-import melitzanosalata from '../assets/kala/menu/menu-melitzanosalata.webp';
-import taramasalata from '../assets/kala/menu/menu-taramasalata.webp';
-import grilledOctopus from '../assets/kala/menu/grilled-octopus-coastal.webp';
-import whiteWine from '../assets/kala/menu/white-wine-glass-coastal.webp';
 
-// Reusable blue line-art illustrations (monochrome, inherit currentColor)
-const oliveSprig = `<svg class="illo illo-olive" viewBox="0 0 64 134" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M42 6c-7 10-11 23-13 38-3 22-2 50 1 84"/><path d="M28 36c-7-5-16-5-22-1 5 7 14 9 22 1Z"/><path d="M31 55c8-6 16-7 23-3-5 7-15 9-23 3Z"/><path d="M27 74c-7-5-16-5-22-1 5 7 14 9 22 1Z"/><path d="M30 93c8-6 16-7 23-3-5 7-15 9-23 3Z"/><ellipse cx="20" cy="46" rx="4.6" ry="6.4" transform="rotate(-24 20 46)"/><ellipse cx="42" cy="65" rx="4.6" ry="6.4" transform="rotate(22 42 65)"/></svg>`;
+// Blue line-art illustrations (monochrome, inherit currentColor).
+const oliveSprig = `<svg viewBox="0 0 64 134" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M42 6c-7 10-11 23-13 38-3 22-2 50 1 84"/><path d="M28 36c-7-5-16-5-22-1 5 7 14 9 22 1Z"/><path d="M31 55c8-6 16-7 23-3-5 7-15 9-23 3Z"/><path d="M27 74c-7-5-16-5-22-1 5 7 14 9 22 1Z"/><path d="M30 93c8-6 16-7 23-3-5 7-15 9-23 3Z"/><ellipse cx="20" cy="46" rx="4.6" ry="6.4" transform="rotate(-24 20 46)"/><ellipse cx="42" cy="65" rx="4.6" ry="6.4" transform="rotate(22 42 65)"/></svg>`;
+
+
+// Prices mirror public/menu-data.js (the online-ordering cart) so the menu
+// and checkout always agree. `d` = dietary marks.
+const menu = [
+  {
+    title: 'Dips & Spreads',
+    items: [
+      { n: 'Tzatziki', p: '7', d: ['gf'] },
+      { n: 'Hummus', p: '7', d: ['v', 'gf'] },
+      { n: 'Melitzanosalata', p: '7', d: ['v'] },
+      { n: 'Taramasalata', p: '8' },
+      { n: 'Tirokafteri', p: '8', d: ['spicy'] },
+      { n: 'Skordalia', p: '7', d: ['v', 'gf'] },
+      { n: 'Fava', p: '7', d: ['v', 'gf'] },
+      { n: 'Trio Sampler', p: '15' },
+    ],
+  },
+  {
+    title: 'Salads',
+    items: [
+      { n: 'Horiatiki', p: '14', d: ['gf'] },
+      { n: 'Mixed Greens', p: '11', d: ['v'] },
+      { n: 'Beet & Walnut', p: '13', d: ['gf'] },
+      { n: 'Watermelon & Feta', p: '14', d: ['gf'] },
+    ],
+  },
+  {
+    title: 'Gyros',
+    items: [
+      { n: 'The Classic Pork', p: '13' },
+      { n: 'Chicken Gyro', p: '13' },
+      { n: 'Lamb Gyro', p: '15' },
+      { n: 'Garden Gyro', p: '14', d: ['v'] },
+    ],
+  },
+  {
+    title: 'Souvlaki',
+    items: [
+      { n: 'Chicken Souvlaki', p: '16', d: ['gf'] },
+      { n: 'Pork Souvlaki', p: '16', d: ['gf'] },
+      { n: 'Lamb Souvlaki', p: '19', d: ['gf'] },
+      { n: 'Shrimp Souvlaki', p: '20', d: ['gf'] },
+    ],
+  },
+  {
+    title: 'From the Sea',
+    items: [
+      { n: 'Whole Branzino', p: '32', d: ['gf'] },
+      { n: 'Grilled Octopus', p: '24', d: ['gf'] },
+      { n: 'Saganaki Shrimp', p: '18', d: ['spicy'] },
+      { n: 'Calamari', p: '16' },
+    ],
+  },
+  {
+    title: 'House Plates',
+    items: [
+      { n: 'Moussaka', p: '19' },
+      { n: 'Pastitsio', p: '18' },
+      { n: 'Lamb Kleftiko', p: '26', d: ['gf'] },
+      { n: 'Roast Chicken', p: '20', d: ['gf'] },
+    ],
+  },
+  {
+    title: 'Sides',
+    items: [
+      { n: 'Lemon Potatoes', p: '6', d: ['v', 'gf'] },
+      { n: 'Greek Rice', p: '5', d: ['v'] },
+      { n: 'Spanakopita', p: '8' },
+      { n: 'Dolmades', p: '9', d: ['v'] },
+    ],
+  },
+  {
+    title: 'Desserts',
+    items: [
+      { n: 'Baklava', p: '8' },
+      { n: 'Galaktoboureko', p: '8' },
+      { n: 'Loukoumades', p: '7' },
+      { n: 'Yogurt & Honey', p: '7', d: ['gf'] },
+    ],
+  },
+  {
+    title: 'Wine & Drinks',
+    items: [
+      { n: 'House Red', p: '9 / 36' },
+      { n: 'House White', p: '9 / 36' },
+      { n: 'Assyrtiko', p: '14 / 54' },
+      { n: 'Agiorgitiko', p: '14 / 54' },
+      { n: 'Ouzo', p: '8' },
+      { n: 'Greek Coffee', p: '4' },
+      { n: 'Frappé', p: '5' },
+      { n: 'Sparkling Water', p: '4' },
+    ],
+  },
+];
+
+const dietLabel = { v: 'V', gf: 'GF', spicy: '✦' };
+
+// Hand-drawn illustration per category (shared with /order-pickup).
+const catIllo = {
+  'Dips & Spreads': 'olive',
+  'Salads': 'tomato',
+  'Gyros': 'gyro',
+  'Souvlaki': 'souvlaki',
+  'From the Sea': 'fish',
+  'House Plates': 'plate',
+  'Sides': 'bowl',
+  'Desserts': 'dessert',
+  'Wine & Drinks': 'wine',
+};
+const ILLO = '/images/kala/order-pickup/illustrations';
+
+// Greek-key corner bracket (rotated per corner via CSS) — matches /order-pickup.
+const cornerKey = `<svg viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 19V3h16"/><path d="M10 19v-9h9"/><path d="M16 13h-3v3"/></svg>`;
 ---
 <Base
   title="Menu — KALA Greek and More"
-  description="The KALA menu — gyros, souvlaki, salads, dips, seafood, plates, sides, desserts, and wine."
+  description="The full KALA menu — dips, salads, gyros, souvlaki, seafood, house plates, sides, desserts, wine and drinks."
   current="/menu"
 >
-
-  <!-- Page header -->
-  <section class="page-header has-bg is-menu">
-    <div class="container">
-      <h1>MENU</h1>
-      <span class="page-sub menu-script-sub">Made by hand, shared by the table</span>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium nisi
-        tincidunt eu. Donec euismod tempor lectus.
+  <!-- ── Printed hero — coastal sketch (left) + olive branch (right) ── -->
+  <header class="pos-hero menu-hero">
+    <span class="pos-hero-art pos-hero-city" aria-hidden="true">
+      <img src={`${ILLO}/illo-coast-city.png`} alt="" decoding="async" />
+    </span>
+    <span class="pos-hero-art pos-hero-sprig" aria-hidden="true">
+      <img src={`${ILLO}/illo-olive-branch.png`} alt="" decoding="async" />
+    </span>
+    <div class="container pos-hero-inner">
+      <span class="pos-hero-eyebrow">KALA · Greek and More</span>
+      <h1 class="pos-hero-title">Our Menu</h1>
+      <p class="pos-hero-sub">
+        Made by hand, shared by the table — from the Aegean coast to Queen Anne.
       </p>
     </div>
-  </section>
+  </header>
 
-  <!-- Greek Key Divider -->
-  <div class="meander-divider" aria-hidden="true"></div>
-
-  <!-- Printed Mediterranean menu panel (decorative) -->
-  <section class="printed-menu">
-    <div class="container">
-      <div class="printed-panel">
-        <span class="panel-corner tl" aria-hidden="true"></span>
-        <span class="panel-corner tr" aria-hidden="true"></span>
-        <span class="panel-corner bl" aria-hidden="true"></span>
-        <span class="panel-corner br" aria-hidden="true"></span>
-
-        <div class="printed-grid">
-          <div class="printed-left">
-            <div class="printed-title">
-              <span class="printed-script">Mediterranean</span>
-              <span class="printed-serif">MENU</span>
-            </div>
-
-            <div class="printed-teaser">
-              <div class="teaser-group">
-                <span class="teaser-heading">Starters</span>
-                <p>Tzatziki · Hummus · Trio Sampler</p>
-              </div>
-              <div class="teaser-group">
-                <span class="teaser-heading">From the Grill</span>
-                <p>Chicken Souvlaki · Lamb Gyro · Grilled Octopus</p>
-              </div>
-              <div class="teaser-group">
-                <span class="teaser-heading">Sweet</span>
-                <p>Baklava · Loukoumades · Greek Coffee</p>
-              </div>
-            </div>
-
-            <div class="printed-rule" aria-hidden="true"><span class="diamond"></span></div>
-            <p class="printed-footer">
-              <span class="printed-sprig" aria-hidden="true" set:html={oliveSprig} />
-              Good food. Good wine. Good company.
-            </p>
-
-            <a href="/printed-menu" class="printed-view-link">
-              View the Menu
-              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-
-          <div class="printed-right" aria-hidden="true">
-            <svg class="illo-lemon" viewBox="0 0 220 176" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M64 60C44 46 22 50 12 68c20 14 44 10 52-8Z"/>
-              <path d="M22 66c12-2 28 0 38 6" stroke-width="1.1"/>
-              <path d="M96 42C92 18 104 2 126 4c2 24-12 40-30 38Z"/>
-              <path d="M104 38c4-12 12-22 20-28" stroke-width="1.1"/>
-              <ellipse cx="86" cy="108" rx="46" ry="38"/>
-              <path d="M131 100c8-3 15 0 17 6-7 4-15 2-17-6Z"/>
-              <circle cx="160" cy="112" r="40"/>
-              <circle cx="160" cy="112" r="31"/>
-              <path d="M160 112 160 72M160 112 188 84M160 112 200 112M160 112 188 140M160 112 160 152M160 112 132 140M160 112 120 112M160 112 132 84" stroke-width="1.1"/>
-              <path d="M150 96c6 4 14 4 20 0" stroke-width="1.1"/>
-            </svg>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Sticky category nav -->
-  <nav class="menu-jump" aria-label="Menu categories">
-    <div class="container menu-jump-inner">
-      <a href="#menu-top" class="is-all">All</a>
-      <a href="#dips">Dips &amp; Spreads</a>
-      <a href="#salads">Salads</a>
-      <a href="#gyros">Gyros</a>
-      <a href="#souvlaki">Souvlaki</a>
-      <a href="#seafood">From the Sea</a>
-      <a href="#plates">House Plates</a>
-      <a href="#sides">Sides</a>
-      <a href="#desserts">Desserts</a>
-      <a href="#wine">Wine &amp; Drinks</a>
-    </div>
-  </nav>
-
-  <div class="menu-page">
-
-    <!-- House Favorites -->
-    <section class="favorites" id="menu-top" aria-label="House favorites">
-      <div class="container">
-        <header class="favorites-head">
-          <span class="favorites-illo" aria-hidden="true" set:html={oliveSprig} />
-          <h2>House Favorites</h2>
-          <span class="favorites-rule" aria-hidden="true"></span>
-        </header>
-        <div class="favorites-strip">
-          <a class="fav-card" href="#dips">
-            <div class="card-image"><Image src={trioSampler} alt="A trio sampler of Greek dips with warm pita." loading="lazy" decoding="async" /><span class="menu-badge">House Favorite</span></div>
-            <div class="fav-body">
-              <div class="item-head"><h3>Trio Sampler</h3><span class="price">$15</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag v">V</span><span class="menu-tag gf">GF</span></div>
-            </div>
-          </a>
-          <a class="fav-card" href="#souvlaki">
-            <div class="card-image"><Image src={chickenSouvlaki} alt="Grilled chicken souvlaki skewers with lemon and herbs." loading="lazy" decoding="async" /></div>
-            <div class="fav-body">
-              <div class="item-head"><h3>Chicken Souvlaki</h3><span class="price">$16</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-            </div>
-          </a>
-          <a class="fav-card" href="#salads">
-            <div class="card-image"><Image src={horiatiki} alt="Traditional horiatiki Greek salad with feta and olives." loading="lazy" decoding="async" /></div>
-            <div class="fav-body">
-              <div class="item-head"><h3>Horiatiki Salad</h3><span class="price">$14</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag v">V</span><span class="menu-tag gf">GF</span></div>
-            </div>
-          </a>
-          <a class="fav-card" href="#seafood">
-            <div class="card-image"><Image src={wholeBranzino} alt="Whole grilled branzino with lemon and herbs." loading="lazy" decoding="async" /></div>
-            <div class="fav-body">
-              <div class="item-head"><h3>Whole Branzino</h3><span class="price">$32</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-            </div>
-          </a>
-          <a class="fav-card" href="#desserts">
-            <div class="card-image"><Image src={baklava} alt="Greek baklava with walnuts and honey." loading="lazy" decoding="async" /></div>
-            <div class="fav-body">
-              <div class="item-head"><h3>Baklava</h3><span class="price">$8</span></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="menu-tags"><span class="menu-tag v">V</span></div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Dips & Spreads -->
-    <section class="menu-category" id="dips">
-      <div class="container">
-        <div class="menu-zone">
-          <aside class="zone-label">
-            <span class="zone-illo" aria-hidden="true" set:html={oliveSprig} />
-            <h2>Dips <em>&amp; Spreads</em></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque magna.</p>
-          </aside>
-          <div class="zone-content">
-            <div class="menu-card-grid">
-              <article class="menu-item-card">
-                <div class="card-image"><Image src={tzatziki} alt="Tzatziki — yogurt and cucumber dip with herbs." loading="lazy" decoding="async" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Tzatziki</h3><span class="price">$7</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><Image src={hummus} alt="Creamy hummus with olive oil and chickpeas." loading="lazy" decoding="async" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Hummus</h3><span class="price">$7</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag v">V</span><span class="menu-tag gf">GF</span></div>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><Image src={melitzanosalata} alt="Smoky melitzanosalata eggplant dip with olive oil." loading="lazy" decoding="async" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Melitzanosalata</h3><span class="price">$7</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag v">V</span></div>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><Image src={taramasalata} alt="Pale pink taramasalata dip with olive oil and dill." loading="lazy" decoding="async" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Taramasalata</h3><span class="price">$8</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/tirokafteri.webp" width="1024" height="1024" alt="Tirokafteri — spicy whipped feta with roasted red peppers." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Tirokafteri</h3><span class="price">$8</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag spicy">Spicy</span></div>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/skordalia.webp" width="1100" height="821" alt="Skordalia — Greek garlic and potato dip with olive oil." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Skordalia</h3><span class="price">$7</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag v">V</span><span class="menu-tag gf">GF</span></div>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/fava.webp" width="1100" height="821" alt="Fava — Greek yellow split-pea purée with red onion and capers." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Fava</h3><span class="price">$7</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag v">V</span><span class="menu-tag gf">GF</span></div>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><Image src={trioSampler} alt="Trio sampler of Greek dips with warm pita." loading="lazy" decoding="async" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Trio Sampler</h3><span class="price">$15</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag">House Made</span></div>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Salads -->
-    <section class="menu-category" id="salads">
-      <div class="container">
-        <div class="menu-zone">
-          <aside class="zone-label">
-            <span class="zone-illo" aria-hidden="true" set:html={oliveSprig} />
-            <h2>Greek <em>Salads</em></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus.</p>
-          </aside>
-          <div class="zone-content">
-            <div class="menu-card-grid">
-              <article class="menu-item-card">
-                <div class="card-image"><Image src={horiatiki} alt="Horiatiki — Greek salad with tomato, cucumber, feta, and olives." loading="lazy" decoding="async" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Horiatiki</h3><span class="price">$14</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/1edd312e-7622-4c96-80d2-7f9b72e4b99e.webp" width="1100" height="1100" alt="Mixed greens salad with lemon-herb vinaigrette and toasted pine nuts." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Mixed Greens</h3><span class="price">$11</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag v">V</span></div>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/8bc4ad07-a989-4b76-85da-af9eae80fa73.webp" width="1100" height="1100" alt="Beet and walnut salad with arugula and crumbled goat cheese." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Beet &amp; Walnut</h3><span class="price">$13</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/6b99cc72-6194-477d-81ca-f8102c1d044d.webp" width="1100" height="1100" alt="Watermelon and feta salad with mint and a drizzle of honey." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Watermelon &amp; Feta</h3><span class="price">$14</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Gyros -->
-    <section class="menu-category" id="gyros">
-      <div class="container">
-        <div class="menu-zone">
-          <aside class="zone-label">
-            <span class="zone-illo" aria-hidden="true" set:html={oliveSprig} />
-            <h2>Gyros</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut sollicitudin ligula.</p>
-          </aside>
-          <div class="zone-content">
-            <div class="menu-card-grid">
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/e04b7c58-8d54-487c-9f41-5f660e52bc91.webp" width="1100" height="880" alt="The Classic Pork gyro wrapped in warm pita with tzatziki, tomato, and fries." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>The Classic Pork</h3><span class="price">$13</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/8e01e74a-1220-406b-a82a-796f1a525d84.webp" width="1100" height="880" alt="Chicken gyro in warm pita with tzatziki, tomato, and onion." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Chicken Gyro</h3><span class="price">$13</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/796a6d3d-2ec0-4831-ab7b-ab194896a7e7.webp" width="1100" height="880" alt="Lamb gyro, slow-roasted and sliced onto pita with tzatziki and crisp onion." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Lamb Gyro</h3><span class="price">$15</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/1ea85671-d0fd-4362-a7a9-a7479a31635d.webp" width="1100" height="880" alt="Garden gyro with grilled vegetables, hummus, feta, and fresh herbs." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Garden Gyro</h3><span class="price">$14</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag v">V</span></div>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Souvlaki — featured + text list -->
-    <section class="menu-category" id="souvlaki">
-      <div class="container">
-        <div class="menu-zone">
-          <aside class="zone-label">
-            <span class="zone-illo" aria-hidden="true" set:html={oliveSprig} />
-            <h2>Souvlaki</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque magna.</p>
-          </aside>
-          <div class="zone-content souvlaki-content">
-            <a class="menu-feature-card" href="/order">
-              <div class="card-image">
-                <Image src={chickenSouvlaki} alt="Grilled chicken souvlaki skewers with lemon, oregano, and olive oil." loading="lazy" decoding="async" />
-              </div>
-              <div class="feature-body">
-                <div class="item-head"><h3>Chicken Souvlaki</h3><span class="price">$16</span></div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-                <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-              </div>
-            </a>
-            <ul class="text-list">
-              <li>
-                <div class="text-item-head"><h4>Lamb Souvlaki</h4><span class="price">$19</span></div>
-                <p>Lorem ipsum dolor sit amet.</p>
-                <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-              </li>
-              <li>
-                <div class="text-item-head"><h4>Pork Souvlaki</h4><span class="price">$16</span></div>
-                <p>Lorem ipsum dolor sit amet.</p>
-                <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-              </li>
-              <li>
-                <div class="text-item-head"><h4>Shrimp Souvlaki</h4><span class="price">$20</span></div>
-                <p>Lorem ipsum dolor sit amet.</p>
-                <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- From the Sea — featured + grid -->
-    <section class="menu-category" id="seafood">
-      <div class="container">
-        <div class="menu-zone">
-          <aside class="zone-label">
-            <span class="zone-illo" aria-hidden="true" set:html={oliveSprig} />
-            <h2>From <em>the Sea</em></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus.</p>
-          </aside>
-          <div class="zone-content">
-            <a class="menu-feature-card" href="/order">
-              <div class="card-image">
-                <Image src={wholeBranzino} alt="Whole grilled branzino with lemon, olive oil, and fresh herbs." loading="lazy" decoding="async" />
-                <span class="menu-badge">Chef's Pick</span>
-              </div>
-              <div class="feature-body">
-                <div class="item-head"><h3>Whole Branzino</h3><span class="price">$32</span></div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus, vivamus sit amet libero in lacus.</p>
-                <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-              </div>
-            </a>
-            <div class="menu-card-grid">
-              <article class="menu-item-card">
-                <div class="card-image"><Image src={grilledOctopus} alt="Grilled octopus with lemon, olive oil, and herbs." loading="lazy" decoding="async" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Grilled Octopus</h3><span class="price">$24</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/saganaki-shrimp.webp" width="1024" height="1024" alt="Saganaki shrimp baked with feta in a spicy tomato sauce." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Saganaki Shrimp</h3><span class="price">$18</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag spicy">Spicy</span></div>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/calamari.webp" width="1024" height="1024" alt="Lightly fried calamari rings served with lemon and garlic aioli." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Calamari</h3><span class="price">$16</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- House Plates -->
-    <section class="menu-category" id="plates">
-      <div class="container">
-        <div class="menu-zone">
-          <aside class="zone-label">
-            <span class="zone-illo" aria-hidden="true" set:html={oliveSprig} />
-            <h2>House <em>Plates</em></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet libero.</p>
-          </aside>
-          <div class="zone-content">
-            <div class="menu-card-grid">
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/moussaka.webp" width="1024" height="1024" alt="Moussaka — layered eggplant and spiced lamb topped with golden béchamel." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Moussaka</h3><span class="price">$19</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/pastitsio.webp" width="1024" height="1024" alt="Pastitsio — Greek pasta bake with seasoned beef and creamy béchamel." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Pastitsio</h3><span class="price">$18</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/lamb-kleftiko.webp" width="1024" height="1024" alt="Lamb kleftiko, slow-braised in parchment with lemon, garlic, and herbs." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Lamb Kleftiko</h3><span class="price">$26</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/014a33bc-3a11-4396-82a5-8c7e7f5726cf.webp" width="1100" height="880" alt="Roast half chicken with lemon, oregano, and garlic, served with potatoes." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Roast Chicken</h3><span class="price">$20</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Sides -->
-    <section class="menu-category" id="sides">
-      <div class="container">
-        <div class="menu-zone">
-          <aside class="zone-label">
-            <span class="zone-illo" aria-hidden="true" set:html={oliveSprig} />
-            <h2>Sides</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque.</p>
-          </aside>
-          <div class="zone-content">
-            <div class="menu-card-grid is-compact">
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/1debfddb-5fce-44a5-bd4c-9957be88836c.webp" width="1100" height="880" alt="Oven-roasted Greek lemon potatoes with olive oil and oregano." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Lemon Potatoes</h3><span class="price">$6</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag v">V</span><span class="menu-tag gf">GF</span></div>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/c09f71a2-079a-4e68-9360-362d961cb6ac.webp" width="1100" height="880" alt="Greek tomato rice pilaf simmered with herbs and olive oil." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Greek Rice</h3><span class="price">$5</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag v">V</span></div>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/94d38a32-02ea-4584-ba7e-9f4187fd90f1.webp" width="1100" height="880" alt="Spanakopita — flaky phyllo triangles filled with spinach and feta." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Spanakopita</h3><span class="price">$8</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/01c5098e-cec5-45ac-b622-86405690a6da.webp" width="1100" height="880" alt="Dolmades — vine leaves stuffed with herbed rice and served with lemon." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Dolmades</h3><span class="price">$9</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag v">V</span></div>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Desserts -->
-    <section class="menu-category" id="desserts">
-      <div class="container">
-        <div class="menu-zone">
-          <aside class="zone-label">
-            <span class="zone-illo" aria-hidden="true" set:html={oliveSprig} />
-            <h2>Desserts</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor lectus.</p>
-          </aside>
-          <div class="zone-content">
-            <div class="menu-card-grid">
-              <article class="menu-item-card">
-                <div class="card-image"><Image src={baklava} alt="Baklava — layered phyllo with walnuts and honey." loading="lazy" decoding="async" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Baklava</h3><span class="price">$8</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/f7ff28eb-f2a7-4078-9852-d247d2505b8f.webp" width="1100" height="880" alt="Galaktoboureko — semolina custard baked in phyllo with citrus syrup." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Galaktoboureko</h3><span class="price">$8</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/5f295419-264c-47da-b6b4-47921e4e288f.webp" width="1100" height="880" alt="Loukoumades — Greek honey doughnuts drizzled with thyme honey and cinnamon." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Loukoumades</h3><span class="price">$7</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/02dad55d-cdeb-4a3b-8a08-974bca6bd92d.webp" width="1100" height="880" alt="Thick Greek yogurt topped with wild honey and crushed walnuts." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Yogurt &amp; Honey</h3><span class="price">$7</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="menu-tags"><span class="menu-tag gf">GF</span></div>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Wine & Drinks -->
-    <section class="menu-category" id="wine">
-      <div class="container">
-        <div class="menu-zone">
-          <aside class="zone-label">
-            <span class="zone-illo zone-illo-glass" aria-hidden="true">
-              <svg viewBox="0 0 48 120" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8h24c0 18-7 30-12 30S12 26 12 8Z"/><path d="M13 17h22"/><path d="M24 38v60"/><path d="M12 110h24"/></svg>
-            </span>
-            <h2>Wine <em>&amp; Drinks</em></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet libero.</p>
-          </aside>
-          <div class="zone-content">
-            <div class="menu-card-grid is-drinks">
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/f3dff88e-f5e1-40a7-b77a-d8dcef65f46d.webp" width="1100" height="880" alt="A glass of smooth Greek house red wine." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>House Red</h3><span class="price">$9 / $36</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur. Glass / Bottle.</p>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><Image src={whiteWine} alt="A chilled glass of crisp white wine." loading="lazy" decoding="async" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>House White</h3><span class="price">$9 / $36</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur. Glass / Bottle.</p>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/99fbf158-70ee-46cc-bbe1-0449c5976a5a.webp" width="880" height="1100" alt="A glass of Assyrtiko, a crisp mineral-driven Santorini white." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Assyrtiko</h3><span class="price">$14 / $54</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur. Glass / Bottle.</p>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/c40549f9-037d-4fdf-8380-b7fd49956858.webp" width="880" height="1100" alt="A glass of Agiorgitiko, a velvety Nemean red." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Agiorgitiko</h3><span class="price">$14 / $54</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur. Glass / Bottle.</p>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/ouzo.webp" width="1100" height="821" alt="A glass of Greek ouzo over ice with a twist of lemon." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Ouzo</h3><span class="price">$8</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/8b7afa69-13d8-484b-8974-e82c0fab6bf7.webp" width="948" height="1100" alt="Greek coffee brewed in a copper briki and served in a demitasse." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Greek Coffee</h3><span class="price">$4</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/frappe.webp" width="1100" height="821" alt="A tall glass of Greek frappé with creamy foam." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Frappé</h3><span class="price">$5</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-              </article>
-              <article class="menu-item-card">
-                <div class="card-image"><img src="/public/2fec95ff-4488-44f5-89fb-9e42ed63a107.webp" width="899" height="1100" alt="A chilled glass of sparkling mineral water." loading="lazy" /></div>
-                <div class="card-body">
-                  <div class="item-head"><h3>Sparkling Water</h3><span class="price">$4</span></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
+  <!-- ── Greek-key divider ── -->
+  <div class="pos-divider" role="presentation" aria-hidden="true">
+    <span class="pos-divider-rule"></span>
+    <span class="pos-divider-diamond"></span>
+    <span class="pos-divider-rule"></span>
   </div>
 
-  <!-- Order CTA -->
-  <section class="menu-cta">
-    <div class="container">
-      <div class="menu-cta-inner">
-        <span class="menu-eyebrow">Come hungry</span>
-        <h2>Hungry yet? <em>Let's eat.</em></h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis pellentesque magna.</p>
-        <div class="menu-cta-actions">
-          <a href="/order" class="btn btn-primary btn-lg">
-            Order Online
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="/reservations" class="btn btn-outline btn-lg">Make a Reservation</a>
+  <!-- ── Printed-menu sheet ── -->
+  <div class="menu-open">
+    <div class="container pos-sheet-wrap">
+      <div class="pos-sheet">
+        <span class="pos-corner tl" set:html={cornerKey} aria-hidden="true" />
+        <span class="pos-corner tr" set:html={cornerKey} aria-hidden="true" />
+        <span class="pos-corner bl" set:html={cornerKey} aria-hidden="true" />
+        <span class="pos-corner br" set:html={cornerKey} aria-hidden="true" />
+
+        <div class="pm-columns">
+          {menu.map((cat) => (
+            <section class="pm-cat">
+              <h2 class="pm-cat-title">{cat.title}</h2>
+              <div class="pm-cat-body">
+                {catIllo[cat.title] && (
+                  <span class="pm-illo" aria-hidden="true">
+                    <img src={`${ILLO}/illo-${catIllo[cat.title]}.png`} alt="" loading="lazy" decoding="async" />
+                  </span>
+                )}
+                <ul class="pm-items">
+                  {cat.items.map((it) => (
+                    <li class="pm-item">
+                      <span class="pm-name">
+                        {it.n}
+                        {it.d && it.d.map((mark) => (
+                          <span class={`pm-diet pm-diet-${mark}`}>{dietLabel[mark]}</span>
+                        ))}
+                      </span>
+                      <span class="pm-leader" aria-hidden="true"></span>
+                      <span class="pm-price">${it.p}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+          ))}
         </div>
-        <span class="menu-cta-meander" aria-hidden="true"></span>
+
+        <footer class="pm-foot">
+          <div class="menu-rule menu-rule-short" role="presentation" aria-hidden="true"></div>
+          <p class="pm-legend">
+            <span><b>V</b> Vegetarian</span>
+            <span><b>GF</b> Gluten-free</span>
+            <span><b>✦</b> Spicy</span>
+          </p>
+          <p class="pm-tagline">
+            <span class="pm-sprig" aria-hidden="true" set:html={oliveSprig} />
+            Good food. Good wine. Good company.
+          </p>
+          <p class="pm-addr">1500 Queen Anne Ave N · Seattle · (555) 123 — 4567</p>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <!-- Closing order / reserve band -->
+  <section class="menu-cta-band">
+    <div class="container">
+      <span class="eyebrow">Hungry?</span>
+      <h2>Come dine with us</h2>
+      <div class="pm-actions">
+        <a href="/order" class="btn btn-primary btn-lg">
+          Order Online
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="/reservations" class="btn btn-outline btn-lg">Make a Reservation</a>
       </div>
     </div>
   </section>
-
 </Base>

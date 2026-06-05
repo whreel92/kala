@@ -68,6 +68,12 @@
 
   /* Faint paper grain (~5% opacity) reused across warm surfaces */
   --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+
+  /* Greek-key meander — one tessellating key (period 20) on a continuous
+     baseline, repeated horizontally for divider bands and section accents.
+     Stroke colour is baked into the data URI (background-image ignores
+     currentColor), so it always renders in brand blue. */
+  --meander: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%23194B9E' stroke-width='2' shape-rendering='crispEdges'%3E%3Cpath d='M0 17H20'/%3E%3Cpath d='M2 17V3H17V14H7V8H12V11'/%3E%3C/svg%3E");
 }
 
 /* Reset */
@@ -491,9 +497,7 @@ main:focus { outline: none; }
   object-position: center center;
   display: block;
 }
-.hero-media img {
-  animation: heroZoom 18s ease-out forwards;
-}
+/* Static hero — no Ken-Burns zoom (simplified). */
 /* Engraving-style illustration overlay (KALA sequence) — three keyframe stills
    crossfading in a loop on top of the hero. mix-blend-mode: multiply drops the
    pure-white paper background so only the ink lines + photo elements (KALA bottle,
@@ -909,7 +913,7 @@ main:focus { outline: none; }
   opacity: .32;
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 24%, #000 76%, transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0%, #000 24%, #000 76%, transparent 100%);
-  animation: meanderPan 26s linear infinite;
+  /* static — no auto-pan (simplified) */
 }
 /* center medallion — a small blue diamond on a white plate */
 .meander-divider::after {
@@ -1831,7 +1835,7 @@ main:focus { outline: none; }
     radial-gradient(ellipse 80% 120% at 50% -10%, rgba(38, 53, 90, .55), transparent 60%),
     var(--charcoal);
   color: var(--cream);
-  padding: clamp(60px, 8vw, 100px) 0 30px;
+  padding: clamp(46px, 6vw, 76px) 0 26px;
   position: relative;
   overflow: hidden;
 }
@@ -1844,9 +1848,9 @@ main:focus { outline: none; }
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.6fr repeat(4, 1fr);
-  gap: 48px;
-  padding-bottom: 56px;
+  grid-template-columns: 1.5fr repeat(3, 1fr);
+  gap: 40px;
+  padding-bottom: 38px;
   position: relative;
   border-bottom: 1px solid rgba(255,255,255,.08);
 }
@@ -4021,32 +4025,151 @@ img, video, svg { max-width: 100%; height: auto; }
   min-height: 70vh;
 }
 
-.pos-header {
-  padding: clamp(40px, 6vw, 80px) 0 clamp(28px, 4vw, 40px);
+/* ── Printed hero ── */
+.pos-hero {
+  position: relative;
   text-align: center;
+  padding: clamp(30px, 4.5vw, 58px) 0 clamp(18px, 2.6vw, 28px);
+  overflow: hidden;
 }
-.pos-header h1 {
+.pos-hero-inner { position: relative; z-index: 2; }
+.pos-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+  color: var(--blue-primary);
+}
+.pos-hero-eyebrow::before,
+.pos-hero-eyebrow::after {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  opacity: .55;
+}
+.pos-hero-title {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(40px, 6vw, 64px);
-  margin: 8px 0 14px;
-  color: var(--charcoal);
+  font-size: clamp(42px, 6.6vw, 70px);
+  line-height: 1.02;
+  color: var(--blue-primary);
+  margin: 10px 0 8px;
 }
-.pos-header-sub {
+.pos-hero-sub {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(16px, 1.8vw, 20px);
   color: var(--slate);
-  font-size: clamp(14px, 1.6vw, 17px);
-  max-width: 50ch;
+  max-width: 46ch;
   margin: 0 auto;
 }
-
-/* Single-column layout — the cart is no longer pinned to the right;
-   it lives in a floating button at the bottom-right that expands into a
-   full-screen overlay. */
-.pos-grid {
-  display: block;
-  padding-bottom: clamp(60px, 8vw, 100px);
+/* Hero line-art — olive branch (left) + coastal village sketch (right) */
+.pos-hero-art {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  color: var(--blue-soft);
+  pointer-events: none;
 }
-.pos-menu-col { min-width: 0; }
+.pos-hero-art svg,
+.pos-hero-art img { display: block; width: 100%; height: auto; }
+/* Coastal-village sketch, anchored to the top-left corner */
+.pos-hero-city {
+  top: 0;
+  left: 0;
+  width: clamp(230px, 30vw, 440px);
+  opacity: .6;
+  transform: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+}
+/* Olive branch sweeps in from the top-right */
+.pos-hero-sprig {
+  top: 4px;
+  right: 0;
+  width: clamp(230px, 30vw, 420px);
+  opacity: .55;
+  transform: none;
+  -webkit-mask-image: linear-gradient(to left, #000 64%, transparent 100%);
+  mask-image: linear-gradient(to left, #000 64%, transparent 100%);
+}
+@media (max-width: 900px) {
+  .pos-hero-art { display: none; }
+}
+
+/* ── Greek-key divider (rule · diamond · rule) ── */
+.pos-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  max-width: 1180px;
+  margin: clamp(12px, 2vw, 20px) auto 0;
+  padding: 0 clamp(20px, 4vw, 40px);
+}
+.pos-divider-rule {
+  flex: 1 1 auto;
+  max-width: 380px;
+  height: 0;
+  border-top: 1px solid rgba(25, 75, 158, .30);
+}
+.pos-divider-diamond {
+  flex: 0 0 auto;
+  width: 11px;
+  height: 11px;
+  background: var(--blue-primary);
+  transform: rotate(45deg);
+  box-shadow: 0 0 0 4px var(--cream), 0 0 0 5px rgba(25, 75, 158, .35);
+}
+
+/* ── Printed-menu sheet ── */
+.pos-sheet-wrap {
+  padding: clamp(18px, 2.6vw, 32px) 0 clamp(50px, 7vw, 96px);
+}
+.pos-sheet {
+  position: relative;
+  background-color: var(--paper-3);
+  background-image: var(--paper-grain);
+  background-size: 170px;
+  border: 1.5px solid var(--blue-primary);
+  border-radius: 4px;
+  padding: clamp(28px, 4vw, 58px) clamp(18px, 3.4vw, 60px) clamp(34px, 4.5vw, 60px);
+  box-shadow: 0 22px 60px -40px rgba(25, 75, 158, .45);
+}
+/* Thin inset double-line, the classic printed-menu frame */
+.pos-sheet::before {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(25, 75, 158, .28);
+  border-radius: 2px;
+  pointer-events: none;
+}
+.pos-corner {
+  position: absolute;
+  width: clamp(26px, 2.8vw, 38px);
+  height: clamp(26px, 2.8vw, 38px);
+  color: var(--blue-primary);
+  z-index: 2;
+}
+.pos-corner svg { width: 100%; height: 100%; display: block; }
+.pos-corner.tl { top: 13px; left: 13px; }
+.pos-corner.tr { top: 13px; right: 13px; transform: rotate(90deg); }
+.pos-corner.br { right: 13px; bottom: 13px; transform: rotate(180deg); }
+.pos-corner.bl { bottom: 13px; left: 13px; transform: rotate(270deg); }
+.pos-sheet-olive {
+  display: block;
+  width: clamp(96px, 12vw, 132px);
+  margin: clamp(16px, 2.6vw, 30px) auto 0;
+  color: var(--blue-soft);
+  opacity: .6;
+}
+.pos-sheet-olive svg { width: 100%; height: auto; display: block; }
 
 /* Cart overlay — centered popup that floats over the menu. The menu
    stays visible (dimmed/blurred behind) so users feel like they're
@@ -4076,71 +4199,122 @@ img, video, svg { max-width: 100%; height: auto; }
   cursor: pointer;
 }
 
-/* Category chip bar (sticky inside menu column) */
+/* ── Category jump pills (sticky below the nav) ── */
 .pos-cats {
   position: sticky;
   top: 64px;
-  z-index: 4;
-  background: var(--cream);
-  margin: 0 -8px;
-  padding: 8px;
-  border-bottom: 1px solid rgba(34,37,46,.08);
+  z-index: 20;
+  background: linear-gradient(var(--cream) 60%, rgba(238, 239, 239, .82));
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  padding: 12px 0;
 }
 .pos-cats-inner {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  padding-bottom: 2px;
+  scroll-padding-inline: 16px;
 }
 .pos-cats-inner::-webkit-scrollbar { display: none; }
 .pos-cat-chip {
   flex: 0 0 auto;
-  background: var(--white);
-  border: 1px solid rgba(34,37,46,.12);
-  color: var(--charcoal);
-  padding: 8px 16px;
+  background: var(--paper-warm);
+  border: 1px solid rgba(25, 75, 158, .26);
+  color: var(--blue-primary);
+  padding: 8px 18px;
   border-radius: 999px;
   font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 13.5px;
+  font-weight: 600;
   letter-spacing: .02em;
+  white-space: nowrap;
   cursor: pointer;
-  transition: background .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
   text-decoration: none;
+  transition: background .2s var(--ease), color .2s var(--ease),
+    border-color .2s var(--ease), box-shadow .2s var(--ease);
 }
 .pos-cat-chip:hover {
   border-color: var(--blue-primary);
-  color: var(--blue-primary);
+  box-shadow: 0 3px 12px -7px rgba(25, 75, 158, .6);
 }
 .pos-cat-chip.is-active {
   background: var(--blue-primary);
-  color: var(--white);
+  color: #fff;
   border-color: var(--blue-primary);
 }
 
-/* Menu sections */
+/* ── Two-column printed menu inside the sheet ── */
 .pos-menu {
-  padding-top: 24px;
+  position: relative;
+  z-index: 1;
+  columns: 2;
+  column-gap: clamp(30px, 4.4vw, 64px);
+  column-rule: 1px solid rgba(25, 75, 158, .16);
 }
 .pos-cat-section {
-  padding: 24px 0 32px;
-  scroll-margin-top: 140px;   /* so anchor scroll lands below sticky chips */
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  margin: 0 0 clamp(24px, 3vw, 38px);
+  scroll-margin-top: 132px;   /* so anchor scroll lands below sticky pills */
 }
-.pos-cat-section-head {
-  margin: 0 0 18px;
+/* Section header — line-art icon + uppercase blue title + mini meander rule */
+.pos-sec-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 7px;
 }
-.pos-cat-section-head h2 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(28px, 3.5vw, 38px);
-  color: var(--charcoal);
-  margin: 0 0 4px;
+.pos-sec-tick {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 16px;
+  color: var(--blue-primary);
+  opacity: .9;
 }
-.pos-cat-section-head p {
-  color: var(--slate);
+.pos-sec-tick svg { width: 100%; height: 100%; display: block; }
+.pos-sec-title {
   margin: 0;
-  font-size: 14.5px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--blue-primary);
+}
+.pos-sec-key {
+  display: block;
+  height: 10px;
+  margin: 0 0 10px;
+  background-image: var(--meander);
+  background-repeat: repeat-x;
+  background-position: left center;
+  background-size: auto 10px;
+  opacity: .5;
+}
+/* Section body — hand-drawn illustration in a left gutter beside the items */
+.pos-sec-body {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(10px, 1.4vw, 18px);
+}
+.pos-sec-illo {
+  flex: 0 0 auto;
+  width: clamp(64px, 7vw, 96px);
+  margin-top: 2px;
+  opacity: .85;
+}
+.pos-sec-illo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.pos-sec-body .pos-items { flex: 1 1 auto; min-width: 0; }
+@media (max-width: 540px) {
+  .pos-sec-illo { width: 56px; }
 }
 
 /* Cart panel — bounded popup with one scroll area. The "Back to menu"
@@ -4259,72 +4433,76 @@ img, video, svg { max-width: 100%; height: auto; }
   .pos-cats { top: 60px; }
 }
 
-/* Menu item cards (POS) */
-.pos-card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: clamp(14px, 1.8vw, 22px);
-}
-.pos-item-card {
-  background: var(--white);
-  border: 1px solid rgba(34,37,46,.08);
-  border-radius: var(--radius);
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .2s var(--ease);
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  font-family: inherit;
-  color: inherit;
+/* ── Printed menu item rows ──
+   Each item is a full-width button: a name · dotted-leader · price line with a
+   small description beneath. No cards — printed-menu typography. Clicking opens
+   the customize/add-to-cart panel. */
+.pos-items {
+  list-style: none;
+  margin: 0;
   padding: 0;
 }
-.pos-item-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-soft);
-  border-color: rgba(25,75,158,.25);
-}
-.pos-item-image {
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  background: var(--cream);
-}
-.pos-item-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.pos-item { margin: 0; }
+.pos-item-row {
   display: block;
+  width: calc(100% + 16px);
+  margin: 0 -8px;
+  padding: 7px 8px 8px;
+  background: none;
+  border: 0;
+  border-radius: 6px;
+  font-family: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color .16s var(--ease);
 }
-.pos-item-body {
-  padding: 14px 16px 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.pos-item-row:hover { background-color: rgba(25, 75, 158, .06); }
+.pos-item-row:focus-visible {
+  outline: 2px solid var(--blue-primary);
+  outline-offset: 1px;
+  background-color: rgba(25, 75, 158, .06);
 }
-.pos-item-head {
+.pos-item-line {
   display: flex;
-  justify-content: space-between;
   align-items: baseline;
-  gap: 12px;
+  gap: 8px;
 }
-.pos-item-head h3 {
+.pos-item-name {
+  flex: 0 1 auto;
   font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 19px;
+  font-size: clamp(17px, 1.5vw, 20px);
+  font-weight: 600;
   color: var(--charcoal);
-  margin: 0;
+}
+.pos-item-leader {
+  flex: 1 1 auto;
+  min-width: 14px;
+  align-self: flex-end;
+  transform: translateY(-4px);
+  border-bottom: 1.5px dotted rgba(25, 75, 158, .42);
 }
 .pos-item-price {
-  font-family: var(--font-body);
+  flex: 0 0 auto;
+  font-family: var(--font-display);
+  font-size: clamp(16px, 1.5vw, 20px);
   font-weight: 600;
   color: var(--blue-primary);
-  font-size: 16px;
+  white-space: nowrap;
 }
 .pos-item-desc {
+  display: block;
+  margin: 1px 0 0;
+  max-width: 44ch;
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  line-height: 1.45;
   color: var(--slate);
-  font-size: 13.5px;
-  margin: 0;
-  line-height: 1.5;
+}
+
+/* One column on small screens */
+@media (max-width: 720px) {
+  .pos-menu { columns: 1; column-rule: none; }
 }
 
 /* Detail panel */
@@ -4873,8 +5051,10 @@ img, video, svg { max-width: 100%; height: auto; }
 }
 
 /* Hide the cart/menu/header when confirmation is showing */
-.pos-ui.is-confirming .pos-header,
-.pos-ui.is-confirming .pos-grid,
+.pos-ui.is-confirming .pos-hero,
+.pos-ui.is-confirming .pos-cats,
+.pos-ui.is-confirming .pos-divider,
+.pos-ui.is-confirming .pos-sheet-wrap,
 .pos-ui.is-confirming .pos-detail,
 .pos-ui.is-confirming .pos-mobile-bar { display: none; }
 
@@ -4947,16 +5127,6 @@ body:has(.pos-cart-col.is-open) .pos-mobile-bar { opacity: 0; pointer-events: no
   }
   .pos-detail.is-open .pos-detail-panel { transform: translateY(0); }
   .pos-detail-image { aspect-ratio: 3 / 2; }
-}
-
-/* Item card grid narrower phones */
-@media (max-width: 480px) {
-  .pos-card-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-  .pos-item-body { padding: 12px 12px 14px; }
-  .pos-item-head h3 { font-size: 16px; }
 }
 
 /* Add-to-cart toast */
@@ -5037,9 +5207,9 @@ body:has(.pos-cart-col.is-open) .pos-mobile-bar { opacity: 0; pointer-events: no
 /* Lift the toast above the floating "Your order" pill */
 .pos-toast { bottom: calc(env(safe-area-inset-bottom, 0px) + 80px); }
 
-/* Tighter POS header on tablet */
+/* Tighter POS hero on tablet */
 @media (min-width: 761px) and (max-width: 1024px) {
-  .pos-header { padding: clamp(28px, 4vw, 56px) 0 clamp(20px, 3vw, 32px); }
+  .pos-hero { padding: clamp(28px, 4vw, 56px) 0 clamp(18px, 3vw, 28px); }
 }
 
 /* ──────────────────────────────────────────────
@@ -5659,7 +5829,8 @@ body.is-pos .sticky-order { display: none !important; }
   transform: rotate(-1.4deg);
   overflow: hidden;
 }
-.os-photo-card img {
+.os-photo-card img,
+.os-photo-card video {
   display: block;
   width: 100%;
   aspect-ratio: 3 / 2;
@@ -5668,7 +5839,10 @@ body.is-pos .sticky-order { display: none !important; }
   transform: scale(1.05);
   transition: transform 1.5s var(--ease);
 }
-.os-hero-media.in-view .os-photo-card img { transform: scale(1); }
+/* The engraving clip is square; show it 1:1 so the Greek-key border isn't cropped. */
+.os-photo-card video { aspect-ratio: 1 / 1; }
+.os-hero-media.in-view .os-photo-card img,
+.os-hero-media.in-view .os-photo-card video { transform: scale(1); }
 .os-stamp {
   position: absolute;
   right: -12px; bottom: -20px;
@@ -6544,3 +6718,141 @@ body.is-bare {
   .pm-columns { column-gap: 14mm; }
   .pm-citrus { opacity: .85; }
 }
+
+/* ── Menu page framing: header band + sheet + closing CTA ── */
+.menu-head {
+  text-align: center;
+  padding: clamp(54px, 9vw, 104px) 0 clamp(26px, 4vw, 48px);
+  background:
+    radial-gradient(ellipse 72% 90% at 50% -10%, var(--blue-wash), transparent 68%),
+    linear-gradient(180deg, var(--white) 0%, var(--paper-3) 100%);
+}
+.menu-head h1 {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 8vw, 88px);
+  font-weight: 500;
+  line-height: 1.02;
+  color: var(--blue-primary);
+  margin: 14px 0 0;
+  letter-spacing: -.015em;
+}
+.menu-head h1 em { font-style: italic; font-weight: 400; }
+.menu-head-sub {
+  max-width: 520px;
+  margin: 16px auto 0;
+  color: var(--slate);
+  font-size: clamp(15px, 1.8vw, 17px);
+  line-height: 1.7;
+}
+
+/* Open menu — the list now lives inside a bordered printed sheet (.pos-sheet,
+   shared with /order-pickup). The page itself is cream so the paper sheet reads
+   as a distinct panel. */
+.menu-open {
+  position: relative;
+  background: var(--cream);
+  padding: 0;
+}
+.menu-open .pm-columns { margin-top: 0; }
+
+/* Per-category illustration in a left gutter beside the items (menu page only,
+   so the printed-menu PDF is unaffected). */
+.menu-open .pm-cat-body {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(10px, 1.4vw, 18px);
+}
+.menu-open .pm-illo {
+  flex: 0 0 auto;
+  width: clamp(60px, 6vw, 88px);
+  margin-top: 4px;
+  opacity: .85;
+}
+.menu-open .pm-illo img { display: block; width: 100%; height: auto; }
+.menu-open .pm-cat-body .pm-items { flex: 1 1 auto; min-width: 0; }
+@media (max-width: 540px) {
+  .menu-open .pm-illo { width: 54px; }
+}
+
+/* Greek-key meander divider — repeats horizontally, brand blue, on a baseline */
+.menu-rule {
+  height: 20px;
+  margin: 0 auto;
+  background-image: var(--meander);
+  background-repeat: repeat-x;
+  background-position: center bottom;
+  background-size: auto 20px;
+  opacity: .9;
+}
+.menu-rule-short {
+  max-width: 220px;
+  margin-bottom: clamp(16px, 2.4vw, 24px);
+}
+
+/* Lemon line-art sits centred between the meander band and the columns —
+   a small Mediterranean ornament, clear of any menu content. */
+.menu-open .menu-citrus {
+  position: static;
+  display: block;
+  width: clamp(92px, 12vw, 124px);
+  margin: clamp(16px, 2.4vw, 26px) auto 0;
+  color: var(--blue-soft);
+  opacity: .9;
+}
+
+/* Each category heading gets a short 3-key meander accent on the left */
+.menu-open .pm-cat-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom-color: rgba(25, 75, 158, .22);
+}
+.menu-open .pm-cat-title::before {
+  content: '';
+  flex: 0 0 auto;
+  width: 44px;
+  height: 13px;
+  background-image: var(--meander);
+  background-repeat: repeat-x;
+  background-position: left bottom;
+  background-size: auto 13px;
+  opacity: .8;
+}
+
+@media (max-width: 720px) {
+  .menu-open .menu-citrus { width: clamp(84px, 16vw, 110px); opacity: .85; }
+  .menu-open .pm-cat-title::before { width: 35px; }
+}
+
+.menu-cta-band {
+  text-align: center;
+  background: var(--paper-3);
+  padding: clamp(40px, 6vw, 76px) 0 clamp(56px, 8vw, 100px);
+}
+.menu-cta-band h2 {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4.4vw, 46px);
+  font-weight: 500;
+  color: var(--blue-primary);
+  margin: 10px 0 clamp(22px, 3vw, 32px);
+  letter-spacing: -.01em;
+}
+
+/* Order / reserve actions */
+.pm-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+@media (max-width: 480px) {
+  .pm-actions { flex-direction: column; align-items: stretch; }
+  .pm-actions .btn { width: 100%; justify-content: center; }
+}
+
+/* Simplified homepage menu section — centered heading + single CTA */
+.menu-section--simple { text-align: center; }
+.menu-section--simple .section-header { max-width: 640px; margin: 0 auto; align-items: center; }
+.menu-section--simple .section-header .btn { margin-top: clamp(20px, 3vw, 30px); }

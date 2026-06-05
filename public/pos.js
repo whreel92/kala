@@ -33,31 +33,60 @@
     <a class="pos-cat-chip" href="#pos-cat-${cat.id}" data-cat-id="${cat.id}">${escapeHtml(cat.name)}</a>
   `).join('');
 
-  // Category sections
-  menuContainer.innerHTML = menu.categories.map(cat => `
+  // Hand-drawn Higgsfield illustration per category — deep-blue etched line art
+  // on transparent paper, sitting in the section's left gutter (à la a printed
+  // taverna menu). Maps category id → file in /images/kala/order-pickup/illustrations.
+  const ILLO_DIR = '/images/kala/order-pickup/illustrations';
+  const CAT_ILLO = {
+    dips: 'olive', salads: 'tomato', gyros: 'gyro', souvlaki: 'souvlaki',
+    seafood: 'fish', plates: 'plate', sides: 'bowl', desserts: 'dessert', wine: 'wine',
+  };
+  // Tiny uniform sprig flourish before each heading (kept as crisp inline SVG).
+  const SEC_TICK = `<svg viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 13C8 11 16 7 22 2"/><path d="M9 9c-2-2-2-5 0-6 2 2 2 5 0 6Z"/><path d="M13 6c2-2 5-2 6 0-2 2-5 2-6 0Z"/><ellipse cx="5" cy="11" rx="1.3" ry="1.8" transform="rotate(-30 5 11)"/></svg>`;
+
+  // Render one printed-menu section: a small flourish + uppercase title + mini
+  // Greek-key rule, then a left-gutter illustration beside dotted-leader item
+  // rows (name · leader · price) with a description beneath. Each row stays a
+  // button → opens the customize panel. A not-yet-generated illustration hides
+  // itself via onerror so the layout never shows a broken image.
+  const renderSection = (cat) => {
+    const illo = CAT_ILLO[cat.id];
+    return `
     <section class="pos-cat-section" id="pos-cat-${cat.id}" data-cat-id="${cat.id}">
-      <header class="pos-cat-section-head">
-        <h2>${escapeHtml(cat.name)}</h2>
-        ${cat.blurb ? `<p>${escapeHtml(cat.blurb)}</p>` : ''}
+      <header class="pos-sec-head">
+        <span class="pos-sec-tick" aria-hidden="true">${SEC_TICK}</span>
+        <h2 class="pos-sec-title">${escapeHtml(cat.name)}</h2>
       </header>
-      <div class="pos-card-grid">
-        ${cat.items.map(item => `
-          <button type="button" class="pos-item-card" data-item-id="${item.id}" data-cat-id="${cat.id}">
-            <div class="pos-item-image">
-              <img src="${item.image}" alt="" loading="lazy" />
-            </div>
-            <div class="pos-item-body">
-              <div class="pos-item-head">
-                <h3>${escapeHtml(item.name)}</h3>
-                <span class="pos-item-price">${fmtMoney(item.price)}</span>
-              </div>
-              <p class="pos-item-desc">${escapeHtml(item.description)}</p>
-            </div>
-          </button>
-        `).join('')}
+      <span class="pos-sec-key" aria-hidden="true"></span>
+      <div class="pos-sec-body">
+        ${illo ? `<span class="pos-sec-illo" aria-hidden="true"><img src="${ILLO_DIR}/illo-${illo}.png" alt="" loading="lazy" decoding="async" onerror="this.closest('.pos-sec-illo').remove()" /></span>` : ''}
+        <ul class="pos-items">
+          ${cat.items.map(item => `
+            <li class="pos-item">
+              <button
+                type="button"
+                class="pos-item-row"
+                data-item-id="${item.id}"
+                data-cat-id="${cat.id}"
+                aria-label="${escapeHtml(item.name)}, ${fmtMoney(item.price)} — customize and add to order"
+              >
+                <span class="pos-item-line">
+                  <span class="pos-item-name">${escapeHtml(item.name)}</span>
+                  <span class="pos-item-leader" aria-hidden="true"></span>
+                  <span class="pos-item-price">${fmtMoney(item.price)}</span>
+                </span>
+                ${item.description ? `<span class="pos-item-desc">${escapeHtml(item.description)}</span>` : ''}
+              </button>
+            </li>
+          `).join('')}
+        </ul>
       </div>
-    </section>
-  `).join('');
+    </section>`;
+  };
+
+  // Sections flow down two balanced columns inside the printed sheet
+  // (CSS `columns: 2`), collapsing to one column on small screens.
+  menuContainer.innerHTML = menu.categories.map(renderSection).join('');
 
   /* ─── Scroll-spy on category chips ─── */
 
@@ -233,7 +262,7 @@
 
   // Open on item card click
   menuContainer.addEventListener('click', (e) => {
-    const card = e.target.closest('.pos-item-card');
+    const card = e.target.closest('.pos-item-row');
     if (!card) return;
     detailOpener = card;
     openDetail(card.dataset.catId, card.dataset.itemId);

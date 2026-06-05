@@ -1,17 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import { Image } from 'astro:assets';
-import osHeroTable from '../assets/kala/story/os-hero-table.webp';
 import osCoastal from '../assets/kala/story/os-coastal.webp';
 import handsPreparing from '../assets/kala/story/hands-preparing-greek-food.webp';
 
 // ---- Blue line-art illustrations (monochrome, inherit currentColor) ----
 const oliveBranch = `<svg viewBox="0 0 90 60" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 54C26 48 52 36 84 8"/><path d="M30 40c-6-5-6-12-2-17 6 3 8 11 2 17Z"/><path d="M44 31c-7-3-11-9-10-15 6 2 11 9 10 15Z"/><path d="M40 44c2-7 8-11 14-11-1 6-7 11-14 11Z"/><path d="M55 33c-5-5-6-12-3-17 6 4 7 11 3 17Z"/><path d="M67 22c2-7 8-11 14-10-1 6-7 11-14 10Z"/><ellipse cx="24" cy="48" rx="3.4" ry="4.6" transform="rotate(-28 24 48)"/></svg>`;
 const lemonIllo = `<svg viewBox="0 0 150 120" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M44 42C30 30 14 33 7 47c14 9 30 5 37-5Z"/><path d="M15 45c8-1 19 0 26 4" stroke-width="0.9"/><ellipse cx="58" cy="74" rx="33" ry="27"/><path d="M90 68c6-2 11 0 12 4-5 3-11 2-12-4Z"/><circle cx="112" cy="78" r="28"/><circle cx="112" cy="78" r="22"/><path d="M112 78 112 50M112 78 132 58M112 78 140 78M112 78 132 98M112 78 112 106M112 78 92 98M112 78 84 78M112 78 92 58" stroke-width="0.9"/></svg>`;
-const iconTable = `<svg viewBox="0 0 64 56" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 30h20"/><path d="M26 30l-3 16M38 30l3 16"/><path d="M9 18v16"/><path d="M9 28h11"/><path d="M9 34v10M20 28v16"/><path d="M55 18v16"/><path d="M44 28h11"/><path d="M55 34v10M44 28v16"/></svg>`;
-const iconSailboat = `<svg viewBox="0 0 60 58" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M30 6v32"/><path d="M31 12c10 4 16 13 18 24H31Z"/><path d="M28 14c-8 4-12 11-14 20h14Z"/><path d="M10 42h40l-5 9H15Z"/><path d="M6 53c4-3 7 2 11 0s7-3 11 0 7 2 11 0" stroke-width="1.1"/></svg>`;
-const iconHouse = `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 23 24 9l15 14"/><path d="M13 21v18h22V21"/><path d="M20 39V29h8v10"/></svg>`;
-const iconTarget = `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="24" cy="24" r="13"/><circle cx="24" cy="24" r="4" fill="currentColor" stroke="none"/></svg>`;
 const ctaIllo = `<svg viewBox="0 0 210 130" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M52 26c0 17-8 27-15 27s-15-10-15-27Z"/><path d="M37 53v46"/><path d="M24 99h26"/><path d="M84 30h16v16l5 13v50a4 4 0 0 1-4 4H83a4 4 0 0 1-4-4V59l5-13Z"/><path d="M84 30v-9h16v9"/><path d="M120 96c0 7 10 12 22 12s22-5 22-12Z"/><ellipse cx="132" cy="92" rx="4" ry="5"/><ellipse cx="143" cy="90" rx="4" ry="5"/><ellipse cx="153" cy="93" rx="4" ry="5"/><path d="M176 36c11 11 17 28 15 54"/><path d="M178 50c8-3 15-1 19 4-6 5-15 3-19-4Z"/><path d="M183 68c8-3 15-1 19 4-6 5-15 3-19-4Z"/></svg>`;
 const kalaStamp = `<svg viewBox="0 0 100 100" class="stamp-svg" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#fff" stroke="currentColor" stroke-width="1.1"/><circle cx="50" cy="50" r="41.5" fill="none" stroke="currentColor" stroke-width="0.7"/><defs><path id="kalaTop" d="M50 50 m-34 0 a34 34 0 0 1 68 0"/><path id="kalaBot" d="M50 50 m34 0 a34 34 0 0 1 -68 0"/></defs><text class="stamp-top"><textPath href="#kalaTop" startOffset="50%">KALA</textPath></text><text class="stamp-bot"><textPath href="#kalaBot" startOffset="50%">GREEK &#183; AND &#183; MORE</textPath></text><g transform="translate(50 52) scale(0.42) translate(-45 -30)" stroke-width="2.4">${oliveBranch.replace('<svg viewBox="0 0 90 60" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">','').replace('</svg>','')}</g></svg>`;
 ---
@@ -43,12 +38,18 @@ const kalaStamp = `<svg viewBox="0 0 100 100" class="stamp-svg" aria-hidden="tru
         <div class="os-hero-media">
           <span class="os-coastal-bg" aria-hidden="true"></span>
           <figure class="os-photo-card">
-            <Image
-              src={osHeroTable}
-              alt="A Greek family-style table seen from above — hands sharing horiatiki salad, dips, warm pita, grilled food, and white wine on blue-and-white ceramics in warm coastal light."
-              loading="eager"
-              fetchpriority="high"
-              decoding="async" />
+            <video
+              class="os-hero-video"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="auto"
+              poster="/images/kala/story/olive-drop-poster.webp"
+              aria-label="KALA engraving animation — a hand drops an olive onto a block of feta cheese."
+            >
+              <source src="/public/video/olive-drop.mp4" type="video/mp4" />
+            </video>
           </figure>
           <span class="os-stamp" aria-hidden="true" set:html={kalaStamp} />
         </div>
@@ -113,7 +114,6 @@ const kalaStamp = `<svg viewBox="0 0 100 100" class="stamp-svg" aria-hidden="tru
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. We make our dips, bake our
             bread, and prepare every dish with care — just as we would for our own family.
           </p>
-          <a href="#journey" class="os-link">Meet the KALA Family <span aria-hidden="true">→</span></a>
           <span class="os-ed-illo lemon" aria-hidden="true" set:html={lemonIllo} />
         </div>
         <figure class="os-ed-media bordered">
@@ -122,63 +122,6 @@ const kalaStamp = `<svg viewBox="0 0 100 100" class="stamp-svg" aria-hidden="tru
             alt="Hands preparing Greek food on a rustic table — scattering herbs over feta drizzled with olive oil, beside blue-and-white ceramic bowls, a lemon, and a Greek-blue linen towel."
             loading="lazy" decoding="async" />
         </figure>
-      </div>
-    </section>
-
-    <!-- Promise strip -->
-    <section class="os-promise">
-      <div class="container os-promise-grid">
-        <div class="promise-col">
-          <span class="promise-icon" aria-hidden="true" set:html={iconTable} />
-          <div class="promise-body">
-            <h3>Hospitality</h3>
-            <p>You're not just guests.<br/>You're family.</p>
-          </div>
-        </div>
-        <div class="promise-col">
-          <span class="promise-icon" aria-hidden="true" set:html={oliveBranch} />
-          <div class="promise-body">
-            <h3>Tradition</h3>
-            <p>Recipes passed down.<br/>Flavors that last.</p>
-          </div>
-        </div>
-        <div class="promise-col">
-          <span class="promise-icon" aria-hidden="true" set:html={iconSailboat} />
-          <div class="promise-body">
-            <h3>The Sea</h3>
-            <p>Fresh ingredients.<br/>Inspired by the coast.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Our Journey timeline -->
-    <section class="os-journey" id="journey">
-      <span class="os-journey-illo" aria-hidden="true" set:html={oliveBranch} />
-      <div class="container">
-        <span class="os-eyebrow">Our Journey</span>
-        <ol class="journey-track">
-          <li class="journey-point">
-            <span class="journey-mark" aria-hidden="true" set:html={iconHouse} />
-            <h3>Family</h3>
-            <p>Rooted in family<br/>and tradition.</p>
-          </li>
-          <li class="journey-point">
-            <span class="journey-mark is-dot" aria-hidden="true"></span>
-            <h3>Coast</h3>
-            <p>Inspired by the beauty<br/>of the Mediterranean.</p>
-          </li>
-          <li class="journey-point">
-            <span class="journey-mark" aria-hidden="true" set:html={iconTarget} />
-            <h3>Kitchen</h3>
-            <p>Made by hand.<br/>Prepared with care.</p>
-          </li>
-          <li class="journey-point">
-            <span class="journey-mark is-dot" aria-hidden="true"></span>
-            <h3>Table</h3>
-            <p>Shared with love.<br/>Remembered always.</p>
-          </li>
-        </ol>
       </div>
     </section>
 

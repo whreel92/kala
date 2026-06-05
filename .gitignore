@@ -50,3 +50,6 @@ skills-lock.json
 # Intermediate generation artifacts (stitched into final assets)
 ill_a.mp4
 ill_b.mp4
+
+# Scratch / experiments
+sandbox/

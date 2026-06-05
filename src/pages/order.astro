@@ -1,7 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-
-const oliveBranch = `<svg viewBox="0 0 90 60" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 54C26 48 52 36 84 8"/><path d="M30 40c-6-5-6-12-2-17 6 3 8 11 2 17Z"/><path d="M44 31c-7-3-11-9-10-15 6 2 11 9 10 15Z"/><path d="M40 44c2-7 8-11 14-11-1 6-7 11-14 11Z"/><path d="M55 33c-5-5-6-12-3-17 6 4 7 11 3 17Z"/><path d="M67 22c2-7 8-11 14-10-1 6-7 11-14 10Z"/><ellipse cx="24" cy="48" rx="3.4" ry="4.6" transform="rotate(-28 24 48)"/></svg>`;
 ---
 <Base
   title="Order Online — KALA Greek and More"
@@ -11,21 +9,21 @@ const oliveBranch = `<svg viewBox="0 0 90 60" fill="none" stroke="currentColor" 
 
   <div class="order-page">
 
-    <!-- Page header -->
-    <section class="page-header has-bg is-order">
-      <div class="container">
-        <span class="order-hero-olive" aria-hidden="true" set:html={oliveBranch} />
-        <h1>ORDER ONLINE</h1>
-        <span class="page-sub order-script-sub">Pickup, delivery &amp; catering</span>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium nisi
-          tincidunt eu. Donec euismod tempor lectus, vivamus sit amet libero.
-        </p>
+    <!-- ── Printed hero — matches /menu, /contact title size & typography ── -->
+    <header class="pos-hero">
+      <div class="container pos-hero-inner">
+        <span class="pos-hero-eyebrow">Order</span>
+        <h1 class="pos-hero-title">Order Online</h1>
+        <p class="pos-hero-sub">Pickup, delivery &amp; catering across the coast.</p>
       </div>
-    </section>
+    </header>
 
-    <!-- Greek Key Divider -->
-    <div class="meander-divider" aria-hidden="true"></div>
+    <!-- ── Greek-key divider ── -->
+    <div class="pos-divider" role="presentation" aria-hidden="true">
+      <span class="pos-divider-rule"></span>
+      <span class="pos-divider-diamond"></span>
+      <span class="pos-divider-rule"></span>
+    </div>
 
     <!-- Order options -->
     <section class="order-options">

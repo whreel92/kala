@@ -14,23 +14,27 @@ const iconTable = `<svg viewBox="0 0 64 56" fill="none" stroke="currentColor" st
 
   <div class="res-page">
 
-    <!-- Hero -->
-    <section class="res-hero">
-      <span class="res-hero-coast" aria-hidden="true"></span>
-      <span class="res-hero-olive-side" aria-hidden="true" set:html={oliveBranch} />
-      <div class="container res-hero-inner">
-        <span class="res-hero-olive-top" aria-hidden="true" set:html={oliveBranch} />
-        <h1>RESERVATIONS</h1>
-        <span class="res-script">Save your seat by the harbor.</span>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium nisi
-          tincidunt eu. Donec euismod tempor lectus.
-        </p>
+    <!-- ── Printed hero — matches /menu (taverna table left, grapevine right) ── -->
+    <header class="pos-hero">
+      <span class="pos-hero-art pos-hero-city" aria-hidden="true">
+        <img src="/images/kala/order-pickup/illustrations/illo-res-table.png" alt="" decoding="async" />
+      </span>
+      <span class="pos-hero-art pos-hero-sprig" aria-hidden="true">
+        <img src="/images/kala/order-pickup/illustrations/illo-res-grapes.png" alt="" decoding="async" />
+      </span>
+      <div class="container pos-hero-inner">
+        <span class="pos-hero-eyebrow">Reserve</span>
+        <h1 class="pos-hero-title">Reservations</h1>
+        <p class="pos-hero-sub">Save your seat by the harbor.</p>
       </div>
-    </section>
+    </header>
 
-    <!-- Greek key divider -->
-    <div class="meander-divider" aria-hidden="true"></div>
+    <!-- ── Greek-key divider ── -->
+    <div class="pos-divider" role="presentation" aria-hidden="true">
+      <span class="pos-divider-rule"></span>
+      <span class="pos-divider-diamond"></span>
+      <span class="pos-divider-rule"></span>
+    </div>
 
     <!-- Reservation feature: image card + form card -->
     <section class="res-feature">

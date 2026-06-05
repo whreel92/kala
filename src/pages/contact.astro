@@ -7,20 +7,27 @@ import Base from '../layouts/Base.astro';
   current="/contact"
 >
 
-  <!-- Page header -->
-  <section class="page-header has-bg is-contact">
-    <div class="container">
-      <h1>CONTACT</h1>
-      <span class="page-sub">Find us by the harbor</span>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium nisi
-        tincidunt eu. Donec euismod tempor lectus.
-      </p>
+  <!-- ── Printed hero — matches /menu (coastal sketch left, olive branch right) ── -->
+  <header class="pos-hero">
+    <span class="pos-hero-art pos-hero-city" aria-hidden="true">
+      <img src="/images/kala/order-pickup/illustrations/illo-harbor.png" alt="" decoding="async" />
+    </span>
+    <span class="pos-hero-art pos-hero-sprig" aria-hidden="true">
+      <img src="/images/kala/order-pickup/illustrations/illo-lemon-branch.png" alt="" decoding="async" />
+    </span>
+    <div class="container pos-hero-inner">
+      <span class="pos-hero-eyebrow">Visit</span>
+      <h1 class="pos-hero-title">Contact</h1>
+      <p class="pos-hero-sub">Find us by the harbor at 1500 Queen Anne Ave N.</p>
     </div>
-  </section>
+  </header>
 
-  <!-- Greek Key Divider -->
-  <div class="meander-divider" aria-hidden="true"></div>
+  <!-- ── Greek-key divider ── -->
+  <div class="pos-divider" role="presentation" aria-hidden="true">
+    <span class="pos-divider-rule"></span>
+    <span class="pos-divider-diamond"></span>
+    <span class="pos-divider-rule"></span>
+  </div>
 
   <!-- Contact details -->
   <section class="visit">
@@ -29,11 +36,11 @@ import Base from '../layouts/Base.astro';
       <!-- Storefront atmosphere banner -->
       <figure class="contact-atmos">
         <img
-          src="/images/kala/contact/kala-exterior-blue-white.webp"
-          alt="KALA's whitewashed Mediterranean storefront with a deep-blue door and window trim, potted olive trees, and a small bistro table by the entrance overlooking the coast."
+          src="/images/kala/contact/kala-storefront-evening.webp"
+          alt="KALA's storefront at dusk — a white facade with deep-blue Greek-key signage reading KALA Greek &amp; More, navy awnings and umbrellas over a sidewalk patio where guests dine among potted olive trees and string lights."
           loading="lazy"
           decoding="async"
-          width="1400" height="930" />
+          width="1280" height="543" />
         <figcaption class="atmos-label">Queen Anne · Seattle</figcaption>
       </figure>
 
@@ -99,9 +106,17 @@ import Base from '../layouts/Base.astro';
           </div>
         </div>
 
-        <div class="visit-map" aria-label="Map of KALA at 1500 Queen Anne Ave N, Seattle">
+        <div class="visit-map">
           <span class="map-label">Find us in Queen Anne</span>
-          <div id="kala-map" class="map-canvas" data-kala-map></div>
+          <iframe
+            class="map-canvas"
+            title="Map of KALA at 1500 Queen Anne Ave N, Seattle"
+            src="https://www.google.com/maps?q=1500+Queen+Anne+Ave+N,+Seattle,+WA+98109&z=15&output=embed"
+            style="border:0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+          ></iframe>
           <a
             class="map-open"
             href="https://www.google.com/maps/search/?api=1&query=1500+Queen+Anne+Ave+N+Seattle+WA+98109"
@@ -147,107 +162,6 @@ import Base from '../layouts/Base.astro';
         </a>
       </div>
 
-      <!-- Leaflet — loaded only on the Contact page -->
-      <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-        crossorigin=""
-      />
-      <script
-        is:inline
-        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-        crossorigin=""
-        data-astro-rerun
-      ></script>
-      <script is:inline data-astro-rerun>
-        (() => {
-          const mount = document.querySelector('[data-kala-map]');
-          if (!mount) return;
-          if (mount.dataset.kalaMapInit === 'true') return;
-
-          // Leaflet may not have finished executing yet when this inline
-          // script runs (especially after a view transition where both the
-          // CDN script tag and this one are re-inserted at the same time).
-          // Poll briefly until `L` shows up, then init.
-          const waitForLeaflet = (attempt) => {
-            if (typeof L !== 'undefined') return initMap();
-            if (attempt > 60) {
-              console.warn('[KALA map] Leaflet failed to load — giving up.');
-              return;
-            }
-            setTimeout(() => waitForLeaflet(attempt + 1), 100);
-          };
-
-          const initMap = () => {
-            // Re-check the init guard in case multiple invocations queued
-            if (mount.dataset.kalaMapInit === 'true') return;
-            mount.dataset.kalaMapInit = 'true';
-
-            // Tear down a map from a previous Contact visit (the script
-            // re-runs on view transitions) so its Leaflet listeners go away.
-            if (window.__kalaMap) { try { window.__kalaMap.remove(); } catch (e) {} }
-
-            // 1500 Queen Anne Ave N, Seattle, WA 98109
-            const KALA_LATLNG = [47.63613, -122.35713];
-
-            const map = L.map(mount, {
-              zoomControl: true,
-              scrollWheelZoom: false,
-              attributionControl: true,
-            }).setView(KALA_LATLNG, 16);
-
-            // Move zoom control out of the top-left so the "Find us"
-            // label overlay has a clear corner.
-            map.zoomControl.setPosition('bottomright');
-
-            // Single standard street map — clean, default basemap.
-            L.tileLayer(
-              'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-              {
-                maxZoom: 19,
-                attribution:
-                  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-              }
-            ).addTo(map);
-
-            // Branded pin
-            const icon = L.divIcon({
-              className: 'kala-map-pin',
-              html: '<span class="kala-pin-ring"></span><span class="kala-pin-dot"></span>',
-              iconSize: [28, 28],
-              iconAnchor: [14, 14],
-            });
-            L.marker(KALA_LATLNG, { icon, title: 'KALA · Greek and More' })
-              .addTo(map)
-              .bindPopup(
-                '<strong>KALA &middot; Greek and More</strong><br/>1500 Queen Anne Ave N<br/>Seattle, WA 98109'
-              );
-
-            // Tile rendering can break if Leaflet measures the container
-            // before fonts / images / layout settle. Nudge it twice:
-            // once on the next frame and once after a short delay.
-            requestAnimationFrame(() => map.invalidateSize());
-            setTimeout(() => map.invalidateSize(), 300);
-
-            // Expose the active map and register the revalidation listeners
-            // ONCE per session — re-adding them on every Contact visit would
-            // leak handlers (the script re-runs across view transitions).
-            window.__kalaMap = map;
-            if (!window.__kalaMapWindowListeners) {
-              window.__kalaMapWindowListeners = true;
-              const revalidate = () => window.__kalaMap && window.__kalaMap.invalidateSize();
-              window.addEventListener('resize', revalidate);
-              document.addEventListener('visibilitychange', () => {
-                if (!document.hidden) revalidate();
-              });
-            }
-          };
-
-          waitForLeaflet(0);
-        })();
-      </script>
     </div>
   </section>
 

@@ -4,138 +4,170 @@ interface Props {
 }
 const { fulfillment } = Astro.props;
 const isPickup = fulfillment === 'pickup';
+
+/* ── Decorative blue line-art (monochrome, inherit currentColor) ── */
+
+// Hero: a hand-drawn Greek coastal-village sketch sits top-left and an olive
+// branch top-right — both generated illustrations keyed to brand blue on
+// transparency (see /images/kala/order-pickup/illustrations).
+
+// Greek-key corner bracket (rotated per corner via CSS).
+const cornerKey = `<svg viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 19V3h16"/><path d="M10 19v-9h9"/><path d="M16 13h-3v3"/></svg>`;
+
+// Small centred olive sprig near the foot of the sheet.
+const footOlive = `<svg viewBox="0 0 120 44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 28C40 20 80 20 114 28"/><path d="M38 22c-5-4-5-11-1-15 5 3 6 11 1 15Z"/><path d="M52 19c-5-4-5-11-1-15 5 3 6 11 1 15Z"/><path d="M68 19c5-4 12-4 16 0-4 4-12 4-16 0Z" transform="rotate(8 76 19)"/><path d="M82 22c-5-4-5-11-1-15 5 3 6 11 1 15Z"/><ellipse cx="60" cy="30" rx="4" ry="5.2"/></svg>`;
 ---
 
 <section
-  class="pos-ui"
+  class="pos-ui pos-printed"
   data-pos-ui
   data-fulfillment={fulfillment}
 >
 
-  <!-- Page header -->
-  <div class="pos-header container">
-    <span class="eyebrow">{isPickup ? 'Pickup' : 'Delivery'}</span>
-    <h1>{isPickup ? 'Order for Pickup' : 'Order for Delivery'}</h1>
-    <p class="pos-header-sub">
-      {isPickup
-        ? 'Ready in about 25 minutes at 1500 Queen Anne Ave N.'
-        : 'Delivered in about 45 minutes across Queen Anne.'}
-    </p>
+  <!-- ── Hero ── -->
+  <header class="pos-hero">
+    <span class="pos-hero-art pos-hero-city" aria-hidden="true">
+      <img src="/images/kala/order-pickup/illustrations/illo-coast-city.png" alt="" decoding="async" />
+    </span>
+    <span class="pos-hero-art pos-hero-sprig" aria-hidden="true">
+      <img src="/images/kala/order-pickup/illustrations/illo-olive-branch.png" alt="" decoding="async" />
+    </span>
+    <div class="container pos-hero-inner">
+      <span class="pos-hero-eyebrow">{isPickup ? 'Pickup' : 'Delivery'}</span>
+      <h1 class="pos-hero-title">{isPickup ? 'Order for Pickup' : 'Order for Delivery'}</h1>
+      <p class="pos-hero-sub">
+        {isPickup
+          ? 'Ready in about 25 minutes at 1500 Queen Anne Ave N.'
+          : 'Delivered in about 45 minutes across Queen Anne.'}
+      </p>
+    </div>
+  </header>
+
+  <!-- ── Category jump pills (populated by pos.js) ── -->
+  <nav class="pos-cats" aria-label="Menu categories">
+    <div class="container">
+      <div class="pos-cats-inner" data-pos-cats></div>
+    </div>
+  </nav>
+
+  <!-- ── Greek-key divider ── -->
+  <div class="pos-divider" role="presentation" aria-hidden="true">
+    <span class="pos-divider-rule"></span>
+    <span class="pos-divider-diamond"></span>
+    <span class="pos-divider-rule"></span>
   </div>
 
-  <!-- Main two-column layout -->
-  <div class="pos-grid container">
+  <!-- ── Printed-menu sheet ── -->
+  <div class="container pos-sheet-wrap">
+    <div class="pos-sheet">
+      <span class="pos-corner tl" set:html={cornerKey} aria-hidden="true" />
+      <span class="pos-corner tr" set:html={cornerKey} aria-hidden="true" />
+      <span class="pos-corner bl" set:html={cornerKey} aria-hidden="true" />
+      <span class="pos-corner br" set:html={cornerKey} aria-hidden="true" />
 
-    <!-- Menu column (left) -->
-    <div class="pos-menu-col">
-      <!-- Category jump chips (populated by JS) -->
-      <nav class="pos-cats" aria-label="Menu categories">
-        <div class="pos-cats-inner" data-pos-cats></div>
-      </nav>
+      <!-- Menu sections (two columns, populated by pos.js on mount) -->
+      <div class="pos-menu" data-pos-menu></div>
 
-      <!-- Menu sections (populated by JS) -->
-      <div class="pos-menu" data-pos-menu>
-        <!-- pos.js fills this in on mount -->
-      </div>
+      <span class="pos-sheet-olive" set:html={footOlive} aria-hidden="true" />
     </div>
+  </div>
 
-    <!-- Cart panel — hidden by default, opens as a centered popup with the
-         menu still visible (and dimmed) behind it. -->
-    <aside class="pos-cart-col" aria-label="Your order" aria-hidden="true" inert>
-      <div class="pos-cart-backdrop" data-pos-cart-close aria-hidden="true"></div>
-      <div class="pos-cart" data-pos-cart role="dialog" aria-modal="true" aria-label="Your order">
-        <header class="pos-cart-head">
-          <button
-            type="button"
-            class="pos-cart-back"
-            data-pos-cart-close
-            aria-label="Back to menu"
-          >
-            <svg viewBox="0 0 20 20" aria-hidden="true">
-              <path d="M16 10H4M9 5l-5 5 5 5" fill="none" stroke="currentColor"
-                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span>Back to menu</span>
-          </button>
-          <h2>Your order</h2>
-        </header>
+  <!-- Cart panel — hidden by default, opens as a centered popup with the
+       menu still visible (and dimmed) behind it. -->
+  <aside class="pos-cart-col" aria-label="Your order" aria-hidden="true" inert>
+    <div class="pos-cart-backdrop" data-pos-cart-close aria-hidden="true"></div>
+    <div class="pos-cart" data-pos-cart role="dialog" aria-modal="true" aria-label="Your order">
+      <header class="pos-cart-head">
+        <button
+          type="button"
+          class="pos-cart-back"
+          data-pos-cart-close
+          aria-label="Back to menu"
+        >
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M16 10H4M9 5l-5 5 5 5" fill="none" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Back to menu</span>
+        </button>
+        <h2>Your order</h2>
+      </header>
 
-        <!-- Empty state -->
-        <div class="pos-cart-empty" data-pos-cart-empty>
-          <p class="pos-cart-empty-line">Your order is empty.</p>
-          <p class="pos-cart-empty-sub">Pick a dish from the menu to start.</p>
+      <!-- Empty state -->
+      <div class="pos-cart-empty" data-pos-cart-empty>
+        <p class="pos-cart-empty-line">Your order is empty.</p>
+        <p class="pos-cart-empty-sub">Pick a dish from the menu to start.</p>
+      </div>
+
+      <!-- Line items (populated by JS) -->
+      <ul class="pos-cart-items" data-pos-cart-items hidden></ul>
+
+      <!-- Footer: subtotal + checkout toggle + inline checkout dropdown -->
+      <footer class="pos-cart-foot" data-pos-cart-foot hidden>
+        <div class="pos-cart-subtotal">
+          <span>Subtotal</span>
+          <span data-pos-cart-subtotal>$0</span>
         </div>
 
-        <!-- Line items (populated by JS) -->
-        <ul class="pos-cart-items" data-pos-cart-items hidden></ul>
+        <button
+          type="button"
+          class="btn btn-primary btn-lg pos-checkout-btn"
+          data-pos-checkout-open
+          aria-expanded="false"
+          aria-controls="pos-checkout-dropdown"
+        >
+          <span class="pos-checkout-btn-label">Proceed to checkout</span>
+          <span class="pos-checkout-btn-chevron" aria-hidden="true">▾</span>
+        </button>
 
-        <!-- Footer: subtotal + checkout toggle + inline checkout dropdown -->
-        <footer class="pos-cart-foot" data-pos-cart-foot hidden>
-          <div class="pos-cart-subtotal">
-            <span>Subtotal</span>
-            <span data-pos-cart-subtotal>$0</span>
-          </div>
+        <!-- Inline checkout dropdown — expands below the button -->
+        <div
+          class="pos-checkout"
+          id="pos-checkout-dropdown"
+          data-pos-checkout
+          hidden
+        >
+          <form class="pos-checkout-form" data-pos-checkout-form novalidate>
+            <!-- Time -->
+            <fieldset class="pos-cko-fs">
+              <legend class="pos-cko-legend" data-pos-cko-time-legend>Pickup time</legend>
+              <div class="pos-cko-slots" data-pos-cko-slots></div>
+            </fieldset>
 
-          <button
-            type="button"
-            class="btn btn-primary btn-lg pos-checkout-btn"
-            data-pos-checkout-open
-            aria-expanded="false"
-            aria-controls="pos-checkout-dropdown"
-          >
-            <span class="pos-checkout-btn-label">Proceed to checkout</span>
-            <span class="pos-checkout-btn-chevron" aria-hidden="true">▾</span>
-          </button>
-
-          <!-- Inline checkout dropdown — expands below the button -->
-          <div
-            class="pos-checkout"
-            id="pos-checkout-dropdown"
-            data-pos-checkout
-            hidden
-          >
-            <form class="pos-checkout-form" data-pos-checkout-form novalidate>
-              <!-- Time -->
-              <fieldset class="pos-cko-fs">
-                <legend class="pos-cko-legend" data-pos-cko-time-legend>Pickup time</legend>
-                <div class="pos-cko-slots" data-pos-cko-slots></div>
-              </fieldset>
-
-              <!-- Customer details — one field per line. Email is optional. -->
-              <fieldset class="pos-cko-fs">
-                <legend class="pos-cko-legend">Your details</legend>
-                <label class="pos-cko-field">
-                  <span>Name</span>
-                  <input type="text" name="name" autocomplete="name" required />
+            <!-- Customer details — one field per line. Email is optional. -->
+            <fieldset class="pos-cko-fs">
+              <legend class="pos-cko-legend">Your details</legend>
+              <label class="pos-cko-field">
+                <span>Name</span>
+                <input type="text" name="name" autocomplete="name" required />
+              </label>
+              <label class="pos-cko-field">
+                <span>Phone</span>
+                <input type="tel" name="phone" autocomplete="tel" required />
+              </label>
+              <label class="pos-cko-field">
+                <span>Email <em class="pos-cko-optional">(optional)</em></span>
+                <input type="email" name="email" autocomplete="email" />
+              </label>
+              {fulfillment === 'delivery' && (
+                <label class="pos-cko-field" data-pos-cko-address-field>
+                  <span>Delivery address</span>
+                  <input type="text" name="address" autocomplete="street-address" required />
                 </label>
-                <label class="pos-cko-field">
-                  <span>Phone</span>
-                  <input type="tel" name="phone" autocomplete="tel" required />
-                </label>
-                <label class="pos-cko-field">
-                  <span>Email <em class="pos-cko-optional">(optional)</em></span>
-                  <input type="email" name="email" autocomplete="email" />
-                </label>
-                {fulfillment === 'delivery' && (
-                  <label class="pos-cko-field" data-pos-cko-address-field>
-                    <span>Delivery address</span>
-                    <input type="text" name="address" autocomplete="street-address" required />
-                  </label>
-                )}
-              </fieldset>
+              )}
+            </fieldset>
 
-              <!-- Demo-mode line + place order -->
-              <p class="pos-cko-demo-banner">Demo mode — no real payment is processed.</p>
+            <!-- Demo-mode line + place order -->
+            <p class="pos-cko-demo-banner">Demo mode — no real payment is processed.</p>
 
-              <button type="submit" class="btn btn-primary btn-lg pos-cko-submit">
-                Place order · <span data-pos-cko-total>$0</span>
-              </button>
-            </form>
-          </div>
-        </footer>
-      </div>
-    </aside>
-  </div>
+            <button type="submit" class="btn btn-primary btn-lg pos-cko-submit">
+              Place order · <span data-pos-cko-total>$0</span>
+            </button>
+          </form>
+        </div>
+      </footer>
+    </div>
+  </aside>
 
   <!-- Item detail panel (hidden) -->
   <div class="pos-detail" data-pos-detail hidden role="dialog" aria-modal="true" aria-label="Customize item">
